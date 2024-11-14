@@ -1,0 +1,22 @@
+
+
+header {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+header>* {
+    background-color: navy;
+    color: white;
+    padding: 0.5rem 1rem;
+}
+
+header a {
+    color: #fff;
+}
