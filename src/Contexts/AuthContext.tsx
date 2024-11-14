@@ -3,7 +3,7 @@ import { API_URL } from '../util';
 
 interface AuthContextType {
     isLoggedIn: boolean;
-    login: () => void;
+    login: (username: string, password: string) => void;
     logout: () => void;
 }
 

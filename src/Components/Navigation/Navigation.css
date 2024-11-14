@@ -1,22 +1,30 @@
 
-
-header {
-    position: fixed;
-    top: 2rem;
-    right: 2rem;
-
+.navigation {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
-    gap: 2rem;
+    gap: 1rem;
+
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
+    width: max-content;
 }
 
-header>* {
-    background-color: navy;
-    color: white;
-    padding: 0.5rem 1rem;
+.navigation a {
+    background-color: antiquewhite;
+    color: #000;
+
+    text-decoration: none;
+    font-family: inherit;
+
+    padding: .5rem;
+    border-radius: .3rem;
+
+    transition: .25s ease-in-out;
 }
 
-header a {
-    color: #fff;
+.navigation a:hover {
+    background-color: #000;
+    color: antiquewhite;
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { Post, User, AdminKey} from "../types";
+import { Post} from "../types";
 
 type PostsContextType = {
     posts: Post[];

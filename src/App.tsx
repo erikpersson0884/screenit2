@@ -1,24 +1,30 @@
-import { useState } from 'react'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import './App.css'
-import Upload from './Components/Upload/Upload.tsx';
-import Header from './Components/Navigation/Navigation.tsx';
+import Navigation from './Components/Navigation/Navigation.tsx';
 import Gallery from './Components/Gallery/Gallery.tsx';
+
+import { AuthProvider } from './Contexts/AuthContext.tsx';
+import { PostsProvider } from './Contexts/PostsContext.tsx';
+
+
 function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <BrowserRouter>
-      <Header></Header>
-      
-      <Routes>
-        <Route path="/upload" element={<Upload />}></Route>
-        <Route path="/" element={<Gallery />}></Route>
-        </Routes>
-    </BrowserRouter>
+    return (
+        <AuthProvider>
+            <PostsProvider>
+                <BrowserRouter>
+                
+                    <Navigation />
+                    
+                    <Routes>
+                        <Route path="/" element={<Gallery />}></Route>
+                    </Routes>
 
-  )
+                </BrowserRouter>
+            </PostsProvider>
+        </AuthProvider>
+    )
 }
 
 export default App
