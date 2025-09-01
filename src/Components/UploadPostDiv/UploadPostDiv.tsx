@@ -67,8 +67,7 @@ const UploadPostDiv = () => {
             .catch((error) => {
                 console.error(error);
             });
-    }
-
+    };
 
     return (
         <PopupDiv>
@@ -78,20 +77,21 @@ const UploadPostDiv = () => {
                     <div className='postImagePreview'>
 
                     </div>
-                    <form>
+                    <form onSubmit={uploadPostHandler}>
+                        <img src={previewUrl ? previewUrl : "https://via.placeholder.com/150"} alt="Preview" />
                         <input type="file" onChange={e => imageChangeHandler(e)} />
 
                         <div className='inputDiv'>
                             <label htmlFor="date">Date</label>
-                            <input type="date" />
+                            <input type="date" onChange={(e) => setDate(e.target.value)}/>
                         </div>
 
                         <div className='inputDiv'>
                             <label htmlFor="event">Event name</label>
-                            <input type="text" placeholder="Event name" />
+                            <input type="text" placeholder="Event name" onChange={(e) => setEventName(e.target.value)}/>
                         </div>
 
-                        <button>Upload</button>
+                        <button type="submit">Upload</button>
                     </form>
                 </div>
             ) : (

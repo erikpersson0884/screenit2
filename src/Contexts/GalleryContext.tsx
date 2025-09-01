@@ -1,5 +1,4 @@
 import React from "react";
-import { Post} from "../types";
 
 
 const initialDisplayTime = 20;

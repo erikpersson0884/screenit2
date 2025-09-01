@@ -1,6 +1,5 @@
 import React from 'react';
 import './Gallery.css';
-import { usePostsContext } from '../../Contexts/PostsContext';
 import Sidebar from './Sidebar/Sidebar';
 import GallerySettings from './GallerySettings/GallerySettings';
 import PostsDisplay from './PostsDisplay/PostsDisplay';
