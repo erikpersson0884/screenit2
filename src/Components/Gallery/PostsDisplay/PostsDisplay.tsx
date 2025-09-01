@@ -1,4 +1,3 @@
-
 import React from 'react';
 import './PostsDisplay.css';
 import { useGalleryContext } from '../../../Contexts/GalleryContext';

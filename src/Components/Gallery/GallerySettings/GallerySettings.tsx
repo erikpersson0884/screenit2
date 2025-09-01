@@ -7,7 +7,7 @@ interface GallerySettingsProps {
     // Define any props for the component here
 }
 
-const GallerySettings: React.FC<GallerySettingsProps> = (props) => {
+const GallerySettings: React.FC<GallerySettingsProps> = () => {
     const { postDisplayTime, 
         setPostDisplayTime, 
         showSettings, 

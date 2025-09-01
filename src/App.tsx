@@ -9,28 +9,28 @@ import { PostsProvider } from './Contexts/PostsContext.tsx';
 
 import UploadPostDiv from './Components/UploadPostDiv/UploadPostDiv.tsx';
 import { GalleryProvider } from './Contexts/GalleryContext.tsx';
+import Footer from "./Components/Footer/Footer.tsx";
 
 function App() {
 
     return (
-        <AuthProvider>
-        <PostsProvider>
-        <GalleryProvider>
-            <BrowserRouter>
-
-                <Navigation />
-
-                <UploadPostDiv />
-                
-                <Routes>
+        <>
+            <AuthProvider>
+            <PostsProvider>
+            <GalleryProvider>
+                <BrowserRouter>
+                    <Navigation />
+                    <UploadPostDiv />
+                    <Routes>
                         <Route path="/" element={<Gallery />}></Route>
+                    </Routes>
+                </BrowserRouter>
+            </GalleryProvider>
+            </PostsProvider>
+            </AuthProvider>
 
-                </Routes>
-
-            </BrowserRouter>
-        </GalleryProvider>
-        </PostsProvider>
-        </AuthProvider>
+            <Footer />
+        </>
     )
 }
 
