@@ -3,28 +3,29 @@
     display: flex;
     justify-content: space-between;
     gap: 1rem;
+    flex-wrap: wrap;
+    
 
     position: absolute;
     top: 1rem;
     right: 1rem;
 
-    width: max-content;
+    padding-inline: 1rem;
+
+    z-index: 10;
 }
 
-.navigation a {
-    background-color: antiquewhite;
-    color: #000;
-
-    text-decoration: none;
-    font-family: inherit;
-
-    padding: .5rem;
-    border-radius: .3rem;
-
-    transition: .25s ease-in-out;
+.navigation button a {
+    color: inherit;
+    text-decoration: inherit;
 }
 
-.navigation a:hover {
-    background-color: #000;
-    color: antiquewhite;
+
+@media screen and (max-width: 600px) {
+    .navigation {
+        flex-direction: column;
+        width: 90%;
+        right: 0;
+    }
+    
 }

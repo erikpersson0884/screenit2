@@ -1,5 +1,6 @@
 export interface Post {
     id: string;
+    eventName: string;
     path: string;
     date: string;
     creationDate: string;

@@ -1,0 +1,32 @@
+
+.sidebar {
+    position:absolute;
+    top: 0;
+    left: 0;
+
+    height: max-content;
+    padding: 2rem;
+    background-color: rgba(0, 0, 0, 0.719);
+
+    max-width: 20%;
+}
+
+.sidebar ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar li {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 1rem;    
+}
+
+
+@media screen and (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+}

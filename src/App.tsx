@@ -7,22 +7,29 @@ import Gallery from './Components/Gallery/Gallery.tsx';
 import { AuthProvider } from './Contexts/AuthContext.tsx';
 import { PostsProvider } from './Contexts/PostsContext.tsx';
 
+import UploadPostDiv from './Components/UploadPostDiv/UploadPostDiv.tsx';
+import { GalleryProvider } from './Contexts/GalleryContext.tsx';
 
 function App() {
 
     return (
         <AuthProvider>
-            <PostsProvider>
-                <BrowserRouter>
-                
-                    <Navigation />
-                    
-                    <Routes>
-                        <Route path="/" element={<Gallery />}></Route>
-                    </Routes>
+        <PostsProvider>
+        <GalleryProvider>
+            <BrowserRouter>
 
-                </BrowserRouter>
-            </PostsProvider>
+                <Navigation />
+
+                <UploadPostDiv />
+                
+                <Routes>
+                        <Route path="/" element={<Gallery />}></Route>
+
+                </Routes>
+
+            </BrowserRouter>
+        </GalleryProvider>
+        </PostsProvider>
         </AuthProvider>
     )
 }

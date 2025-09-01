@@ -10,14 +10,19 @@ const Navigation: React.FC = () => {
 
     return (
         <nav className='navigation'>
-            <Link to="/">Gallery</Link>
-            <Link to="/upload">Upload</Link>
-            <Link to="/manageUsers">Manage Users</Link>
-            {isLoggedIn ?
-                <Link to="account" >Account</Link>
-                :
-                <Link to="/login">Login</Link>
-            }
+            <button>Upload</button>
+            <button>
+                <Link to="/manageUsers">Manage Users</Link>
+            </button>
+            <button>Settings</button>
+
+            <button>
+                {isLoggedIn ?
+                    <Link to="account" >Account</Link>
+                    :
+                    <Link to="/login">Login</Link>
+                }
+            </button>
         </nav>
     );
 }
