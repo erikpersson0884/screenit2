@@ -5,7 +5,9 @@ import { useGalleryContext } from '../../../Contexts/GalleryContext';
 
 const Sidebar: React.FC = () => {
     const { posts } = usePostsContext();
+    const { showSidebar } = useGalleryContext();
 
+    if (!showSidebar) return null;
 
     return (
         <aside className="sidebar">
