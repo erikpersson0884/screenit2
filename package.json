@@ -1,32 +1,29 @@
 {
-  "name": "screenit-react",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "axios": "^1.7.7",
-    "dotenv": "^16.4.5",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.23.0"
-  },
-  "devDependencies": {
-    "@types/node": "^22.9.0",
-    "@types/react": "^18.2.66",
-    "@types/react-dom": "^18.2.22",
-    "@typescript-eslint/eslint-plugin": "^7.2.0",
-    "@typescript-eslint/parser": "^7.2.0",
-    "@vitejs/plugin-react-swc": "^3.5.0",
-    "eslint": "^8.57.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.6",
-    "typescript": "^5.2.2",
-    "vite": "^5.2.0"
-  }
+    "name": "screenit-v2",
+    "version": "1.0.0",
+    "description": "",
+    "homepage": "https://github.com/erikpersson0884/screenIT-frontend-rework#readme",
+    "bugs": {
+        "url": "https://github.com/erikpersson0884/screenIT-frontend-rework/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/erikpersson0884/screenIT-v2.git"
+    },
+    "author": "Erik Persson",
+    "type": "commonjs",
+    "main": "index.js",
+    "scripts": {
+        "dev-frontend": "cd client && npm run dev",
+        "dev-backend": "cd ../server && npm run dev",
+        "dev": "concurrently \"npm run dev-frontend\" \"npm run dev-backend\"",
+
+        "start-frontend": "cd client && npm start",
+        "start-backend": "cd ../server && npm start",
+        "start": "concurrently \"npm run start-frontend\" \"npm run start-backend\"",
+
+        "test-frontend": "cd client && npm test",
+        "test-backend": "cd ../server && npm test",
+        "test": "concurrently \"npm run test-frontend\" \"npm run test-backend\""
+    }
 }
