@@ -21,11 +21,11 @@ const GallerySettings: React.FC<GallerySettingsProps> = () => {
     if (!showSettings) return null;
 
     return (
-        <div className='gallerySettings'>
+        <div className='gallerySettings popupbox'>
             <h2>Gallery Settings</h2>
 
             <hr /> 
-            <div className='inputDiv'>
+            <div className='input-group'>
                 <label htmlFor="postDisplayTime">Post Display Time (seconds):</label>
                 <input
                     type="number"
@@ -38,7 +38,7 @@ const GallerySettings: React.FC<GallerySettingsProps> = () => {
 
             <hr />
 
-            <div className='inputDiv'>
+            <div className='input-group'>
                 <label htmlFor="showSidebarButton">Show Sidebar:</label>
                 <input
                     type='checkbox'
@@ -50,12 +50,12 @@ const GallerySettings: React.FC<GallerySettingsProps> = () => {
 
             <hr />
 
-            <div className='inputDiv'>
+            <div className='input-group'>
                 <label htmlFor="showHubbenrattanButton">Show Hubbenråttan:</label>
                 <input type='checkbox' id='showHubbenrattanButton' name='showHubbenrattanButton' checked={showHubbenRattan} onChange={() => setShowHubbenRattan(!showHubbenRattan)} />
             </div>
 
-            <div className='inputDiv'>
+            <div className='input-group'>
                 <label htmlFor="hubben-rattan-display-time">Hubbenråttan displaytime:</label>
                 <input type='number' id='hubben-rattan-display-time' name='hubben-rattan-display-time' value={hubbenRattanDisplayTime} onChange={(e) => setHubbenRattanDisplayTime(Number(e.target.value))}/>
             </div>

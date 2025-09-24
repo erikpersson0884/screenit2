@@ -1,12 +1,7 @@
 
 .sidebar {
-    position:absolute;
-    top: 0;
-    left: 0;
-
-    height: max-content;
-    padding: 2rem;
-    background-color: rgba(0, 0, 0, 0.719);
+    top: 1rem;
+    left: 1rem;
 
     max-width: 20%;
 }
@@ -22,4 +17,8 @@
     align-items: center;
     flex-direction: row;
     gap: 1rem;    
+}
+
+.sidebar h2 {
+    margin-top: 0;
 }

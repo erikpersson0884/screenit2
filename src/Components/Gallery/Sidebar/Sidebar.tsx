@@ -10,7 +10,7 @@ const Sidebar: React.FC = () => {
     if (!showSidebar) return null;
 
     return (
-        <aside className="sidebar">
+        <aside className="sidebar popupbox">
             <h2>Upcoming events</h2>
             <hr />
             <ul>

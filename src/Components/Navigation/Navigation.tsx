@@ -7,23 +7,19 @@ import { useGalleryContext } from '../../Contexts/GalleryContext';
 
 const Navigation: React.FC = () => {
     const { isLoggedIn } = useAuthContext();
-    const { setShowSettings, showSettings } = useGalleryContext();
+    const { setShowSettings, showSettings, setShowAccount, showAccount, setShowUpload, showUpload } = useGalleryContext();
 
 
     return (
         <nav className='navigation'>
-            <button>Upload</button>
+            {isLoggedIn && <button onClick={() => setShowUpload(!showUpload)}>Upload</button>}
             <button>
                 <Link to="/manageUsers">Manage Users</Link>
             </button>
             <button onClick={() => setShowSettings(!showSettings)}>Settings</button>
 
-            <button>
-                {isLoggedIn ?
-                    <Link to="account" >Account</Link>
-                    :
-                    <Link to="/login">Login</Link>
-                }
+            <button onClick={() => setShowAccount(!showAccount)}>
+                {isLoggedIn ? 'Account' : 'Login'}  
             </button>
         </nav>
     );

@@ -11,7 +11,7 @@
     min-height: 100vh;
 }
 
-.inputDiv {
+.input-group {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -35,70 +35,25 @@
     min-height: 100vh;
 }
 
-/* --- -- RESETTER STYLES -- --- */
+.popupbox {
+    background-color: #000000c9;
 
-.noUlFormatting {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    padding: 2rem;
+    border-radius: .5rem;
+    border: #fff solid .1rem;
+
+    position: absolute;
+    top: 5rem;
+    right: 2rem;
 }
 
-.noUlFormatting li {
-    display: inline;
-    
-    padding: 0;
-    margin: 0;
-}
+.popupbox hr {
+    border-color: #fff;
 
-.noAFormatting, .noAFormatting * {
-    color: var(--textColor);
-    text-decoration: none;
-    font-family: inherit;
-}
-
-.noAFormatting::after {
-    content: none;
-}
-
-.noButtonFormatting {
-    background: inherit;
-
-    cursor: pointer;
-
-    padding: 0;
-    border: none;
-}
-
-.noButtonFormatting:hover {
-    background: inherit;
-}
-
-.noInputFormatting {
-    border: none;
-    outline: none;
-}
-
-.hidden {
-    display: none;
-}
-
-.invisible {
-    visibility: hidden;
-}
-
-
-.hoverUnderSlide::after {
-    content: "";
-    display: block;
-    width: 0;
-    height: 2px;
-    background: var(--contrastColor);
-    transition: width .5s ease;
-    background: #2cb9ef; /* this line is here cause fucking neinei think it looks better than green. I like green, my name is erik fuking "göken" persson and i do not approve of this line. i approve only off green (and spagetti). */
-}
-
-.hoverUnderSlide:hover::after {
     width: 100%;
 }
-
-

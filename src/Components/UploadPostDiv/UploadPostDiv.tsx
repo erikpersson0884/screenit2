@@ -2,16 +2,11 @@ import './UploadPostDiv.css';
 import React from 'react';
 
 import { useAuthContext } from "../../Contexts/AuthContext";
-import PopupDiv from "../PopupDiv/PopupDiv";
-import { useLocation } from "react-router-dom";
+import { useGalleryContext } from '../../Contexts/GalleryContext';
 
 const UploadPostDiv = () => {
     const { isLoggedIn } = useAuthContext();
-    const location = useLocation();
-
-    if (location.pathname !== "/upload") {
-        return null;
-    }
+    const { showUpload, setShowUpload } = useGalleryContext();
 
     const [image, setImage] = React.useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = React.useState<string | null>(null);
@@ -60,6 +55,7 @@ const UploadPostDiv = () => {
             .then((response) => {
                 if (response.ok) {
                     console.log("Post uploaded successfully");
+                    setShowUpload(false);
                 } else {
                     console.log("Failed to upload post");
                 }
@@ -69,35 +65,41 @@ const UploadPostDiv = () => {
             });
     };
 
-    return (
-        <PopupDiv>
-            {!isLoggedIn ? (
-                <div className="uploadPostDiv">
-                    <h1>Upload Post</h1>
-                    <div className='postImagePreview'>
+    if (!showUpload) return null;
 
-                    </div>
-                    <form onSubmit={uploadPostHandler}>
-                        <img src={previewUrl ? previewUrl : "https://via.placeholder.com/150"} alt="Preview" />
-                        <input type="file" onChange={e => imageChangeHandler(e)} />
+    if (isLoggedIn) return (
+        <form className="upload-post-div popupbox" onSubmit={uploadPostHandler}>
+            <h2>Upload Post</h2>
 
-                        <div className='inputDiv'>
-                            <label htmlFor="date">Date</label>
-                            <input type="date" onChange={(e) => setDate(e.target.value)}/>
-                        </div>
+            <hr />
 
-                        <div className='inputDiv'>
-                            <label htmlFor="event">Event name</label>
-                            <input type="text" placeholder="Event name" onChange={(e) => setEventName(e.target.value)}/>
-                        </div>
+            <div
+                style={{
+                    backgroundImage: previewUrl ? `url(${previewUrl})` : undefined
+                }}
+                className='postImagePreview'
+                onClick={() => document.getElementById('uploadNewPostImageInput')?.click()}
+            ></div>
+            <input id="uploadNewPostImageInput" type="file" onChange={e => imageChangeHandler(e)} />
 
-                        <button type="submit">Upload</button>
-                    </form>
-                </div>
-            ) : (
-                <p>You must be logged in to upload new posts</p>
-            )}
-        </PopupDiv>
+            <hr />
+
+            <div className='input-group'>
+                <label htmlFor="date">Date</label>
+                <input type="date" onChange={(e) => setDate(e.target.value)}/>
+            </div>
+
+            <div className='input-group'>
+                <label htmlFor="event">Event name</label>
+                <input type="text" placeholder="Event name" onChange={(e) => setEventName(e.target.value)}/>
+            </div>
+
+            <button type="submit">Upload</button>
+        </form>
+    )
+
+    else return (
+        <p  className="uploadPostDiv popupbox">You must be logged in to upload new posts</p>
     );
 };
 

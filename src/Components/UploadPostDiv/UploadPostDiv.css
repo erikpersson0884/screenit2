@@ -1,29 +1,15 @@
 
-.uploadPostDiv form {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+.upload-post-div input {
+    min-width: 6rem;
 }
 
 .postImagePreview {
-    background-color: aquamarine;
-    background-image: url('images/icons/image.svg');
+    background-color: rgba(255, 255, 255, 0.13);
+    background-image: url('/src/assets/upload-image.svg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 
     width: 80%;
     aspect-ratio: 1/1;
-}
-
-.uploadPostDiv .inputDiv {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0;
-
-    width: 100%;
-}
-
-.uploadPostDiv input {
-    width: 100%;
 }

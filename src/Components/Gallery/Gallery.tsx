@@ -1,18 +1,21 @@
 import React from 'react';
 import './Gallery.css';
+
 import Sidebar from './Sidebar/Sidebar';
 import GallerySettings from './GallerySettings/GallerySettings';
+import AccountDiv from '../authDiv/AuthDiv';
 import PostsDisplay from './PostsDisplay/PostsDisplay';
-import { useGalleryContext } from '../../Contexts/GalleryContext';
+import UploadPostDiv from '../UploadPostDiv/UploadPostDiv';
 
 const Gallery: React.FC = () => {
-    const { showSidebar } = useGalleryContext();
 
     return (
         <div className='gallery'>
-            {showSidebar && <Sidebar /> }
+            <Sidebar />
             <PostsDisplay />
             <GallerySettings />
+            <AccountDiv />
+            <UploadPostDiv />
         </div>
     );
 };

@@ -1,38 +1,13 @@
 
 .gallerySettings {
-    background-color: #000000c9;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content:  space-between;
     gap: 1rem;
-
-    position: absolute;
-    top: 5rem;
-    right: 2rem;
-
-    padding: 2rem;
-    border-radius: .5rem;
-    border: #fff solid .1rem;
 }
 
-.gallerySettings hr {
-    border-color: #fff;
-
-    width: 100%;
-}
-
-.gallerySettings .inputDiv {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 1rem;
-
-    width: max-content
-}
-
-.inputDiv input {
+.input-group input {
     max-width: 4rem;
 }
 
