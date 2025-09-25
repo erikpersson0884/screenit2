@@ -14,7 +14,6 @@ enum Role {
     user
 }
 
-
 model User {
     id        String      @id @default(uuid()) // Use Auto Increment for ID
     username  String      @unique
@@ -22,4 +21,17 @@ model User {
     role      Role        @default(user)
     createdAt DateTime    @default(now())
     updatedAt DateTime    @updatedAt
+
+    createdEvents Event[] @relation("createdBy")
+}
+
+model Event {
+    id          String   @id @default(uuid()) // Use Auto Increment for ID
+    name        String
+    date        DateTime
+    createdById String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    createdBy   User     @relation("createdBy", fields: [createdById], references: [id])
 }

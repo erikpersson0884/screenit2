@@ -1,14 +1,14 @@
-import IUser from '../IUser.js';
+import { User } from '@prisma/client';
 
 export interface IUserService {
     checkIfUserExists(id: string): Promise<boolean>;
     
-    getAllUsers(): Promise<IUser[]>;
-    getUserByUsername(username: string): Promise<IUser | null>;
-    createUser(name: string, password: string): Promise<IUser>;
-    getUserById(id: string): Promise<IUser | null>;
-    updateUser(id: string, newUsername?: string, newPassword?: string): Promise<IUser | null>;
-    deleteUser(id: string): Promise<IUser | null>;
+    getAllUsers(): Promise<User[]>;
+    getUserByUsername(username: string): Promise<User | null>;
+    createUser(name: string, password: string): Promise<User>;
+    getUserById(id: string): Promise<User | null>;
+    updateUser(id: string, newUsername?: string, newPassword?: string): Promise<User | null>;
+    deleteUser(id: string): Promise<User | null>;
 }
 
 export default IUserService;
