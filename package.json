@@ -14,14 +14,19 @@
     "type": "commonjs",
     "main": "index.js",
     "scripts": {
+        "client": "npm run dev-frontend",
+        "server": "npm run dev-backend",
+        
         "dev-frontend": "cd client && npm run dev",
-        "dev-backend": "cd ../server && npm run dev",
+        "dev-backend": "cd server && npm run dev",
         "dev": "concurrently \"npm run dev-frontend\" \"npm run dev-backend\"",
+
         "start-frontend": "cd client && npm start",
-        "start-backend": "cd ../server && npm start",
+        "start-backend": "cd server && npm start",
         "start": "concurrently \"npm run start-frontend\" \"npm run start-backend\"",
+        
         "test-frontend": "cd client && npm test",
-        "test-backend": "cd ../server && npm test",
+        "test-backend": "cd server && npm test",
         "test": "concurrently \"npm run test-frontend\" \"npm run test-backend\""
     },
     "dependencies": {

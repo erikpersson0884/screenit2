@@ -13,13 +13,13 @@ type GalleryContextType = {
     setShowUpload: React.Dispatch<React.SetStateAction<boolean>>;
 
     postDisplayTime: number;
-    setPostDisplayTime: React.Dispatch<React.SetStateAction<number>>;
+    setEventDisplayTime: React.Dispatch<React.SetStateAction<number>>;
 
     hubbenRattanDisplayTime: number;
     setHubbenRattanDisplayTime: React.Dispatch<React.SetStateAction<number>>;
 
     postIndex: number;
-    setPostIndex: React.Dispatch<React.SetStateAction<number>>;
+    setEventIndex: React.Dispatch<React.SetStateAction<number>>;
 
     showSidebar: boolean;
     setShowSidebar: React.Dispatch<React.SetStateAction<boolean>>;
@@ -34,9 +34,9 @@ type GalleryContextType = {
 const GalleryContext = React.createContext<GalleryContextType | undefined>(undefined);
 
 const GalleryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [postDisplayTime, setPostDisplayTime] = React.useState<number>(initialDisplayTime);
+    const [postDisplayTime, setEventDisplayTime] = React.useState<number>(initialDisplayTime);
     const [hubbenRattanDisplayTime, setHubbenRattanDisplayTime] = React.useState<number>(initialHubbenRattanDisplayTime);
-    const [postIndex, setPostIndex] = React.useState<number>(0);
+    const [postIndex, setEventIndex] = React.useState<number>(0);
     const [showAccount, setShowAccount] = React.useState<boolean>(false);
     const [showUpload, setShowUpload] = React.useState<boolean>(false);
 
@@ -61,9 +61,9 @@ const GalleryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
     return (
         <GalleryContext.Provider value={{ 
             postDisplayTime, 
-            setPostDisplayTime, 
+            setEventDisplayTime, 
             postIndex, 
-            setPostIndex, 
+            setEventIndex, 
 
             showSidebar, 
             setShowSidebar, 

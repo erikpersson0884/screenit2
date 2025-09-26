@@ -1,10 +1,10 @@
-import './UploadPostDiv.css';
+import './createEventPopup.css';
 import React from 'react';
 
-import { useAuthContext } from "../../Contexts/AuthContext";
-import { useGalleryContext } from '../../Contexts/GalleryContext';
+import { useAuthContext } from "../../contexts/authContext";
+import { useGalleryContext } from '../../contexts/galleryContext';
 
-const UploadPostDiv = () => {
+const UploadEventDiv = () => {
     const { isLoggedIn } = useAuthContext();
     const { showUpload, setShowUpload } = useGalleryContext();
 
@@ -36,7 +36,7 @@ const UploadPostDiv = () => {
         fileReader.readAsDataURL(image);
     }, [image]);
 
-    const uploadPostHandler = (event: React.FormEvent<HTMLFormElement>) => {
+    const uploadEventHandler = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         if (!image || !date || !eventName) {
@@ -54,7 +54,7 @@ const UploadPostDiv = () => {
         })
             .then((response) => {
                 if (response.ok) {
-                    console.log("Post uploaded successfully");
+                    console.log("Event uploaded successfully");
                     setShowUpload(false);
                 } else {
                     console.log("Failed to upload post");
@@ -68,8 +68,8 @@ const UploadPostDiv = () => {
     if (!showUpload) return null;
 
     if (isLoggedIn) return (
-        <form className="upload-post-div popupbox" onSubmit={uploadPostHandler}>
-            <h2>Upload Post</h2>
+        <form className="upload-post-div popupbox" onSubmit={uploadEventHandler}>
+            <h2>Upload Event</h2>
 
             <hr />
 
@@ -78,9 +78,9 @@ const UploadPostDiv = () => {
                     backgroundImage: previewUrl ? `url(${previewUrl})` : undefined
                 }}
                 className='postImagePreview'
-                onClick={() => document.getElementById('uploadNewPostImageInput')?.click()}
+                onClick={() => document.getElementById('uploadNewEventImageInput')?.click()}
             ></div>
-            <input id="uploadNewPostImageInput" type="file" onChange={e => imageChangeHandler(e)} />
+            <input id="uploadNewEventImageInput" type="file" onChange={e => imageChangeHandler(e)} />
 
             <hr />
 
@@ -99,8 +99,8 @@ const UploadPostDiv = () => {
     )
 
     else return (
-        <p  className="uploadPostDiv popupbox">You must be logged in to upload new posts</p>
+        <p  className="uploadEventDiv popupbox">You must be logged in to upload new posts</p>
     );
 };
 
-export default UploadPostDiv;
+export default UploadEventDiv;

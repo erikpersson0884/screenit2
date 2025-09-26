@@ -1,0 +1,24 @@
+declare global {
+    interface IUser {
+        id: string;
+        username: string;
+        createdAt: Date;
+        updatedAt: Date;
+        role: Role;
+        isAdmin: boolean;
+    }
+
+    type Role = 'user' | 'admin';
+
+    interface IEvent {
+        id: string;
+        name: string;
+        date: Date;
+        imageUrl: string;
+        createdAt: Date;
+        updatedAt: Date;
+        createdBy: string;
+    }
+}
+
+export {};

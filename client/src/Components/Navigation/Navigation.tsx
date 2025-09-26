@@ -2,8 +2,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Navigation.css';
-import { useAuthContext } from '../../Contexts/AuthContext';
-import { useGalleryContext } from '../../Contexts/GalleryContext';
+import { useAuthContext } from '../../contexts/authContext';
+import { useGalleryContext } from '../../contexts/galleryContext';
 
 const Navigation: React.FC = () => {
     const { isLoggedIn } = useAuthContext();

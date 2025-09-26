@@ -1,7 +1,7 @@
 import React from 'react';
 import './GallerySettings.css';
 
-import { useGalleryContext } from '../../../Contexts/GalleryContext';
+import { useGalleryContext } from '../../../contexts/galleryContext';
 
 interface GallerySettingsProps {
     // Define any props for the component here
@@ -9,7 +9,7 @@ interface GallerySettingsProps {
 
 const GallerySettings: React.FC<GallerySettingsProps> = () => {
     const { postDisplayTime, 
-        setPostDisplayTime, 
+        setEventDisplayTime, 
         showSettings, 
         setShowHubbenRattan, 
         showHubbenRattan, 
@@ -26,13 +26,13 @@ const GallerySettings: React.FC<GallerySettingsProps> = () => {
 
             <hr /> 
             <div className='input-group'>
-                <label htmlFor="postDisplayTime">Post Display Time (seconds):</label>
+                <label htmlFor="postDisplayTime">Event Display Time (seconds):</label>
                 <input
                     type="number"
                     id="postDisplayTime"
                     name="postDisplayTime"
                     value={postDisplayTime}
-                    onChange={(e) => setPostDisplayTime(Number(e.target.value))}
+                    onChange={(e) => setEventDisplayTime(Number(e.target.value))}
                 />
             </div>
 
