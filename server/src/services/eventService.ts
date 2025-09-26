@@ -18,12 +18,13 @@ export const createEventService = (client: PrismaClient = prismaClient): IEventS
         return event;
     },
 
-    createEvent: async (date: Date, userId: string, name?: string): Promise<Event> => {
+    createEvent: async (date: Date, userId: string, name: string, imagePath: string): Promise<Event> => {
         const newEvent: Event =  await client.event.create({
             data: {
                 date,
                 createdById: userId,
-                name: name ?? "",
+                name: name,
+                imagePath: imagePath,
                 createdAt: new Date(),
                 updatedAt: new Date()
             }

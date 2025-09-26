@@ -5,6 +5,7 @@ import IEventService from "../models/services/IEventService.js";
 import createEventService from "../services/eventService.js";
 import { AuthenticatedRequest } from "../types/AuthenticatedRequest.js";
 import { EventsResponseSchema, EventResponseSchema } from "../models/dtos/EventDTO.js";
+import { th } from "zod/locales";
 
 const defaultEventService = createEventService();
 
@@ -18,8 +19,11 @@ export const createEventController = (eventService: IEventService = defaultEvent
     createEvent: async (req: AuthenticatedRequest, res) => {
         const user: User = req.user;
         const { name, date } = req.body;
-        const eventData = { name, date };
-        const newEvent: Event = await eventService.createEvent(date, user.id, name);
+
+        if (!req.file) throw new Error("File was not uploaded");
+        const imagePath = req.file.path;
+
+        const newEvent: Event = await eventService.createEvent(date, user.id, name, imagePath);
         sendValidatedResponse(res, EventResponseSchema, newEvent);
     },
 

@@ -23,8 +23,9 @@ export const UpdateEventSchema = z.object({
 // Response Schemas
 export const EventResponseSchema = z.object({
     id: z.string(),
-    name: z.string().min(1).optional(),
+    name: z.string().min(0).optional(),
     date: z.date(),
+    imagePath: z.string(),
     createdById: z.string(),
     createdAt: z.date(),
     updatedAt: z.date(),

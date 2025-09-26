@@ -29,6 +29,7 @@ model Event {
     id          String   @id @default(uuid()) // Use Auto Increment for ID
     name        String
     date        DateTime
+    imagePath    String
     createdById String
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt

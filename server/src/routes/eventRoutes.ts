@@ -6,6 +6,7 @@ import { CreateEventSchema, UpdateEventSchema } from '../models/dtos/EventDTO.js
 import { validateRequest } from '../middleware/validateRequestMiddleware.js';
 import asyncHandler from '../middleware/asyncHandler.js';
 import { strictAuth } from '../middleware/authMiddleware.js';
+import { upload } from '../multner/upload.js';  
 
 const router = express.Router();
 
@@ -23,6 +24,7 @@ router.post(
     '/',
     strictAuth,
     validateRequest(CreateEventSchema),
+    upload.single('image'), // <-- multer middleware here
     asyncHandler((req: Request, res: Response) => {
         const authenticatedReq = req as AuthenticatedRequest;
         eventController.createEvent(authenticatedReq, res);
