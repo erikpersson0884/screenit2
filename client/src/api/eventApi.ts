@@ -10,6 +10,37 @@ export const eventApi = {
             throw error;
         }
     },
+
+    createEvent: async (date: Date, name: string) => {
+        const eventData = { date, name };
+        try {
+            const response = await api.post('/event', eventData);
+            return response.data;
+        } catch (error) {
+            console.error('Error creating event:', error);
+            throw error;
+        }
+    },
+
+    updateEvent: async (eventId: string, eventData: Partial<IEvent>) => {
+        try {
+            const response = await api.put(`/event/${eventId}`, eventData);
+            return response.data;
+        } catch (error) {
+            console.error('Error updating event:', error);
+            throw error;
+        }
+    },
+
+    deleteEvent: async (eventId: string) => {
+        try {
+            const response = await api.delete(`/event/${eventId}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error deleting event:', error);
+            throw error;
+        }
+    },
 };
 
 export default eventApi;
