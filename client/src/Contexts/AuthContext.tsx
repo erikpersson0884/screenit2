@@ -1,101 +1,95 @@
-import React, { createContext, useEffect, useContext, useState, ReactNode } from 'react';
-import authApi from '../api/authApi';
-import userApi from '../api/userApi';
-import { setAuthToken } from '../api/axiosInstance';
-import { useUsersContext } from './usersContext';
+import { createContext, useContext, useState, useEffect } from "react";
+import { setAuthToken as setAuthTokenInAxios } from "../api/axiosInstance";
+import usersApi from "../api/userApi";
+import authApi from "../api/authApi";
 
 interface AuthContextType {
-    currentUser: IUser | null;
-    isLoggedIn: boolean;
-    register: (username: string, password: string) => Promise<boolean>;
-    login: (username: string, password: string) => Promise<boolean>;
+    isLoggingIn: boolean;
+    isAuthenticated: boolean;
+    authenticate: () => void;
     logout: () => void;
-
-    showAuthPopup: boolean;
-    setShowAuthPopup: React.Dispatch<React.SetStateAction<boolean>>;
+    currentUser: User | null;
+    exchangeCodeForToken: (code: string) => Promise<void>;
+    setToken: (token: string | null) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const { createUser } = useUsersContext();
-
-    const [ currentUser, setCurrentUser ] = useState<IUser | null>(null);
-    const [ isLoggedIn, setIsLoggedIn ] = useState<boolean>(!!currentUser);
-    const [ showAuthPopup, setShowAuthPopup ] = React.useState(false);
-
-    const getCurrentUser = async (): Promise<void> => {
-        const user: IUser | null = await userApi.getCurrentUser();
-        if (!user) {
-            setCurrentUser(null);
-            return;
-        }
-
-        user.isAdmin = user.role === 'admin';
-        setCurrentUser(user);
-    }
-
-    
-    useEffect(() => {
-        setIsLoggedIn(!!currentUser);
-    }, [currentUser]);
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const [isLoggingIn , setIsLoggingIn ] = useState<boolean>(true);
+    const [token, setToken] = useState<string | null>(() => localStorage.getItem("authToken"));
+    const [currentUser, setCurrentUser] = useState<User | null>(null);
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchUser = async () => {
+            if (!token) {
+                setCurrentUser(null);
+                setIsAuthenticated(false);
+                localStorage.removeItem("authToken");
+                setIsLoggingIn(false);
+                return;
+            }
             try {
-                await getCurrentUser();
+                setAuthTokenInAxios(token);
+                const user: User = await usersApi.getCurrentUser();
+                setCurrentUser(user);
+                setIsAuthenticated(true);
+                localStorage.setItem("authToken", token);
+                setIsLoggingIn(false);
             } catch (error) {
-                console.error('Failed to fetch current user', error);
+                console.error("Error fetching the current user:", error);
+                setCurrentUser(null);
+                setIsAuthenticated(false);
+                setToken(null);
             }
         };
-        if (localStorage.getItem('authToken')) {
-            fetchUser();
-        }
-    }, []);
 
-    const login = async (username: string, password: string): Promise<boolean> => {
-        try {
-            const token: string = await authApi.login(username, password);
-            if (token) {
-                setAuthToken(token);
-                getCurrentUser();
-                return true;
-            }
-        } catch (error: unknown) {
-            console.error('Login failed', error);
-        }
-        return false;
+
+        fetchUser();
+    }, [token]); // Ensure it refetches user when token changes
+
+    const authenticate = async (): Promise<void> => {
+        const authenticationUrl = ("/authorize");
+        window.location.href = authenticationUrl;
     };
 
-    const logout = () => {
-        setCurrentUser(null);
-        localStorage.removeItem('authToken'); 
-    };
-
-    const register = async (username: string, password: string): Promise<boolean> => {
+    const exchangeCodeForToken = async (code: string): Promise<void> => {
         try {
-            const success = await createUser(username, password);
-            if (success) {
-                return await login(username, password);
-            }
+            const { token } = await authApi.login(code);
+            setToken(token);
         } catch (error) {
-            console.error('Registration failed', error);
+            console.error("Error exchanging code for token", error);
         }
-        return false;
     };
-            
+
+    const logout = (): void => {
+        setToken(null);
+        setCurrentUser(null);
+        setIsAuthenticated(false);
+        localStorage.removeItem("authToken");
+    };
+
 
     return (
-        <AuthContext.Provider value={{ currentUser, isLoggedIn, login, logout, showAuthPopup, setShowAuthPopup, register }}>
+        <AuthContext.Provider value={{ 
+            isLoggingIn, 
+            isAuthenticated, 
+            authenticate, 
+            logout, 
+            currentUser, 
+            exchangeCodeForToken,
+            setToken
+        }}>
             {children}
         </AuthContext.Provider>
     );
 };
 
-export const useAuthContext = (): AuthContextType => {
+export const useAuthContext = () => {
     const context = useContext(AuthContext);
     if (!context) {
-        throw new Error('useAuth must be used within an AuthProvider');
+        throw new Error("useAuth must be used within an AuthProvider");
     }
     return context;
 };

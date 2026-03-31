@@ -1,5 +1,5 @@
 declare global {
-    interface IUser {
+    interface User {
         id: string;
         username: string;
         createdAt: Date;

@@ -4,22 +4,20 @@ import { useEffect } from 'react';
 
 interface UsersContextType {
     loadingUsers: boolean;
-    users: IUser[];
-    getUserById: (id: string) => IUser;
-    createUser: (username: string, password: string) => Promise<boolean>;
-    updateUser: (userId: string, username: string, password: string) => Promise<boolean>;
+    users: User[];
+    getUserById: (id: string) => User;
 }
 
 const UsersContext = createContext<UsersContextType | undefined>(undefined);
 
 export const UsersProvider = ({ children }: { children: ReactNode }) => {
-    const [ users, setUsers ] = useState<IUser[]>([]);
+    const [ users, setUsers ] = useState<User[]>([]);
     const [ loadingUsers, setLoadingUsers ] = useState<boolean>(true);
 
     const fetchUsers = async () => {
         try {
             const fetchedUsers = await userApi.fetchUsers();
-            const myUsers: IUser[] = fetchedUsers.map((user: any) => {
+            const myUsers: User[] = fetchedUsers.map((user: any) => {
                 user.isAdmin = user.role === 'admin';
                 return user;
             });
@@ -35,49 +33,14 @@ export const UsersProvider = ({ children }: { children: ReactNode }) => {
         fetchUsers();
     }, []);
 
-    const getUserById = (id: string): IUser => {
-        const user: IUser | undefined = users.find(user => user.id === id);
+    const getUserById = (id: string): User => {
+        const user: User | undefined = users.find(user => user.id === id);
         if (!user) throw new Error(`User with id ${id} not found`);
         else return user;
     }
 
-    const createUser = async (username: string, password: string): Promise<boolean> => {
-        try {
-            const success = await userApi.createUser(username, password);
-            if (success) {
-                await fetchUsers();
-                return success;
-            }
-            else {
-                console.error('Login failed after user creation');
-                return false;
-            }
-        } catch (error) {
-            console.error('Failed to create user:', error);
-            return false;
-        }
-    }
-
-    const updateUser = async (userId: string, username: string, password: string): Promise<boolean> => {
-        try {
-            const user = getUserById(userId);
-            if (!user) throw new Error(`User with id ${userId} not found`);
-
-            await userApi.updateUser(
-                userId,
-                username === user.username ? undefined : username,
-                password === "" ? undefined : password
-            );
-            fetchUsers(); // Refresh the users list after updating
-            return true;
-        } catch (error) {
-            console.error('Failed to update user:', error);
-            return false;
-        }
-    }
-
     return (
-        <UsersContext.Provider value={{ loadingUsers, users, getUserById, createUser, updateUser }}>
+        <UsersContext.Provider value={{ loadingUsers, users, getUserById }}>
             {children}
         </UsersContext.Provider>
     );

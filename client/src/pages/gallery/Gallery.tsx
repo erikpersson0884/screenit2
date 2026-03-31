@@ -3,9 +3,8 @@ import './Gallery.css';
 
 import Sidebar from './sidebar/Sidebar';
 import GallerySettings from './gallerySettings/GallerySettings';
-import AuthPopup from '../../components/authPopup/AuthPopup';
 import EventsDisplay from './postsDisplay/PostsDisplay';
-import UploadEventDiv from '../../components/createEventPopup/CreateEventPopup';
+import UploadEventDiv from '../../Components/createEventPopup/CreateEventPopup';
 
 const Gallery: React.FC = () => {
 
@@ -14,7 +13,6 @@ const Gallery: React.FC = () => {
             <Sidebar />
             <EventsDisplay />
             <GallerySettings />
-            <AuthPopup />
             <UploadEventDiv />
         </div>
     );

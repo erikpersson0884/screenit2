@@ -1,11 +1,11 @@
 import './createEventPopup.css';
 import React from 'react';
 
-import { useAuthContext } from "../../contexts/authContext";
-import { useGalleryContext } from '../../contexts/galleryContext';
+import { useAuthContext } from "../../contexts/AuthContext";
+import { useGalleryContext } from '../../contexts/GalleryContext';
 
 const UploadEventDiv = () => {
-    const { isLoggedIn } = useAuthContext();
+    const { isAuthenticated } = useAuthContext();
     const { showUpload, setShowUpload } = useGalleryContext();
 
     const [image, setImage] = React.useState<File | null>(null);
@@ -47,27 +47,11 @@ const UploadEventDiv = () => {
         formData.append("image", image);
         formData.append("date", date);
         formData.append("eventName", eventName);
-
-        fetch(import.meta.env.VITE_API_URL + "/images/upload", {
-            method: "POST",
-            body: formData,
-        })
-            .then((response) => {
-                if (response.ok) {
-                    console.log("Event uploaded successfully");
-                    setShowUpload(false);
-                } else {
-                    console.log("Failed to upload post");
-                }
-            })
-            .catch((error) => {
-                console.error(error);
-            });
     };
 
     if (!showUpload) return null;
 
-    if (isLoggedIn) return (
+    if (isAuthenticated) return (
         <form className="upload-post-div popupbox" onSubmit={uploadEventHandler}>
             <h2>Upload Event</h2>
 

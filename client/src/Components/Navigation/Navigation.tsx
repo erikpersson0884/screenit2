@@ -2,24 +2,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Navigation.css';
-import { useAuthContext } from '../../contexts/authContext';
-import { useGalleryContext } from '../../contexts/galleryContext';
+import { useAuthContext } from '../../contexts/AuthContext';
+import { useGalleryContext } from '../../contexts/GalleryContext';
 
 const Navigation: React.FC = () => {
-    const { isLoggedIn } = useAuthContext();
-    const { setShowSettings, showSettings, setShowAccount, showAccount, setShowUpload, showUpload } = useGalleryContext();
-
+    const { isAuthenticated, authenticate, logout } = useAuthContext();
+    const { setShowSettings, showSettings, setShowAccount, setShowUpload, showUpload } = useGalleryContext();
 
     return (
         <nav className='navigation'>
-            {isLoggedIn && <button onClick={() => setShowUpload(!showUpload)}>Upload</button>}
+            {isAuthenticated && <button onClick={() => setShowUpload(!showUpload)}>Upload</button>}
             <button>
                 <Link to="/manageUsers">Manage Users</Link>
             </button>
             <button onClick={() => setShowSettings(!showSettings)}>Settings</button>
 
-            <button onClick={() => setShowAccount(!showAccount)}>
-                {isLoggedIn ? 'Account' : 'Login'}  
+            <button onClick={isAuthenticated ? logout : authenticate}>
+                {isAuthenticated ? 'Log out' : 'Login'}  
             </button>
         </nav>
     );
