@@ -1,4 +1,4 @@
-# screenIT
+# screenIT2
 ## A digital event screen
 [![Last Commit][last-commit-shield]][last-commit-url]
 [![Build Status][build-shield]][build-url]

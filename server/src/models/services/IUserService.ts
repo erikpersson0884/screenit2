@@ -1,4 +1,4 @@
-import { User } from '@prisma/client';
+import { User } from '../../../prisma/generated/prisma/client.js';
 
 export interface IUserService {
     checkIfUserExists(id: string): Promise<boolean>;

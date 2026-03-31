@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client"; 
 import prismaClient from "../lib/prisma.js";
 import { IEventService } from '../models/services/IEventService.js';
-import { Event } from '@prisma/client';
+import { Event } from '../../prisma/generated/prisma/client.js';
 
 
 

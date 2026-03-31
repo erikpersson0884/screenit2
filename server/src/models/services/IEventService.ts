@@ -1,4 +1,4 @@
-import { Event } from '@prisma/client';
+import { Event } from '../../../prisma/generated/prisma/client.js';
 
 export interface IEventService {
     getAllEvents(): Promise<Event[]>;

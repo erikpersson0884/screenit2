@@ -1,6 +1,6 @@
 import sendValidatedResponse from "../middleware/validateResponseMiddleware.js";
 import IEventController from "../models/controllers/IEventController.js";
-import { Event, User } from '@prisma/client';
+import { Event, User } from '../../prisma/generated/prisma/client.js';
 import IEventService from "../models/services/IEventService.js";
 import createEventService from "../services/eventService.js";
 import { AuthenticatedRequest } from "../types/AuthenticatedRequest.js";
@@ -28,14 +28,14 @@ export const createEventController = (eventService: IEventService = defaultEvent
     },
 
     getEventById: async (req, res) => {
-        const { id } = req.params;
+        const id = req.params.id as string;
         const event: Event | null = await eventService.getEventById(id);
         sendValidatedResponse(res, EventsResponseSchema, event ? [event] : []);
     },
 
     updateEvent: async (req: AuthenticatedRequest, res) => {
         const user = req.user as User;
-        const { id } = req.params;
+        const id = req.params.id as string;
         const { name, date } = req.body;
         const eventData = { name, date };
         const updatedEvent: Event | null = await eventService.updateEvent(id, eventData);
@@ -44,7 +44,7 @@ export const createEventController = (eventService: IEventService = defaultEvent
 
     deleteEvent: async (req: AuthenticatedRequest, res) => {
         const user: User = req.user as User;
-        const { id } = req.params;
+        const id = req.params.id as string;
                              
         const event = await eventService.getEventById(id);
         if (user.id !== event.createdById || user.role == "admin") throw new Error("Only admins can delete events");

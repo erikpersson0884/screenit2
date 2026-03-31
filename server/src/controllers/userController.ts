@@ -6,7 +6,7 @@ import { UserResponseSchema, UserResponseArraySchema } from '../models/dtos/User
 import { sendValidatedResponse } from "../middleware/validateResponseMiddleware.js";
 import { MissingUserIDError } from "../errors/MissingUserIDError.js";
 import { UnauthorizedActionError } from "../errors/UnauthorizedActionError.js";
-import { User } from "@prisma/client";
+import { User } from "../../prisma/generated/prisma/client.js";
 
 const userService = createUserService();
 
@@ -17,7 +17,7 @@ export const createUserController = (service = userService): IUserController => 
     },
 
     getUserById: async (req: Request, res: Response) => {
-        const userId: string = req.params.id;
+        const userId: string = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
         const user: User | null = await service.getUserById(userId);
         if (user) {
             sendValidatedResponse(res, UserResponseSchema, user);
@@ -39,7 +39,7 @@ export const createUserController = (service = userService): IUserController => 
     updateUser: async (req: AuthenticatedRequest, res: Response) => {
         const authUser: User = req.user;
         let { username, password }: { username?: string, password?: string} = req.body;
-        let userId: string = req.params.id;
+        let userId: string = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
 
         if (!userId) throw new MissingUserIDError();
         
@@ -55,7 +55,7 @@ export const createUserController = (service = userService): IUserController => 
 
     deleteUser: async (req: AuthenticatedRequest, res: Response) => {
         const authUser: User = req.user;
-        let userId: string = req.params.id;
+        let userId: string = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
         if (!userId) throw new MissingUserIDError();
         
         if (authUser.id !== userId && authUser.role !== 'admin') {

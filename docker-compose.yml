@@ -1,0 +1,46 @@
+services:
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: vevit-backend
+    environment:
+      - DATABASE_URL=postgresql://myuser:secretpassword@db:5432/screenit2?schema=public
+      - JWT_SECRET=your_jwt_secret
+      - GAMMA_CLIENT_ID=1
+      - GAMMA_REDIRECT_URI=http://screenit.chalmers.it/api/auth/gamma/callback
+      - GAMMA_CLIENT_SECRET=1
+      - frontend_url=http://screenit.chalmers.it
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: screenit2-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  db:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: secretpassword
+      POSTGRES_DB: screenit2
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myuser -d screenit2"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db_data:

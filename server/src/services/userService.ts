@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client"; 
 import prismaClient from "../lib/prisma.js";
-import { User } from '@prisma/client';
+import { User } from '../../prisma/generated/prisma/client.js';
 import { IUserService } from '../models/services/IUserService.js';
 import { UserNotFoundError } from '../errors/UserNotFoundError.js';
 import { UserAlreadyExistsError } from '../errors/UserAlreadyExistsError.js';

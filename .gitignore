@@ -36,3 +36,6 @@ jspm_packages/
 .idea/
 *.sublime-workspace
 *.sublime-project
+
+
+docker-compose.override.yml

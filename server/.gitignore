@@ -34,3 +34,6 @@ coverage/
 
 # Misc
 *.tgz
+
+prisma/generated
+prisma/migrations
