@@ -1,39 +1,39 @@
 // schema.prisma
 
 datasource db {
-    provider = "postgresql"
-}
-  
-generator client {
-    provider = "prisma-client-js"
-    output   = "./generated/prisma"
+  provider = "postgresql"
 }
 
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/prisma"
+}
 
 enum Role {
-    admin
-    user
-}
-
-model User {
-    id        String      @id @default(uuid()) // Use Auto Increment for ID
-    username  String      @unique
-    password  String
-    role      Role        @default(user)
-    createdAt DateTime    @default(now())
-    updatedAt DateTime    @updatedAt
-
-    createdEvents Event[] @relation("createdBy")
+  admin
+  user
 }
 
 model Event {
-    id          String   @id @default(uuid()) // Use Auto Increment for ID
-    name        String
-    date        DateTime
-    imagePath    String
-    createdById String
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
+  id          String   @id @default(uuid()) // Use Auto Increment for ID
+  name        String
+  date        DateTime
+  imagePath   String
+  createdById String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-    createdBy   User     @relation("createdBy", fields: [createdById], references: [id])
+  createdBy User @relation("createdBy", fields: [createdById], references: [id])
+}
+
+model User {
+  id String @id @default(uuid())
+
+  username String @unique
+
+  role Role @default(user)
+
+  createdAt DateTime @default(now())
+
+  events Event[] @relation("createdBy")
 }

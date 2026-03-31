@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client"; 
+import { PrismaClient } from "../../prisma/generated/prisma/client.js";
 import prismaClient from "../lib/prisma.js";
 import { User } from '../../prisma/generated/prisma/client.js';
 import { IUserService } from '../models/services/IUserService.js';
@@ -12,23 +12,9 @@ export class UserService implements IUserService {
         this.prisma = prismaClient;
     }
 
-    public async checkIfUserExists(username: string): Promise<boolean> {
-        let userExists = await this.prisma.user.findFirst({
-            where: { username: username },
-        })
-        return userExists !== null;
-    }
-
     async getAllUsers(): Promise<User[]> {
         const users: User[] = await this.prisma.user.findMany();
         return users;
-    }
-
-    async getUserById(userId: string): Promise<User | null> {
-        const user: User | null = await this.prisma.user.findUnique({
-            where: { id: userId },
-        });
-        return user;
     }
 
     async getUserByUsername(username: string): Promise<User | null> {
@@ -38,48 +24,42 @@ export class UserService implements IUserService {
         return user;
     }
 
-    async createUser(username: string, password: string): Promise<User> {
-        if (await this.checkIfUserExists(username)) {
-            throw new UserAlreadyExistsError(`User with username ${username} already exists`);
-        }
-        const user: User = await this.prisma.user.create({
-            data: {
-                username,
-                password,
+    // OAuth related methods
+    async getUserById(id: string): Promise<User | null> {
+        const user = await this.prisma.user.findUnique({
+            where: {
+                id: id,
             },
         });
-        return user;
+        return user ? user : null;
     }
 
-    async updateUser(id: string, newUsername?: string, newPassword?: string): Promise<User> {
-        const user: User | null = await this.getUserById(id);
-
-        if (user) {
-            user.username = newUsername || user.username;
-            user.password = newPassword || user.password;
-            user.updatedAt = new Date();
-
-            return this.prisma.user.update({
-                where: { id },
-                data: {
-                    username: user.username,
-                    password: user.password,
-                    updatedAt: user.updatedAt,
-                },
-            });
-        } else throw new UserNotFoundError(`User with id ${id} not found`);
+    async checkIfUserExists(id: string): Promise<boolean> {
+        const user = await this.prisma.user.findUnique({
+            where: {
+                id: id,
+            },
+        });
+        return user !== null;
     }
 
-    async deleteUser(userId: string): Promise<User> {
-        if (await this.checkIfUserExists(userId)) {
-            const user: User | null = await this.getUserById(userId);
-            if (user) {
-                return this.prisma.user.delete({
-                    where: { id: userId },
-                });
-            } else throw new UserNotFoundError(`User with id ${userId} not found`);
+    async createUser(id: string, username: string): Promise<User> {
+        if (await this.checkIfUserExists(id)) {
+            throw new UserAlreadyExistsError(`User with username ${username} already exists`);
         }
-        else throw new UserNotFoundError(`User with id ${userId} not found`);
+        await this.prisma.user.create({
+            data: {
+                id,
+                username
+            },
+        });
+
+        const newUser = await this.getUserById(id);
+        if (!newUser) {
+            throw new UserNotFoundError(`Failed to create user with username ${username}`);
+        }
+
+        return newUser;
     }
 }
 

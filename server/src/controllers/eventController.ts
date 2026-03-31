@@ -5,7 +5,6 @@ import IEventService from "../models/services/IEventService.js";
 import createEventService from "../services/eventService.js";
 import { AuthenticatedRequest } from "../types/AuthenticatedRequest.js";
 import { EventsResponseSchema, EventResponseSchema } from "../models/dtos/EventDTO.js";
-import { th } from "zod/locales";
 
 const defaultEventService = createEventService();
 

@@ -27,32 +27,4 @@ router.get(
 router.get("/", asyncHandler(userController.getAllUsers));
 router.get("/:id", asyncHandler(userController.getUserById));
 
-// Create a new user
-router.post(
-    "/",
-    validateRequest(CreateUserSchema),
-    asyncHandler(userController.createUser)
-);
-
-// Update a user by ID (requires authentication)
-router.patch(
-    "/:id",
-    strictAuth,
-    validateRequest(UpdateUserSchema),
-    asyncHandler((req: Request, res: Response) => {
-        const authenticatedReq = req as AuthenticatedRequest;
-        return userController.updateUser(authenticatedReq, res);
-    })
-);
-
-// Delete a user by ID (requires authentication)
-router.delete(
-    "/:id",
-    strictAuth,
-    asyncHandler((req: Request, res: Response) => {
-        const authenticatedReq = req as AuthenticatedRequest;
-        return userController.deleteUser(authenticatedReq, res);
-    })
-);
-
 export default router;
