@@ -1,4 +1,4 @@
-import { PrismaClient } from "../../prisma/generated/prisma/client.js";
+import { PrismaClient, Role } from "../../prisma/generated/prisma/client.js";
 import prismaClient from "../lib/prisma.js";
 import { User } from '../../prisma/generated/prisma/client.js';
 import { IUserService } from '../models/services/IUserService.js';
@@ -47,10 +47,14 @@ export class UserService implements IUserService {
         if (await this.checkIfUserExists(id)) {
             throw new UserAlreadyExistsError(`User with username ${username} already exists`);
         }
+
+        const role: Role = 'user'; // Default role, can be adjusted as needed
+
         await this.prisma.user.create({
             data: {
                 id,
-                username
+                username,
+                role, // Default role, can be adjusted as needed
             },
         });
 

@@ -5,8 +5,6 @@ import { AuthenticatedRequest } from "../types/AuthenticatedRequest.js";
 import { createUserController } from "../controllers/userController.js";
 
 import { strictAuth} from "../middleware/authMiddleware.js";
-import { validateRequest } from "../middleware/validateRequestMiddleware.js";
-import { CreateUserSchema, UpdateUserSchema } from "../models/dtos/UserDTOs.js";
 import asyncHandler from "../middleware/asyncHandler.js";
 
 const router = express.Router();

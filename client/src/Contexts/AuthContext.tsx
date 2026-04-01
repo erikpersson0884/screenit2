@@ -1,95 +1,67 @@
-import { createContext, useContext, useState, useEffect } from "react";
-import { setAuthToken as setAuthTokenInAxios } from "../api/axiosInstance";
-import usersApi from "../api/userApi";
-import authApi from "../api/authApi";
+import React, { createContext, useEffect, useContext, useState, ReactNode } from 'react';
+import userApi from '../api/userApi';
+import { setAuthToken } from '../api/axiosInstance';
 
 interface AuthContextType {
-    isLoggingIn: boolean;
-    isAuthenticated: boolean;
-    authenticate: () => void;
-    logout: () => void;
     currentUser: User | null;
-    exchangeCodeForToken: (code: string) => Promise<void>;
-    setToken: (token: string | null) => void;
+    isAuthenticated: boolean;
+
+    logout: () => void;
+    authenticate: () => Promise<void>;
+
+    setAuthToken: (token: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [isLoggingIn , setIsLoggingIn ] = useState<boolean>(true);
-    const [token, setToken] = useState<string | null>(() => localStorage.getItem("authToken"));
-    const [currentUser, setCurrentUser] = useState<User | null>(null);
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+    const [ currentUser, setCurrentUser ] = useState<User | null>(null);
+    const [ isAuthenticated, setIsAuthenticated ] = useState<boolean>(!!currentUser);
+
+    const getCurrentUser = async (): Promise<void> => {
+        const user = await userApi.getCurrentUser();
+        user.isAdmin = user.role === 'admin';
+        setCurrentUser(user);
+    }
+
+    
+    useEffect(() => {
+        setIsAuthenticated(!!currentUser);
+    }, [currentUser]);
 
     useEffect(() => {
         const fetchUser = async () => {
-            if (!token) {
-                setCurrentUser(null);
-                setIsAuthenticated(false);
-                localStorage.removeItem("authToken");
-                setIsLoggingIn(false);
-                return;
-            }
             try {
-                setAuthTokenInAxios(token);
-                const user: User = await usersApi.getCurrentUser();
-                setCurrentUser(user);
-                setIsAuthenticated(true);
-                localStorage.setItem("authToken", token);
-                setIsLoggingIn(false);
+                await getCurrentUser();
             } catch (error) {
-                console.error("Error fetching the current user:", error);
-                setCurrentUser(null);
-                setIsAuthenticated(false);
-                setToken(null);
+                console.error('Failed to fetch current user', error);
             }
         };
-
-
-        fetchUser();
-    }, [token]); // Ensure it refetches user when token changes
+        if (localStorage.getItem('authToken')) {
+            fetchUser();
+        }
+    }, []);
 
     const authenticate = async (): Promise<void> => {
-        const authenticationUrl = ("/authorize");
-        window.location.href = authenticationUrl;
+        window.location.replace("/api/auth/gamma");
     };
 
-    const exchangeCodeForToken = async (code: string): Promise<void> => {
-        try {
-            const { token } = await authApi.login(code);
-            setToken(token);
-        } catch (error) {
-            console.error("Error exchanging code for token", error);
-        }
-    };
-
-    const logout = (): void => {
-        setToken(null);
+    const logout = () => {
         setCurrentUser(null);
-        setIsAuthenticated(false);
-        localStorage.removeItem("authToken");
+        localStorage.removeItem('authToken'); 
     };
-
 
     return (
-        <AuthContext.Provider value={{ 
-            isLoggingIn, 
-            isAuthenticated, 
-            authenticate, 
-            logout, 
-            currentUser, 
-            exchangeCodeForToken,
-            setToken
-        }}>
+        <AuthContext.Provider value={{ currentUser, isAuthenticated, logout, authenticate, setAuthToken }}>
             {children}
         </AuthContext.Provider>
     );
 };
 
-export const useAuthContext = () => {
+export const useAuthContext = (): AuthContextType => {
     const context = useContext(AuthContext);
     if (!context) {
-        throw new Error("useAuth must be used within an AuthProvider");
+        throw new Error('useAuth must be used within an AuthProvider');
     }
     return context;
 };
