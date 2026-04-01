@@ -47,9 +47,10 @@ const UploadEventDiv = () => {
         const success = await createEvent(new Date(date), eventName, image);
         if (success) {
             setShowUpload(false);
-        } else {
-            alert("Failed to upload event. Please try again.");
-        }
+        } 
+        // else {
+        //     alert("Failed to upload event. Please try again.");
+        // }
     };
 
     if (!showUpload) return null;

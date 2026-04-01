@@ -10,10 +10,13 @@ const EventsDisplay: React.FC = () => {
 
     const [postImagePath, setEventImagePath] = React.useState<string>(""); 
 
-    
     return (
         <div className="postsDisplay">
-            <img src={postImagePath} alt="post image" width={300}/>
+            {events.length > 0 ? (
+                <img src={`/api/uploads/${events[0].imagePath}`} alt="event poster" width={300} />
+            ) : (
+                <p>No events to display</p>
+            )}
         </div>
     );
 };

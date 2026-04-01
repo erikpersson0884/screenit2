@@ -23,8 +23,8 @@ router.get('/:id', (req: Request, res: Response) => {
 router.post(
     '/',
     strictAuth,
-    validateRequest(CreateEventSchema),
     upload.single('image'), // <-- multer middleware here
+    validateRequest(CreateEventSchema),
     asyncHandler((req: Request, res: Response) => {
         const authenticatedReq = req as AuthenticatedRequest;
         eventController.createEvent(authenticatedReq, res);

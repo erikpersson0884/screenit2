@@ -15,10 +15,18 @@ export const eventApi = {
         const eventData = new FormData();
         eventData.append("image", imageFile);
         eventData.append("date", date.toISOString());
-        eventData.append("eventName", name);
+        eventData.append("name", name);
 
+        console.log("FormData contents:");
+for (const [key, value] of eventData.entries()) {
+  console.log(key, value);
+}
         try {
-            const response = await api.post('/event', eventData);
+            const response = await api.post('/event', eventData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
             return response.data;
         } catch (error) {
             console.error('Error creating event:', error);

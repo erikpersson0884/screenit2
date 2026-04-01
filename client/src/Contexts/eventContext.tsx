@@ -25,8 +25,8 @@ const EventProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 
     const fetchEvents = async () => {
         try {
-            const response = await eventApi.fetchEvents();
-            setEvents(response.data);
+            const events = await eventApi.fetchEvents();
+            setEvents(events);
         } catch (error) {
             console.error("Failed to fetch events:", error);
         }
