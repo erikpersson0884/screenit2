@@ -1,5 +1,8 @@
+.page-footer {
+    margin-top: auto;
+}
 
-footer a {
+.page-footer a {
     color: #09cdda;
 
     text-decoration: none;
