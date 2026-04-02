@@ -36,3 +36,20 @@ button {
 button:hover {
     cursor: pointer;
 }
+
+ul {
+    list-style: none;
+
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+
+    padding: 0;
+}
+
+ul>li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}

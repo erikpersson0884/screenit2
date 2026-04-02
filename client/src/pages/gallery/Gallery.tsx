@@ -5,6 +5,7 @@ import Sidebar from './sidebar/Sidebar';
 import GallerySettings from './gallerySettings/GallerySettings';
 import EventsDisplay from '../../Components/postsDisplay/PostsDisplay';
 import UploadEventDiv from '../../Components/createEventPopup/CreateEventPopup';
+import AccountPopup from '../../Components/accountPopup/AccountPopup';
 
 const Gallery: React.FC = () => {
 
@@ -14,6 +15,7 @@ const Gallery: React.FC = () => {
             <EventsDisplay />
             <GallerySettings />
             <UploadEventDiv />
+            <AccountPopup />
         </div>
     );
 };

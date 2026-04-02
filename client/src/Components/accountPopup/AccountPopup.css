@@ -1,0 +1,38 @@
+
+.account-popup h2 {
+    margin: 0;
+}
+
+.account-popup ul {
+    width: 100%;
+    max-height: 16rem;
+    border: 1px solid #fff;
+    padding: .5rem;
+    border-radius: 1rem;
+
+    overflow: scroll;
+}
+
+.account-popup li {
+    background: #222222;
+
+    padding: 1rem;
+    border-radius: .5rem;
+}
+
+.account-popup li p {
+    padding: 0;
+    margin: 0;
+}
+
+.account-popup li>button {
+    background-color: inherit;
+    padding: 0;
+    border: 0;
+    margin-left: auto;
+    /* height: ; */
+}
+
+.account-popup .event-image {
+    height: 2rem;
+}

@@ -17,7 +17,7 @@ declare global {
         imagePath: string;
         createdAt: Date;
         updatedAt: Date;
-        createdBy: string;
+        createdById: string;
     }
 }
 

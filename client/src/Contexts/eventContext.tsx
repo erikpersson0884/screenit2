@@ -25,7 +25,7 @@ const EventProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 
     const fetchEvents = async () => {
         try {
-            const events = await eventApi.fetchEvents();
+            const events: IEvent[] = await eventApi.fetchEvents();
             setEvents(events);
         } catch (error) {
             console.error("Failed to fetch events:", error);
@@ -65,6 +65,8 @@ const EventProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     };
 
     const deleteEvent = async (eventId: string) => {
+        if (!window.confirm("Are you sure you want to delete this event?")) return;
+        
         try {
             await eventApi.deleteEvent(eventId);
             fetchEvents();

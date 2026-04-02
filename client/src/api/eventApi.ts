@@ -1,10 +1,23 @@
 import api from './axiosInstance';
 
+const convertToClientEvents = (serverEvents: any): IEvent[] => {
+    const clientEvents: IEvent[] = serverEvents.map((event: any) => ({
+        ...event,
+        id: String(event.id),
+        date: new Date(event.date),
+        createdAt: new Date(event.createdAt),
+        name: String(event.name),
+        imagePath: String(event.imagePath)
+    }));
+
+    return clientEvents;
+}
+
 export const eventApi = {
-    fetchEvents: async () => {
+    fetchEvents: async (): Promise<IEvent[]> => {
         try {
             const response = await api.get('/event');
-            return response.data;
+            return convertToClientEvents(response.data);
         } catch (error) {
             console.error('Error fetching users:', error);
             throw error;
@@ -17,17 +30,13 @@ export const eventApi = {
         eventData.append("date", date.toISOString());
         eventData.append("name", name);
 
-        console.log("FormData contents:");
-for (const [key, value] of eventData.entries()) {
-  console.log(key, value);
-}
         try {
             const response = await api.post('/event', eventData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            return response.data;
+            return response.data
         } catch (error) {
             console.error('Error creating event:', error);
             throw error;
