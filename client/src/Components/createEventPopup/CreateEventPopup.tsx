@@ -56,7 +56,7 @@ const UploadEventDiv = () => {
     if (!showUpload) return null;
 
     if (isAuthenticated) return (
-        <form className="upload-post-div popupbox" onSubmit={uploadEventHandler}>
+        <form className="create-event-popup popupbox" onSubmit={uploadEventHandler}>
             <h2>Upload Event</h2>
 
             <hr />
