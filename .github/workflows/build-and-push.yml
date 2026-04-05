@@ -31,11 +31,11 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: ./server
-          file: Dockerfile
+          file: ./server/Dockerfile
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            ghcr.io/${{ github.repository }}backend:latest
+            ghcr.io/${{ github.repository }}/backend:latest
             ghcr.io/${{ github.repository }}/backend:${{ github.sha }}
 
   frontend:
@@ -63,7 +63,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: ./client
-          file: Dockerfile
+          file: ./client/Dockerfile
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
