@@ -1,8 +1,9 @@
 import React from "react";
 
 
-const initialDisplayTime = 10;
-const initialHubbenRattanDisplayTime = 5;
+const defaultDisplayTime = 10;
+const defaultHubbenRattanDisplayTime = 5;
+const defaultHubbenRattanDisplayInterval = 10;
 
 
 type GalleryContextType = {
@@ -17,6 +18,9 @@ type GalleryContextType = {
 
     hubbenRattanDisplayTime: number;
     setHubbenRattanDisplayTime: React.Dispatch<React.SetStateAction<number>>;
+
+    hubbenRattanDisplayInterval: number;
+    setHubbenRattanDisplayInterval: React.Dispatch<React.SetStateAction<number>>;
 
     postIndex: number;
     setEventIndex: React.Dispatch<React.SetStateAction<number>>;
@@ -35,12 +39,17 @@ const GalleryContext = React.createContext<GalleryContextType | undefined>(undef
 
 const GalleryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [postDisplayTime, setEventDisplayTime] = React.useState<number>(
-    () => Number(localStorage.getItem("postDisplayTime")) || initialDisplayTime
+        () => Number(localStorage.getItem("postDisplayTime")) || defaultDisplayTime
     );
 
     const [hubbenRattanDisplayTime, setHubbenRattanDisplayTime] = React.useState<number>(
-    () => Number(localStorage.getItem("hubbenRattanDisplayTime")) || initialHubbenRattanDisplayTime
+        () => Number(localStorage.getItem("hubbenRattanDisplayTime")) || defaultHubbenRattanDisplayTime
     );
+
+    const [hubbenRattanDisplayInterval, setHubbenRattanDisplayInterval] = React.useState<number>(
+        () => Number(localStorage.getItem("hubbenRattanDisplayInterval")) || defaultHubbenRattanDisplayInterval
+    );
+
     const [showSidebar, setShowSidebar] = React.useState<boolean>(
         () => JSON.parse(localStorage.getItem("showSidebar") || "false")
     );
@@ -73,6 +82,10 @@ const GalleryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
     }, [showHubbenRattan]);
 
     React.useEffect(() => {
+        localStorage.setItem("hubbenRattanDisplayInterval", hubbenRattanDisplayInterval.toString());
+    }, [hubbenRattanDisplayInterval]);
+
+    React.useEffect(() => {
         [showAccount, showUpload, showSettings].forEach((state, index) => {
             if (state) {
                 activePopup[1](index === 0 ? "account" : index === 1 ? "upload" : "settings");
@@ -89,6 +102,7 @@ const GalleryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
         <GalleryContext.Provider value={{ 
             postDisplayTime, 
             setEventDisplayTime, 
+
             postIndex, 
             setEventIndex, 
 
@@ -96,7 +110,10 @@ const GalleryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
             setShowSidebar, 
 
             showHubbenRattan, 
-            setShowHubbenRattan, 
+            setShowHubbenRattan,
+
+            hubbenRattanDisplayInterval,
+            setHubbenRattanDisplayInterval,
 
             showSettings, 
             setShowSettings,

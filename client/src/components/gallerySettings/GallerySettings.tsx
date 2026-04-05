@@ -10,14 +10,21 @@ interface GallerySettingsProps {
 const GallerySettings: React.FC<GallerySettingsProps> = () => {
     const { 
         postDisplayTime, 
-        setEventDisplayTime, 
-        showSettings, 
+        setEventDisplayTime,
+
+        showSettings,
+
+        showSidebar,
+        setShowSidebar,
+
         setShowHubbenRattan, 
-        showHubbenRattan, 
+        showHubbenRattan,
+
         hubbenRattanDisplayTime, 
         setHubbenRattanDisplayTime,
-        showSidebar,
-        setShowSidebar
+
+        hubbenRattanDisplayInterval,
+        setHubbenRattanDisplayInterval,
     } = useGalleryContext();
 
     if (!showSettings) return null;
@@ -67,6 +74,11 @@ const GallerySettings: React.FC<GallerySettingsProps> = () => {
             <div className='input-group'>
                 <label htmlFor="hubben-rattan-display-time">Hubbenråttan displaytime:</label>
                 <input type='number' id='hubben-rattan-display-time' name='hubben-rattan-display-time' value={hubbenRattanDisplayTime} onChange={(e) => setHubbenRattanDisplayTime(Number(e.target.value))}/>
+            </div>
+
+            <div className='input-group'>
+                <label htmlFor="hubben-rattan-display-interval">Hubbenråttan display interval:</label>
+                <input type='number' id='hubben-rattan-display-interval' name='hubben-rattan-display-interval' value={hubbenRattanDisplayInterval} onChange={(e) => setHubbenRattanDisplayInterval(Number(e.target.value))}/>
             </div>
         </div>
     );
