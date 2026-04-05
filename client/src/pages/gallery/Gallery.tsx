@@ -1,8 +1,8 @@
 import React from 'react';
 import './Gallery.css';
 
-import Sidebar from './sidebar/Sidebar';
-import GallerySettings from './gallerySettings/GallerySettings';
+import Sidebar from '@/components/sidebar/Sidebar';
+import GallerySettings from '@/components/gallerySettings/GallerySettings';
 import EventsDisplay from '@/components/postsDisplay/PostsDisplay';
 import UploadEventDiv from '@/components/createEventPopup/CreateEventPopup';
 import AccountPopup from '@/components/accountPopup/AccountPopup';
