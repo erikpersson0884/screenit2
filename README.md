@@ -135,7 +135,7 @@ Don't forget to give the project a star! Thanks again!
 [last-commit-url]: https://github.com/erikpersson0884/screenit-v2/commits/main
 [repo-size-shield]: https://img.shields.io/github/repo-size/erikpersson0884/screenit2?style=for-the-badge&cacheSeconds=60
 [repo-size-url]: https://github.com/erikpersson0884/screenit-v2
-[author-shield]: https://img.shields.io/badge/Author-Erik%20Persson-blue?style=for-the-badge
+[author-shield]: https://img.shields.io/badge/Author-Erik%20Persson-purple?style=for-the-badge
 [author-url]: https://github.com/erikpersson0884
 [stars-shield]: https://img.shields.io/github/stars/erikpersson0884/screenit-v2?style=for-the-badge
 [stars-url]: https://github.com/erikpersson0884/screenit-v2/stargazers
