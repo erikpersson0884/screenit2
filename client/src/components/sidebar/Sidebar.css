@@ -1,0 +1,27 @@
+
+.sidebar {
+    top: 1rem;
+    left: 1rem;
+
+    max-width: 20%;
+}
+
+.sidebar ul{
+    list-style-type: none;
+
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    gap: 1rem;    
+}
+
+.sidebar h2 {
+    margin-top: 0;
+}

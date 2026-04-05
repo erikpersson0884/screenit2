@@ -1,8 +1,9 @@
 import React from "react";
 
 
-const initialDisplayTime = 10;
-const initialHubbenRattanDisplayTime = 5;
+const defaultDisplayTime = 10;
+const defaultHubbenRattanDisplayTime = 5;
+const defaultHubbenRattanDisplayInterval = 10;
 
 
 type GalleryContextType = {
@@ -17,6 +18,9 @@ type GalleryContextType = {
 
     hubbenRattanDisplayTime: number;
     setHubbenRattanDisplayTime: React.Dispatch<React.SetStateAction<number>>;
+
+    hubbenRattanDisplayInterval: number;
+    setHubbenRattanDisplayInterval: React.Dispatch<React.SetStateAction<number>>;
 
     postIndex: number;
     setEventIndex: React.Dispatch<React.SetStateAction<number>>;
@@ -34,17 +38,53 @@ type GalleryContextType = {
 const GalleryContext = React.createContext<GalleryContextType | undefined>(undefined);
 
 const GalleryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [postDisplayTime, setEventDisplayTime] = React.useState<number>(initialDisplayTime);
-    const [hubbenRattanDisplayTime, setHubbenRattanDisplayTime] = React.useState<number>(initialHubbenRattanDisplayTime);
-    const [postIndex, setEventIndex] = React.useState<number>(0);
+    const [postDisplayTime, setEventDisplayTime] = React.useState<number>(
+        () => Number(localStorage.getItem("postDisplayTime")) || defaultDisplayTime
+    );
+
+    const [hubbenRattanDisplayTime, setHubbenRattanDisplayTime] = React.useState<number>(
+        () => Number(localStorage.getItem("hubbenRattanDisplayTime")) || defaultHubbenRattanDisplayTime
+    );
+
+    const [hubbenRattanDisplayInterval, setHubbenRattanDisplayInterval] = React.useState<number>(
+        () => Number(localStorage.getItem("hubbenRattanDisplayInterval")) || defaultHubbenRattanDisplayInterval
+    );
+
+    const [showSidebar, setShowSidebar] = React.useState<boolean>(
+        () => JSON.parse(localStorage.getItem("showSidebar") || "false")
+    );
+    const [showHubbenRattan, setShowHubbenRattan] = React.useState<boolean>(
+        () => JSON.parse(localStorage.getItem("showHubbenRattan") || "true")
+    );
+
     const [showAccount, setShowAccount] = React.useState<boolean>(false);
     const [showUpload, setShowUpload] = React.useState<boolean>(false);
-
-    const [showSidebar, setShowSidebar] = React.useState<boolean>(false);
-    const [showHubbenRattan, setShowHubbenRattan] = React.useState<boolean>(true);
     const [showSettings, setShowSettings] = React.useState<boolean>(false);
 
+    const [postIndex, setEventIndex] = React.useState<number>(0);
     const activePopup = React.useState<"account" | "upload" | "settings" | null>(null);
+
+    // Persist variables saved to localStorage whenever they changes
+    React.useEffect(() => {
+        localStorage.setItem("postDisplayTime", postDisplayTime.toString());
+    }, [postDisplayTime]);
+
+    React.useEffect(() => {
+        localStorage.setItem("hubbenRattanDisplayTime", hubbenRattanDisplayTime.toString());
+    }, [hubbenRattanDisplayTime]);
+
+    React.useEffect(() => {
+        localStorage.setItem("showSidebar", JSON.stringify(showSidebar));
+    }, [showSidebar]);
+
+    React.useEffect(() => {
+        localStorage.setItem("showHubbenRattan", JSON.stringify(showHubbenRattan));
+    }, [showHubbenRattan]);
+
+    React.useEffect(() => {
+        localStorage.setItem("hubbenRattanDisplayInterval", hubbenRattanDisplayInterval.toString());
+    }, [hubbenRattanDisplayInterval]);
+
     React.useEffect(() => {
         [showAccount, showUpload, showSettings].forEach((state, index) => {
             if (state) {
@@ -62,6 +102,7 @@ const GalleryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
         <GalleryContext.Provider value={{ 
             postDisplayTime, 
             setEventDisplayTime, 
+
             postIndex, 
             setEventIndex, 
 
@@ -69,7 +110,10 @@ const GalleryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
             setShowSidebar, 
 
             showHubbenRattan, 
-            setShowHubbenRattan, 
+            setShowHubbenRattan,
+
+            hubbenRattanDisplayInterval,
+            setHubbenRattanDisplayInterval,
 
             showSettings, 
             setShowSettings,

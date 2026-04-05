@@ -1,0 +1,19 @@
+
+.hubben-rattan-container {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+}
+
+.hubben-rattan-container .speech-bubble {
+    position: absolute;
+    background-color: #ebebeb;
+    color: #000;
+    border: 1px solid #000000;
+    padding: .3rem 1rem;
+    border-radius: 1rem;
+    width: max-content;
+    max-width: 22rem;
+    top: -4rem; 
+    left: 4rem; 
+}

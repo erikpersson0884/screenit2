@@ -25,7 +25,14 @@
     margin: 0;
 }
 
-.account-popup li>button {
+.account-popup .action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    margin-left: auto;
+}
+.account-popup .action-buttons button {
     background-color: inherit;
     padding: 0;
     border: 0;

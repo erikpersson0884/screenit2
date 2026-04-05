@@ -61,7 +61,7 @@
 4. Set environmental variables
 
     In `./server/.env` add the following (you can copy from `./server/env.example`):
-    ```
+    ```env
     DATABASE_URL=postgresql://myuser:secretpassword@localhost:5432/mydb?schema=public
 
     JWT_SECRET=big_secret_key
@@ -71,6 +71,13 @@
     GAMMA_CLIENT_SECRET=SOMETHINGLIKETHISJ2DVRRBYMWKJ44Q
 
     FRONTEND_URL=http://localhost:3000 
+
+
+    # The following are optional, but can be used to customize the seeded user created when running `npx prisma db seed`. Role is always optional and defaults to "user" if not set.
+
+    SEED_USER_ID=b69a0ccd-01d1-475e-adc5-99ff017b7fd74
+    SEED_USER_USERNAME=Göken
+    SEED_USER_ROLE=user
     ```
  If you are unsure of how to set up the gamma client, you can read the how to on the chalmers.it wiki: https://wiki.chalmers.it/HowTo:Skapa_Gamma_Clients
 
@@ -102,6 +109,11 @@ npm run start-client   # Run frontend only (production)
 npm start            # Run production server
 ```
 
+### Seeding the database
+To seed the database with initial data, run the following command from the ./server directory:
+```sh
+npx prisma db seed
+```
 
 # Contribute
 Any contributions you make are **greatly appreciated**.
@@ -135,7 +147,7 @@ Don't forget to give the project a star! Thanks again!
 [last-commit-url]: https://github.com/erikpersson0884/screenit-v2/commits/main
 [repo-size-shield]: https://img.shields.io/github/repo-size/erikpersson0884/screenit2?style=for-the-badge&cacheSeconds=60
 [repo-size-url]: https://github.com/erikpersson0884/screenit-v2
-[author-shield]: https://img.shields.io/badge/Author-Erik%20Persson-blue?style=for-the-badge
+[author-shield]: https://img.shields.io/badge/Author-Erik%20Persson-purple?style=for-the-badge
 [author-url]: https://github.com/erikpersson0884
 [stars-shield]: https://img.shields.io/github/stars/erikpersson0884/screenit-v2?style=for-the-badge
 [stars-url]: https://github.com/erikpersson0884/screenit-v2/stargazers

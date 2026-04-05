@@ -30,7 +30,8 @@ describe('Event Controller', () => {
             // Mock request and response objects
             const req: any = {
                 user: { id: 'user1', role: 'user' },
-                body: { name: 'Test Event', date: new Date() }
+                body: { name: 'Test Event', date: new Date() },
+                file: { filename: 'test-image.jpg' }
             };
             const res: any = {
                 status: vi.fn().mockReturnThis(),
