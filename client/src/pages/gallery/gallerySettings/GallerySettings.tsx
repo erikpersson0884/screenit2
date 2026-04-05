@@ -1,7 +1,7 @@
 import React from 'react';
 import './GallerySettings.css';
 
-import { useGalleryContext } from '../../../contexts/GalleryContext';
+import { useGalleryContext } from '@/contexts/GalleryContext';
 
 interface GallerySettingsProps {
     // Define any props for the component here

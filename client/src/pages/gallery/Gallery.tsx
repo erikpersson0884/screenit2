@@ -3,9 +3,9 @@ import './Gallery.css';
 
 import Sidebar from './sidebar/Sidebar';
 import GallerySettings from './gallerySettings/GallerySettings';
-import EventsDisplay from '../../Components/postsDisplay/PostsDisplay';
-import UploadEventDiv from '../../Components/createEventPopup/CreateEventPopup';
-import AccountPopup from '../../Components/accountPopup/AccountPopup';
+import EventsDisplay from '@/components/postsDisplay/PostsDisplay';
+import UploadEventDiv from '@/components/createEventPopup/CreateEventPopup';
+import AccountPopup from '@/components/accountPopup/AccountPopup';
 
 const Gallery: React.FC = () => {
 

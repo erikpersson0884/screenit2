@@ -1,7 +1,7 @@
 import React from 'react';
 import './Footer.css';
 
-import pixelnHeart from '../../assets/pixelnheart.png';
+import pixelnHeart from '@/assets/pixelnheart.png';
 
 const Footer: React.FC = () => {
     return (

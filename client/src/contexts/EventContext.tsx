@@ -1,5 +1,5 @@
 import React from "react";
-import eventApi from "../api/eventApi";
+import eventApi from "@/api/eventApi";
 
 type EventsContextType = {
     events: IEvent[];

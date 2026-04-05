@@ -14,20 +14,16 @@
     "type": "commonjs",
     "main": "index.js",
     "scripts": {
-        "client": "npm run dev-frontend",
-        "server": "npm run dev-backend",
+        "client": "npm run dev-client",
+        "server": "npm run dev-server",
         
-        "dev-frontend": "cd client && npm run dev",
-        "dev-backend": "cd server && npm run dev",
-        "dev": "concurrently \"npm run dev-frontend\" \"npm run dev-backend\"",
+        "dev-client": "cd client && npm run dev",
+        "dev-server": "cd server && npm run dev",
+        "dev": "concurrently \"npm run dev-client\" \"npm run dev-server\"",
 
-        "start-frontend": "cd client && npm start",
-        "start-backend": "cd server && npm start",
-        "start": "concurrently \"npm run start-frontend\" \"npm run start-backend\"",
-        
-        "test-frontend": "cd client && npm test",
-        "test-backend": "cd server && npm test",
-        "test": "concurrently \"npm run test-frontend\" \"npm run test-backend\""
+        "start-client": "cd client && npm run start",
+        "start-server": "cd server && npm run start",
+        "start": "concurrently \"npm run start-client\" \"npm run start-server\""
     },
     "dependencies": {
         "concurrently": "^9.2.1"

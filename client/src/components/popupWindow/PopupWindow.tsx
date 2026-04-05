@@ -1,7 +1,7 @@
 import React from 'react';
 import './PopupWindow.css';
-import Modal from '../modal/Modal';
-import closeIcon from '../../assets/close.svg';
+import Modal from '@/components/modal/Modal';
+import closeIcon from '@/assets/close.svg';
 
 interface PopupWindowProps {
     children: React.ReactNode;

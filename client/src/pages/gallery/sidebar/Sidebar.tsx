@@ -1,7 +1,7 @@
 import React from 'react';
 import './Sidebar.css';
-import { useEventContext } from '../../../contexts/EventContext';
-import { useGalleryContext } from '../../../contexts/GalleryContext';
+import { useEventContext } from '@/contexts/EventContext';
+import { useGalleryContext } from '@/contexts/GalleryContext';
 
 const Sidebar: React.FC = () => {
     const { events } = useEventContext();
