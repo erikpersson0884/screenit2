@@ -38,9 +38,23 @@ const GallerySettings: React.FC<GallerySettingsProps> = () => {
 
     if (!showSettings) return null;
 
+    const HubbenRattanDisplayTimeSetting: React.FC = () => (
+        <div className='input-group'>
+            <label htmlFor="hubben-rattan-display-time">Hubbenråttan displaytime:</label>
+            <input type='number' id='hubben-rattan-display-time' name='hubben-rattan-display-time' value={hubbenRattanDisplayTime} onChange={(e) => setHubbenRattanDisplayTime(Number(e.target.value))}/>
+        </div>
+    )
+
+    const HubbenRattanDisplayIntervalSetting: React.FC = () => (
+        <div className='input-group'>
+            <label htmlFor="hubben-rattan-display-interval">Hubbenråttan display interval:</label>
+            <input type='number' id='hubben-rattan-display-interval' name='hubben-rattan-display-interval' value={hubbenRattanDisplayInterval} onChange={(e) => setHubbenRattanDisplayInterval(Number(e.target.value))}/>
+        </div>
+    )
+
     return (
         <Modal onClose={() => setShowSettings(false)}>
-            <div className='gallerySettings popupbox'>
+            <div className='gallerySettings popupbox' onClick={(e) => e.stopPropagation()}>
                 <h2>Gallery Settings</h2>
 
                 <hr /> 
@@ -92,15 +106,8 @@ const GallerySettings: React.FC<GallerySettingsProps> = () => {
                     />
                 </div>
 
-                <div className='input-group'>
-                    <label htmlFor="hubben-rattan-display-time">Hubbenråttan displaytime:</label>
-                    <input type='number' id='hubben-rattan-display-time' name='hubben-rattan-display-time' value={hubbenRattanDisplayTime} onChange={(e) => setHubbenRattanDisplayTime(Number(e.target.value))}/>
-                </div>
-
-                <div className='input-group'>
-                    <label htmlFor="hubben-rattan-display-interval">Hubbenråttan display interval:</label>
-                    <input type='number' id='hubben-rattan-display-interval' name='hubben-rattan-display-interval' value={hubbenRattanDisplayInterval} onChange={(e) => setHubbenRattanDisplayInterval(Number(e.target.value))}/>
-                </div>
+                {showHubbenRattan && <HubbenRattanDisplayTimeSetting />}
+                {showHubbenRattan && <HubbenRattanDisplayIntervalSetting />}
             </div>
         </Modal>
     );

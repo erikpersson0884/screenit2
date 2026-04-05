@@ -50,7 +50,7 @@ const AccountPopup: React.FC = () => {
 
     return (
         <Modal onClose={() => setShowAccount(false)}>
-            <div className="account-popup popupbox">
+            <div className="account-popup popupbox" onClick={(e) => e.stopPropagation()}>
                 
                 {userHasUploadedEvents ? uploadedEvents : <p>You currently have no<br/>uploaded posters :(</p>}
 
