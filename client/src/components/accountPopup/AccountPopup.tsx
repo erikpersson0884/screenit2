@@ -8,16 +8,19 @@ import { useGalleryContext } from '@/contexts/GalleryContext'
 import deleteIcon from '@/assets/delete.svg'
 import editIcon from '@/assets/edit.svg'
 
-const AccountPopup = () => {
+const AccountPopup: React.FC = () => {
     const { logout, currentUser } = useAuthContext()
     const { events, deleteEvent } = useEventContext()
     const { showAccount } = useGalleryContext()
 
     if (!showAccount) return null;
 
-    return (
-        <div className="account-popup popupbox">
+    const userHasUploadedEvents = events.some((event) => event.createdById === currentUser?.id);
+
+    const uploadedEvents = (
+        <>
             <h2>Your uploaded posters</h2>
+
             <ul className="no-list-styling">
                 {events.filter((event) => event.createdById === currentUser?.id).map((event) => (
                     <li key={event.id}>
@@ -27,17 +30,28 @@ const AccountPopup = () => {
                             <p>{event.date.toLocaleDateString()}</p>
                         </div>
                         
-                        {/* <button>
-                            <img src={editIcon} alt="Edit" width={20}/>
-                        </button> */}
-                        <button onClick={() => deleteEvent(event.id)}>
-                            <img src={deleteIcon} alt="Delete" width={20}/>
-                        </button>
+                        <div className='action-buttons'>
+                            {/* <button>
+                                <img src={editIcon} alt="Edit" width={20}/>
+                            </button> */}
+                            <button onClick={() => deleteEvent(event.id)}>
+                                <img src={deleteIcon} alt="Delete" width={20}/>
+                            </button>
+                        </div>
+                        
                     </li>
                 ))}
             </ul>
 
             <hr />
+        </>
+    )
+
+    return (
+        <div className="account-popup popupbox">
+            
+            {userHasUploadedEvents ? uploadedEvents : <p>You currently have no<br/>uploaded posters :(</p>}
+
             <button onClick={logout}>Log out</button>
         </div>
     )
