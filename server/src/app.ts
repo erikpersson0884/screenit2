@@ -1,4 +1,5 @@
 import express from "express";
+import path from "path";
 import userRoutes from "./routes/userRoutes.js";
 import eventRoutes from "./routes/eventRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/event", eventRoutes);
+app.use("/api/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 app.use(errorHandler);
 

@@ -5,6 +5,8 @@
 
 body {
     color: #fff;
+
+    font-size: 16px;
     
     display: flex;
     flex-direction: column;
@@ -35,4 +37,34 @@ button {
 
 button:hover {
     cursor: pointer;
+}
+
+ul {
+    list-style: none;
+
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+
+    padding: 0;
+}
+
+ul>li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+
+input {
+    background-color: inherit;
+    color: #fff;
+
+    font-size: 1rem;
+    /* font-family: "Roboto"; */
+        
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    border: #fff .1rem solid;
+    outline: none;
 }

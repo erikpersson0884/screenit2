@@ -1,7 +1,7 @@
 import React from "react";
 
 
-const initialDisplayTime = 20;
+const initialDisplayTime = 10;
 const initialHubbenRattanDisplayTime = 5;
 
 

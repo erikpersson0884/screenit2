@@ -37,3 +37,5 @@ coverage/
 
 prisma/generated
 prisma/migrations
+
+uploads/**

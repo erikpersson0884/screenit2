@@ -11,27 +11,12 @@ export const parseWithSchema = <T>(schema: z.ZodSchema<T>, data: unknown): T => 
     else return parseResult.data;
 }
 
-// Request Schemas
-export const CreateUserSchema = z.object({
-    username: z.string().min(usernameMinLength),
-    password: z.string().min(passwordMinLength),
-});
-
-export const UpdateUserSchema = z.object({
-    username: z.string().min(usernameMinLength).optional(),
-    password: z.string().min(passwordMinLength).optional(),
-});
-
-export type CreateUserDTO = z.infer<typeof CreateUserSchema>;
-
-
 // Response Schemas
 export const UserResponseSchema = z.object({
     id: z.string(),
     username: z.string(),
     role: z.string(),
     createdAt: z.date(),
-    updatedAt: z.date(),
 });
 
 export const UserResponseArraySchema = z.array(UserResponseSchema);

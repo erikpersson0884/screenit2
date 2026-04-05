@@ -29,40 +29,4 @@ export const createUserController = (service = userService): IUserController => 
         const user: User = req.user;
         if (user) sendValidatedResponse(res, UserResponseSchema, user);
     },
-
-    createUser: async (req: Request, res: Response) => {
-        const { username, password } = req.body;
-        const user = await service.createUser(username, password);
-        sendValidatedResponse(res, UserResponseSchema, user);
-    },
-
-    updateUser: async (req: AuthenticatedRequest, res: Response) => {
-        const authUser: User = req.user;
-        let { username, password }: { username?: string, password?: string} = req.body;
-        let userId: string = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
-
-        if (!userId) throw new MissingUserIDError();
-        
-        if (authUser.id !== userId && authUser.role !== 'admin') {
-            throw new UnauthorizedActionError('Forbidden: Only admins can update other users');
-        }
-
-        const updatedUser: User | null = await service.updateUser(userId, username, password);
-
-        if (updatedUser) sendValidatedResponse(res, UserResponseSchema, updatedUser);
-        else res.status(404).json({ error: `User with id ${userId} not found` });
-    },
-
-    deleteUser: async (req: AuthenticatedRequest, res: Response) => {
-        const authUser: User = req.user;
-        let userId: string = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
-        if (!userId) throw new MissingUserIDError();
-        
-        if (authUser.id !== userId && authUser.role !== 'admin') {
-            throw new UnauthorizedActionError('Forbidden: Only admins can delete other users');
-        }
-
-        await service.deleteUser(userId);
-        res.json({ message: `User with id ${userId} deleted` });
-    }
 });

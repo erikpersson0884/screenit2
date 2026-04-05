@@ -10,7 +10,7 @@ export const parseWithSchema = <T>(schema: z.ZodSchema<T>, data: unknown): T => 
 
 // Request Schemas
 export const CreateEventSchema = z.object({
-    name: z.string().min(1),
+    name: z.string(),
     date: z.string().datetime().transform((val) => new Date(val)),
 });
 

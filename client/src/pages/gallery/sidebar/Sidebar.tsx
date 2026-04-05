@@ -1,7 +1,7 @@
 import React from 'react';
 import './Sidebar.css';
-import { useEventContext } from '../../../contexts/eventContext';
-import { useGalleryContext } from '../../../contexts/galleryContext';
+import { useEventContext } from '../../../contexts/EventContext';
+import { useGalleryContext } from '../../../contexts/GalleryContext';
 
 const Sidebar: React.FC = () => {
     const { events } = useEventContext();
@@ -16,7 +16,7 @@ const Sidebar: React.FC = () => {
             <ul>
                 {events.map((event: IEvent) => (
                     <li key={event.id}>
-                        <p>{event.date.toString()}</p>
+                        <p>{event.date.toLocaleDateString('sv-SE', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
                         <p>{event.name}</p>
                     </li>
                 ))}

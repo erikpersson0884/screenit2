@@ -1,12 +1,14 @@
-import './createEventPopup.css';
+import './CreateEventPopup.css';
 import React from 'react';
 
-import { useAuthContext } from "../../contexts/authContext";
-import { useGalleryContext } from '../../contexts/galleryContext';
+import { useAuthContext } from "../../contexts/AuthContext";
+import { useGalleryContext } from '../../contexts/GalleryContext';
+import { useEventContext } from '../../contexts/EventContext';
 
 const UploadEventDiv = () => {
-    const { isLoggedIn } = useAuthContext();
+    const { isAuthenticated } = useAuthContext();
     const { showUpload, setShowUpload } = useGalleryContext();
+    const { createEvent } = useEventContext();
 
     const [image, setImage] = React.useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = React.useState<string | null>(null);
@@ -36,39 +38,25 @@ const UploadEventDiv = () => {
         fileReader.readAsDataURL(image);
     }, [image]);
 
-    const uploadEventHandler = (event: React.FormEvent<HTMLFormElement>) => {
+    const uploadEventHandler = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         if (!image || !date || !eventName) {
             return;
         }
-
-        const formData = new FormData();
-        formData.append("image", image);
-        formData.append("date", date);
-        formData.append("eventName", eventName);
-
-        fetch(import.meta.env.VITE_API_URL + "/images/upload", {
-            method: "POST",
-            body: formData,
-        })
-            .then((response) => {
-                if (response.ok) {
-                    console.log("Event uploaded successfully");
-                    setShowUpload(false);
-                } else {
-                    console.log("Failed to upload post");
-                }
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        const success = await createEvent(new Date(date), eventName, image);
+        if (success) {
+            setShowUpload(false);
+        } 
+        // else {
+        //     alert("Failed to upload event. Please try again.");
+        // }
     };
 
     if (!showUpload) return null;
 
-    if (isLoggedIn) return (
-        <form className="upload-post-div popupbox" onSubmit={uploadEventHandler}>
+    if (isAuthenticated) return (
+        <form className="create-event-popup popupbox" onSubmit={uploadEventHandler}>
             <h2>Upload Event</h2>
 
             <hr />

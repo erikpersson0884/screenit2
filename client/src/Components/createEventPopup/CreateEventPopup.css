@@ -1,9 +1,13 @@
 
-.upload-post-div input {
+.create-event-popup h2{
+    margin: 0;
+}
+
+.create-event-popup input {
     min-width: 6rem;
 }
 
-.postImagePreview {
+.create-event-popup .postImagePreview {
     background-color: rgba(255, 255, 255, 0.13);
     background-image: url('/src/assets/upload-image.svg');
     background-size: cover;
@@ -12,4 +16,11 @@
 
     width: 80%;
     aspect-ratio: 1/1;
+}
+
+.create-event-popup #uploadNewEventImageInput {
+    width: min-content;
+    max-width: 13rem;
+    padding: 0;
+    border: 0;
 }

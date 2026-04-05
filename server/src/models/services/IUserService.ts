@@ -5,10 +5,8 @@ export interface IUserService {
     
     getAllUsers(): Promise<User[]>;
     getUserByUsername(username: string): Promise<User | null>;
-    createUser(name: string, password: string): Promise<User>;
+    createUser(id: string, username: string): Promise<User>;
     getUserById(id: string): Promise<User | null>;
-    updateUser(id: string, newUsername?: string, newPassword?: string): Promise<User | null>;
-    deleteUser(id: string): Promise<User | null>;
 }
 
 export default IUserService;

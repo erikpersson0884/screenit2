@@ -1,43 +1,32 @@
 import React, { createContext, useEffect, useContext, useState, ReactNode } from 'react';
-import authApi from '../api/authApi';
 import userApi from '../api/userApi';
 import { setAuthToken } from '../api/axiosInstance';
-import { useUsersContext } from './usersContext';
 
 interface AuthContextType {
-    currentUser: IUser | null;
-    isLoggedIn: boolean;
-    register: (username: string, password: string) => Promise<boolean>;
-    login: (username: string, password: string) => Promise<boolean>;
-    logout: () => void;
+    currentUser: User | null;
+    isAuthenticated: boolean;
 
-    showAuthPopup: boolean;
-    setShowAuthPopup: React.Dispatch<React.SetStateAction<boolean>>;
+    logout: () => void;
+    authenticate: () => Promise<void>;
+
+    setAuthToken: (token: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const { createUser } = useUsersContext();
-
-    const [ currentUser, setCurrentUser ] = useState<IUser | null>(null);
-    const [ isLoggedIn, setIsLoggedIn ] = useState<boolean>(!!currentUser);
-    const [ showAuthPopup, setShowAuthPopup ] = React.useState(false);
+    const [ currentUser, setCurrentUser ] = useState<User | null>(null);
+    const [ isAuthenticated, setIsAuthenticated ] = useState<boolean>(!!currentUser);
 
     const getCurrentUser = async (): Promise<void> => {
-        const user: IUser | null = await userApi.getCurrentUser();
-        if (!user) {
-            setCurrentUser(null);
-            return;
-        }
-
+        const user = await userApi.getCurrentUser();
         user.isAdmin = user.role === 'admin';
         setCurrentUser(user);
     }
 
     
     useEffect(() => {
-        setIsLoggedIn(!!currentUser);
+        setIsAuthenticated(!!currentUser);
     }, [currentUser]);
 
     useEffect(() => {
@@ -53,18 +42,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
     }, []);
 
-    const login = async (username: string, password: string): Promise<boolean> => {
-        try {
-            const token: string = await authApi.login(username, password);
-            if (token) {
-                setAuthToken(token);
-                getCurrentUser();
-                return true;
-            }
-        } catch (error: unknown) {
-            console.error('Login failed', error);
-        }
-        return false;
+    const authenticate = async (): Promise<void> => {
+        window.location.replace("/api/auth/gamma");
     };
 
     const logout = () => {
@@ -72,21 +51,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         localStorage.removeItem('authToken'); 
     };
 
-    const register = async (username: string, password: string): Promise<boolean> => {
-        try {
-            const success = await createUser(username, password);
-            if (success) {
-                return await login(username, password);
-            }
-        } catch (error) {
-            console.error('Registration failed', error);
-        }
-        return false;
-    };
-            
-
     return (
-        <AuthContext.Provider value={{ currentUser, isLoggedIn, login, logout, showAuthPopup, setShowAuthPopup, register }}>
+        <AuthContext.Provider value={{ currentUser, isAuthenticated, logout, authenticate, setAuthToken }}>
             {children}
         </AuthContext.Provider>
     );
