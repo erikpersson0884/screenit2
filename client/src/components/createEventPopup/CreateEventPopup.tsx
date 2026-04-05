@@ -58,7 +58,7 @@ const UploadEventDiv = () => {
 
     if (isAuthenticated) return (
         <Modal onClose={() => setShowUpload(false)}>
-            <form className="create-event-popup popupbox" onSubmit={uploadEventHandler} onClick={(e) => e.stopPropagation()}>
+            <form className="create-event-popup popup" onSubmit={uploadEventHandler} onClick={(e) => e.stopPropagation()}>
                 <h2>Upload Event</h2>
 
                 <hr />

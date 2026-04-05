@@ -34,7 +34,7 @@
     min-height: 100vh;
 }
 
-.popupbox {
+.popup {
     background-color: #000000f1;
 
     display: flex;
@@ -51,8 +51,18 @@
     right: 2rem;
 }
 
-.popupbox hr {
+.popup hr {
     border-color: #fff;
 
     width: 100%;
 }
+
+@media screen and (max-width: 450px) {
+    .popup {
+        box-sizing: border-box;
+        width: 92%;
+        top: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+};

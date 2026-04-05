@@ -10,12 +10,3 @@
 .input-group input {
     max-width: 4rem;
 }
-
-
-
-@media screen and (max-width: 768px) {
-    .gallerySettings {
-        top: 14rem;
-        right: 0;
-    }
-}

@@ -54,7 +54,7 @@ const GallerySettings: React.FC<GallerySettingsProps> = () => {
 
     return (
         <Modal onClose={() => setShowSettings(false)}>
-            <div className='gallerySettings popupbox' onClick={(e) => e.stopPropagation()}>
+            <div className='gallerySettings popup' onClick={(e) => e.stopPropagation()}>
                 <h2>Gallery Settings</h2>
 
                 <hr /> 
