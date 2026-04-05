@@ -1,9 +1,9 @@
 services:
-  backend:
+  server:
     build:
       context: ./server
       dockerfile: Dockerfile
-    container_name: vevit-backend
+    container_name: server
     environment:
       - DATABASE_URL=postgresql://myuser:secretpassword@db:5432/screenit2?schema=public
       - JWT_SECRET=your_jwt_secret
@@ -16,15 +16,15 @@ services:
         condition: service_healthy
     restart: unless-stopped
 
-  frontend:
+  client:
     build:
       context: ./client
       dockerfile: Dockerfile
-    container_name: screenit2-frontend
+    container_name: client
     ports:
       - "3000:80"
     depends_on:
-      - backend
+      - server
     restart: unless-stopped
 
   db:
