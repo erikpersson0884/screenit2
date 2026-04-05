@@ -1,7 +1,7 @@
 import React from 'react';
 import './Navigation.css';
-import { useAuthContext } from '../../contexts/AuthContext';
-import { useGalleryContext } from '../../contexts/GalleryContext';
+import { useAuthContext } from '@/contexts/AuthContext';
+import { useGalleryContext } from '@/contexts/GalleryContext';
 
 const Navigation: React.FC = () => {
     const { isAuthenticated, authenticate, logout } = useAuthContext();

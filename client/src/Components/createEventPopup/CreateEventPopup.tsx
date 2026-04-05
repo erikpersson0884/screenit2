@@ -1,9 +1,9 @@
 import './CreateEventPopup.css';
 import React from 'react';
 
-import { useAuthContext } from "../../contexts/AuthContext";
-import { useGalleryContext } from '../../contexts/GalleryContext';
-import { useEventContext } from '../../contexts/EventContext';
+import { useAuthContext } from "@/contexts/AuthContext";
+import { useGalleryContext } from '@/contexts/GalleryContext';
+import { useEventContext } from '@/contexts/EventContext';
 
 const UploadEventDiv = () => {
     const { isAuthenticated } = useAuthContext();

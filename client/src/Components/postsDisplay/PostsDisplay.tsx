@@ -1,7 +1,7 @@
 import React from 'react';
 import './PostsDisplay.css';
-import { useGalleryContext } from '../../contexts/GalleryContext';
-import { useEventContext } from '../../contexts/EventContext';
+import { useGalleryContext } from '@/contexts/GalleryContext';
+import { useEventContext } from '@/contexts/EventContext';
 
 const EventsDisplay: React.FC = () => {
     const { postDisplayTime } = useGalleryContext();

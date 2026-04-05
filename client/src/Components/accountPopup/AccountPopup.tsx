@@ -1,12 +1,12 @@
 import React from 'react'
 import './AccountPopup.css'
 
-import { useAuthContext } from "../../contexts/AuthContext"
-import { useEventContext } from "../../contexts/EventContext"
-import { useGalleryContext } from '../../contexts/GalleryContext'
+import { useAuthContext } from "@/contexts/AuthContext"
+import { useEventContext } from "@/contexts/EventContext"
+import { useGalleryContext } from '@/contexts/GalleryContext'
 
-import deleteIcon from '../../assets/delete.svg'
-import editIcon from '../../assets/edit.svg'
+import deleteIcon from '@/assets/delete.svg'
+import editIcon from '@/assets/edit.svg'
 
 const AccountPopup = () => {
     const { logout, currentUser } = useAuthContext()

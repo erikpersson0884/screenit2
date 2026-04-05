@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import './ActionPopupWindow.css';
-import PopupWindow from '../popupWindow/PopupWindow';
+import PopupWindow from '@/components/popupWindow/PopupWindow';
 
 interface ActionPopupWindowProps {
     children: React.ReactNode;

@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import './App.css'
-import Navigation from './Components/navigation/Navigation.tsx';
+import Navigation from './components/navigation/Navigation.tsx';
 import Gallery from './pages/gallery/Gallery.tsx';
 import OAuthCallback from './pages/OAuthCallback/OAuthCallback.tsx';
 
