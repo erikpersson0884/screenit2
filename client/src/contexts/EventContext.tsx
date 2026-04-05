@@ -1,5 +1,6 @@
 import React from "react";
 import eventApi from "@/api/eventApi";
+import { useGalleryContext } from "./GalleryContext";
 
 type EventsContextType = {
     events: IEvent[];
@@ -10,7 +11,9 @@ type EventsContextType = {
 
 const EventContext = React.createContext<EventsContextType | undefined>(undefined);
 
+
 const EventProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const { fetchInterval } = useGalleryContext();
     const [ events, setEvents ] = React.useState<IEvent[]>([]);
 
     const getEventFromId = (eventId: String): IEvent => {
@@ -21,6 +24,12 @@ const EventProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     
     React.useEffect(() => {
         fetchEvents();
+
+        const intervalId = setInterval(() => { // Periodically fetch events to ensure data is up-to-date
+            fetchEvents();
+        }, fetchInterval * 60 * 1000); // Convert minutes to milliseconds
+
+        return () => clearInterval(intervalId);
     }, []);
 
     const fetchEvents = async () => {

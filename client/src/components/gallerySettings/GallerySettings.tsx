@@ -9,14 +9,17 @@ interface GallerySettingsProps {
 
 const GallerySettings: React.FC<GallerySettingsProps> = () => {
     const { 
+        // Which popups to show
+        showSettings,
+
+        // Poster settings
         postDisplayTime, 
         setEventDisplayTime,
 
-        showSettings,
+        fetchInterval,
+        setFetchInterval,
 
-        showSidebar,
-        setShowSidebar,
-
+        // Hubbenråttan settings
         setShowHubbenRattan, 
         showHubbenRattan,
 
@@ -25,6 +28,10 @@ const GallerySettings: React.FC<GallerySettingsProps> = () => {
 
         hubbenRattanDisplayInterval,
         setHubbenRattanDisplayInterval,
+
+        // Other settings
+        showSidebar,
+        setShowSidebar,
     } = useGalleryContext();
 
     if (!showSettings) return null;
@@ -42,6 +49,17 @@ const GallerySettings: React.FC<GallerySettingsProps> = () => {
                     name="postDisplayTime"
                     value={postDisplayTime}
                     onChange={(e) => setEventDisplayTime(Number(e.target.value))}
+                />
+            </div>
+
+            <div className='input-group'>
+                <label htmlFor="fetchInterval">Fetch Interval (minutes):</label>
+                <input
+                    type="number"
+                    id="fetchInterval"
+                    name="fetchInterval"
+                    value={fetchInterval}
+                    onChange={(e) => setFetchInterval(Number(e.target.value))}
                 />
             </div>
 

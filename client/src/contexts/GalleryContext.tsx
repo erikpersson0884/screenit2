@@ -1,20 +1,26 @@
 import React from "react";
 
 
-const defaultDisplayTime = 10;
-const defaultHubbenRattanDisplayTime = 5;
-const defaultHubbenRattanDisplayInterval = 10;
+const defaultDisplayTime = 10; // seconds
+const defaultHubbenRattanDisplayTime = 5; // seconds
+const defaultHubbenRattanDisplayInterval = 10; // seconds between the times Hubbenråttan is displayed, if enabled
+const defaultFetchInterval = 10; // seconds. How often to fetch new events and images from the server
 
 
 type GalleryContextType = {
+    // Which popups to show
     showAccount: boolean;
     setShowAccount: React.Dispatch<React.SetStateAction<boolean>>;
 
     showUpload: boolean;
     setShowUpload: React.Dispatch<React.SetStateAction<boolean>>;
+    
+    showSettings: boolean;
+    setShowSettings: React.Dispatch<React.SetStateAction<boolean>>;
 
-    postDisplayTime: number;
-    setEventDisplayTime: React.Dispatch<React.SetStateAction<number>>;
+    // Hubbenråttan settings
+    showHubbenRattan: boolean;
+    setShowHubbenRattan: React.Dispatch<React.SetStateAction<boolean>>;
 
     hubbenRattanDisplayTime: number;
     setHubbenRattanDisplayTime: React.Dispatch<React.SetStateAction<number>>;
@@ -22,17 +28,20 @@ type GalleryContextType = {
     hubbenRattanDisplayInterval: number;
     setHubbenRattanDisplayInterval: React.Dispatch<React.SetStateAction<number>>;
 
+    // Poster display settings
     postIndex: number;
     setEventIndex: React.Dispatch<React.SetStateAction<number>>;
 
+    postDisplayTime: number;
+    setEventDisplayTime: React.Dispatch<React.SetStateAction<number>>;
+
+    fetchInterval: number;
+    setFetchInterval: React.Dispatch<React.SetStateAction<number>>;
+
+     // Other settings
     showSidebar: boolean;
     setShowSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 
-    showHubbenRattan: boolean;
-    setShowHubbenRattan: React.Dispatch<React.SetStateAction<boolean>>;
-
-    showSettings: boolean;
-    setShowSettings: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const GalleryContext = React.createContext<GalleryContextType | undefined>(undefined);
@@ -56,6 +65,10 @@ const GalleryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
     const [showHubbenRattan, setShowHubbenRattan] = React.useState<boolean>(
         () => JSON.parse(localStorage.getItem("showHubbenRattan") || "true")
     );
+
+    const [fetchInterval, setFetchInterval] = React.useState<number>(
+        () => Number(localStorage.getItem("fetchInterval")) || defaultFetchInterval
+    ); 
 
     const [showAccount, setShowAccount] = React.useState<boolean>(false);
     const [showUpload, setShowUpload] = React.useState<boolean>(false);
@@ -86,6 +99,10 @@ const GalleryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
     }, [hubbenRattanDisplayInterval]);
 
     React.useEffect(() => {
+        localStorage.setItem("fetchInterval", fetchInterval.toString());
+    }, [fetchInterval]);
+
+    React.useEffect(() => {
         [showAccount, showUpload, showSettings].forEach((state, index) => {
             if (state) {
                 activePopup[1](index === 0 ? "account" : index === 1 ? "upload" : "settings");
@@ -100,33 +117,41 @@ const GalleryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
 
     return (
         <GalleryContext.Provider value={{ 
-            postDisplayTime, 
-            setEventDisplayTime, 
+            // Popups
+            showAccount,
+            setShowAccount,
+            
+            showSettings, 
+            setShowSettings,
 
+            showUpload,
+            setShowUpload,
+
+
+            // Poster display settings
             postIndex, 
             setEventIndex, 
 
-            showSidebar, 
-            setShowSidebar, 
+            postDisplayTime, 
+            setEventDisplayTime, 
 
+            fetchInterval,
+            setFetchInterval,
+
+            // Hubbenråttan settings
             showHubbenRattan, 
             setShowHubbenRattan,
 
             hubbenRattanDisplayInterval,
             setHubbenRattanDisplayInterval,
 
-            showSettings, 
-            setShowSettings,
-
             hubbenRattanDisplayTime,
             setHubbenRattanDisplayTime,
-
-            showAccount,
-            setShowAccount,
-
-            showUpload,
-            setShowUpload,
-            }}>
+        
+            // Other settings
+            showSidebar, 
+            setShowSidebar, 
+        }}>
             {children}
         </GalleryContext.Provider>
     );
