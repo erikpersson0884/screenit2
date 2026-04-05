@@ -1,9 +1,9 @@
 import React from 'react';
-import './PostsDisplay.css';
+import './PosterDisplay.css';
 import { useGalleryContext } from '@/contexts/GalleryContext';
 import { useEventContext } from '@/contexts/EventContext';
 
-const EventsDisplay: React.FC = () => {
+const PosterDisplay: React.FC = () => {
     const { postDisplayTime } = useGalleryContext();
     const { events } = useEventContext();
 
@@ -34,4 +34,4 @@ const EventsDisplay: React.FC = () => {
     );
 };
 
-export default EventsDisplay;
+export default PosterDisplay;
