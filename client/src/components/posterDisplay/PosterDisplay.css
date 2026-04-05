@@ -1,7 +1,13 @@
 
-.posts-display {
-    width: 80%;
+.poster-display {
+    width: 100%;
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.poster-display img {
+    width: 40%;
+    max-height: 90vh;
 }

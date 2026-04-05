@@ -28,7 +28,7 @@ const PosterDisplay: React.FC = () => {
     }
 
     return (
-        <div className="posts-display">
+        <div className="poster-display">
             <img src={"api/uploads/" + events[currentIndex].imagePath} alt="Event poster" className="postImage"  width={300}/>
         </div>
     );
