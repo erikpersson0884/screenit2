@@ -3,7 +3,7 @@ import './Gallery.css';
 
 import Sidebar from '@/components/sidebar/Sidebar';
 import GallerySettings from '@/components/gallerySettings/GallerySettings';
-import EventsDisplay from '@/components/postsDisplay/PostsDisplay';
+import EventsDisplay from '@/components/posterDisplay/PosterDisplay';
 import UploadEventDiv from '@/components/createEventPopup/CreateEventPopup';
 import AccountPopup from '@/components/accountPopup/AccountPopup';
 import HubbenRattan from '@/components/hubbenRattan/HubbenRattan';

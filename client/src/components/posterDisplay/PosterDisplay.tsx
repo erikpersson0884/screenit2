@@ -1,9 +1,9 @@
 import React from 'react';
-import './PostsDisplay.css';
+import './PosterDisplay.css';
 import { useGalleryContext } from '@/contexts/GalleryContext';
 import { useEventContext } from '@/contexts/EventContext';
 
-const EventsDisplay: React.FC = () => {
+const PosterDisplay: React.FC = () => {
     const { postDisplayTime } = useGalleryContext();
     const { events } = useEventContext();
 
@@ -28,10 +28,10 @@ const EventsDisplay: React.FC = () => {
     }
 
     return (
-        <div className="posts-display">
+        <div className="poster-display">
             <img src={"api/uploads/" + events[currentIndex].imagePath} alt="Event poster" className="postImage"  width={300}/>
         </div>
     );
 };
 
-export default EventsDisplay;
+export default PosterDisplay;

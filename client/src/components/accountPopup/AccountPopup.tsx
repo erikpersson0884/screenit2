@@ -1,5 +1,6 @@
 import React from 'react'
 import './AccountPopup.css'
+import Modal from '@/components/modal/Modal'
 
 import { useAuthContext } from "@/contexts/AuthContext"
 import { useEventContext } from "@/contexts/EventContext"
@@ -9,11 +10,11 @@ import deleteIcon from '@/assets/delete.svg'
 import editIcon from '@/assets/edit.svg'
 
 const AccountPopup: React.FC = () => {
-    const { logout, currentUser } = useAuthContext()
+    const { logout, currentUser, isAuthenticated } = useAuthContext()
     const { events, deleteEvent } = useEventContext()
-    const { showAccount } = useGalleryContext()
+    const { showAccount, setShowAccount } = useGalleryContext()
 
-    if (!showAccount) return null;
+    if (!showAccount || !isAuthenticated) return null;
 
     const userHasUploadedEvents = events.some((event) => event.createdById === currentUser?.id);
 
@@ -48,12 +49,14 @@ const AccountPopup: React.FC = () => {
     )
 
     return (
-        <div className="account-popup popupbox">
-            
-            {userHasUploadedEvents ? uploadedEvents : <p>You currently have no<br/>uploaded posters :(</p>}
+        <Modal onClose={() => setShowAccount(false)}>
+            <div className="account-popup popup" onClick={(e) => e.stopPropagation()}>
+                
+                {userHasUploadedEvents ? uploadedEvents : <p>You currently have no<br/>uploaded posters :(</p>}
 
-            <button onClick={logout}>Log out</button>
-        </div>
+                <button onClick={logout}>Log out</button>
+            </div>
+        </Modal>
     )
 }
 

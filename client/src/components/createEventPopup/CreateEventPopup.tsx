@@ -1,5 +1,6 @@
 import './CreateEventPopup.css';
 import React from 'react';
+import Modal from '@/components/modal/Modal';
 
 import { useAuthContext } from "@/contexts/AuthContext";
 import { useGalleryContext } from '@/contexts/GalleryContext';
@@ -56,34 +57,36 @@ const UploadEventDiv = () => {
     if (!showUpload) return null;
 
     if (isAuthenticated) return (
-        <form className="create-event-popup popupbox" onSubmit={uploadEventHandler}>
-            <h2>Upload Event</h2>
+        <Modal onClose={() => setShowUpload(false)}>
+            <form className="create-event-popup popup" onSubmit={uploadEventHandler} onClick={(e) => e.stopPropagation()}>
+                <h2>Upload Event</h2>
 
-            <hr />
+                <hr />
 
-            <div
-                style={{
-                    backgroundImage: previewUrl ? `url(${previewUrl})` : undefined
-                }}
-                className='postImagePreview'
-                onClick={() => document.getElementById('uploadNewEventImageInput')?.click()}
-            ></div>
-            <input id="uploadNewEventImageInput" type="file" onChange={e => imageChangeHandler(e)} />
+                <div
+                    style={{
+                        backgroundImage: previewUrl ? `url(${previewUrl})` : undefined
+                    }}
+                    className='postImagePreview'
+                    onClick={() => document.getElementById('uploadNewEventImageInput')?.click()}
+                ></div>
+                <input id="uploadNewEventImageInput" type="file" onChange={e => imageChangeHandler(e)} />
 
-            <hr />
+                <hr />
 
-            <div className='input-group'>
-                <label htmlFor="date">Date</label>
-                <input type="date" onChange={(e) => setDate(e.target.value)}/>
-            </div>
+                <div className='input-group'>
+                    <label htmlFor="date">Date</label>
+                    <input type="date" onChange={(e) => setDate(e.target.value)}/>
+                </div>
 
-            <div className='input-group'>
-                <label htmlFor="event">Event name</label>
-                <input type="text" placeholder="Event name" onChange={(e) => setEventName(e.target.value)}/>
-            </div>
+                <div className='input-group'>
+                    <label htmlFor="event">Event name</label>
+                    <input type="text" placeholder="Event name" onChange={(e) => setEventName(e.target.value)}/>
+                </div>
 
-            <button type="submit">Upload</button>
-        </form>
+                <button type="submit">Upload</button>
+            </form>
+        </Modal>
     )
 
     else return (

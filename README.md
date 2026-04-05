@@ -115,6 +115,10 @@ To seed the database with initial data, run the following command from the ./ser
 npx prisma db seed
 ```
 
+# Good to know
+* Frontend reloads every 6 hours to clear any potential issues. This can be changed in `./client/src/App.tsx` by modifying the `reloadInterval` variable.
+
+
 # Contribute
 Any contributions you make are **greatly appreciated**.
 

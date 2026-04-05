@@ -1,35 +1,36 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-
+import React from 'react';
 import './App.css'
+
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Providers from './Providers.tsx';
 import Navigation from './components/navigation/Navigation.tsx';
 import Gallery from './pages/gallery/Gallery.tsx';
 import OAuthCallback from './pages/OAuthCallback/OAuthCallback.tsx';
-
-import { AuthProvider } from './contexts/AuthContext.tsx';
-import { EventProvider } from './contexts/EventContext.tsx';
-import { UsersProvider } from './contexts/UsersContext.tsx';
-
-import { GalleryProvider } from './contexts/GalleryContext.tsx';
 import Footer from "./layout/Footer/Footer.tsx";
 
+const reloadInterval = 6 * 60 * 60 * 1000; // 6 hours in milliseconds
+
 function App() {
+    React.useEffect(() => {
+        const timeoutId = window.setTimeout(() => {
+            window.location.reload();
+        }, reloadInterval); 
+
+        return () => window.clearTimeout(timeoutId);
+    }, []);
+
     return (
         <>
-            <UsersProvider>
-                <AuthProvider>
-                <EventProvider>
-                <GalleryProvider>
-                    <BrowserRouter>
-                        <Navigation />
-                        <Routes>
-                            <Route path="/" element={<Gallery />}></Route>
-                            <Route path="/oauth/callback" element={<OAuthCallback />}></Route>
-                        </Routes>
-                    </BrowserRouter>
-                </GalleryProvider>
-                </EventProvider>
-                </AuthProvider>
-            </UsersProvider>    
+            <Providers>
+                <BrowserRouter>
+                    <Navigation />
+                    <Routes>
+                        <Route path="/" element={<Gallery />}></Route>
+                        <Route path="/oauth/callback" element={<OAuthCallback />}></Route>
+                    </Routes>
+                </BrowserRouter>
+            </Providers>
+
             <Footer />
         </>
     )
