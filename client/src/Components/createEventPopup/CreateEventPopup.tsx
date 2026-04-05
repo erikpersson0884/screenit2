@@ -1,4 +1,4 @@
-import './createEventPopup.css';
+import './CreateEventPopup.css';
 import React from 'react';
 
 import { useAuthContext } from "../../contexts/AuthContext";
