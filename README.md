@@ -1,7 +1,6 @@
 # screenIT2
 ## A digital event screen
 [![Last Commit][last-commit-shield]][last-commit-url]
-[![Build Status][build-shield]][build-url]
 [![Repo Size][repo-size-shield]][repo-size-url]
 [![Author][author-shield]][author-url]
 
@@ -45,7 +44,7 @@
 
 2. Install dependencies
     ```
-    cd screenit-v2
+    cd screenit2
 
     npm run install
     ```
@@ -53,7 +52,7 @@
     ```sh
     cd server 
 
-    docker run --name screenit-v2-dev -e POSTGRES_PASSWORD=secretpassword -e POSTGRES_USER=myuser -e POSTGRES_DB=mydb -p 5432:5432 -d postgres
+    docker run --name screenit2 -e POSTGRES_PASSWORD=secretpassword -e POSTGRES_USER=myuser -e POSTGRES_DB=mydb -p 5432:5432 -d postgres
 
     npx prisma migrate dev
 
@@ -61,18 +60,19 @@
     ```
 4. Set environmental variables
 
-    In `./client/.env`
-    ```
-    VITE_BASE_URL=http://localhost:3001/api
-    ```
-
-    In `./server/.env`
+    In `./server/.env` add the following (you can copy from `./server/env.example`):
     ```
     DATABASE_URL=postgresql://myuser:secretpassword@localhost:5432/mydb?schema=public
 
-    JWT_SECRET=your_jwt_secret
-    ```
+    JWT_SECRET=big_secret_key
 
+    GAMMA_CLIENT_ID=SOMETHINGLIKETHISXM4KXNH4DEXXY
+    GAMMA_REDIRECT_URI=http://localhost:3000/api/auth/gamma/callback
+    GAMMA_CLIENT_SECRET=SOMETHINGLIKETHISJ2DVRRBYMWKJ44Q
+
+    FRONTEND_URL=http://localhost:3000 
+    ```
+ If you are unsure of how to set up the gamma client, you can read the how to on the chalmers.it wiki: https://wiki.chalmers.it/HowTo:Skapa_Gamma_Clients
 
 
 ## Usage
@@ -81,30 +81,33 @@ After installation, you simply run the application with a single command from ro
 npm run dev
 ```
 This runs concurrently:
-- Database container (screenit-v2-dev)
-- Backend server (server) in development mode
+- Backend (server) in development mode
 - Frontend (client) in development mode
 
 You can also run each part individually:
 ```sh
-npm run server       # Starts backend only
-npm run client       # Starts frontend only
-npm run start-database   # Start DB only
-npm run stop-database    # Stop DB only
+npm run server       # Starts backend only (in development mode)
+npm run client       # Starts frontend only (in development mode)
 ```
 
 For production:
 ```sh
+
+npm run build-server   # Build backend only
+npm run build-client   # Build frontend only
 npm run build        # Build backend and frontend
-cd server
+
+npm run start-server   # Run backend only (production)
+npm run start-client   # Run frontend only (production)
 npm start            # Run production server
 ```
 
 
 # Contribute
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Any contributions you make are **greatly appreciated**.
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue!
+
 Don't forget to give the project a star! Thanks again!
 
 1. Fork the Project
@@ -114,7 +117,6 @@ Don't forget to give the project a star! Thanks again!
 5. Open a Pull Request
 
 
-# Acknowledgements
 
 
 
@@ -127,15 +129,17 @@ Don't forget to give the project a star! Thanks again!
 <!--  CONFIG FOR README.md   -->
 
 <!-- Repo info Shields -->
-[last-commit-shield]: https://img.shields.io/github/last-commit/erikpersson0884/screenit-v2.svg?style=for-the-badge
+[last-commit-shield]: https://img.shields.io/github/last-commit/erikpersson0884/screenit2/main?style=for-the-badge&cacheSeconds=30
+
+
 [last-commit-url]: https://github.com/erikpersson0884/screenit-v2/commits/main
-[repo-size-shield]: https://img.shields.io/github/repo-size/erikpersson0884/screenit-v2?style=for-the-badge
+[repo-size-shield]: https://img.shields.io/github/repo-size/erikpersson0884/screenit2?style=for-the-badge&cacheSeconds=60
 [repo-size-url]: https://github.com/erikpersson0884/screenit-v2
 [author-shield]: https://img.shields.io/badge/Author-Erik%20Persson-blue?style=for-the-badge
 [author-url]: https://github.com/erikpersson0884
 [stars-shield]: https://img.shields.io/github/stars/erikpersson0884/screenit-v2?style=for-the-badge
 [stars-url]: https://github.com/erikpersson0884/screenit-v2/stargazers
-[build-shield]: https://img.shields.io/github/actions/workflow/status/erikpersson0884/screenit-v2/.github/workflows/tests.yml?branch=main&style=for-the-badge
+[build-shield]: https://img.shields.io/github/actions/workflow/status/erikpersson0884/screenit2/.github/workflows/tests.yml?branch=main&style=for-the-badge
 [build-url]: https://github.com/erikpersson0884/screenit-v2/actions
 
 
