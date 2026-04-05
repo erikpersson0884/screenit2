@@ -8,13 +8,15 @@ interface GallerySettingsProps {
 }
 
 const GallerySettings: React.FC<GallerySettingsProps> = () => {
-    const { postDisplayTime, 
+    const { 
+        postDisplayTime, 
         setEventDisplayTime, 
         showSettings, 
         setShowHubbenRattan, 
         showHubbenRattan, 
         hubbenRattanDisplayTime, 
         setHubbenRattanDisplayTime,
+        showSidebar,
         setShowSidebar
     } = useGalleryContext();
 
@@ -44,7 +46,8 @@ const GallerySettings: React.FC<GallerySettingsProps> = () => {
                     type='checkbox'
                     id='showSidebarButton'
                     name='showSidebar'
-                    onChange={(e) => setShowSidebar((e.target as HTMLInputElement).checked)}
+                    checked={showSidebar}
+                    onChange={(e) => setShowSidebar(!showSidebar)}
                 />
             </div>
 
@@ -52,7 +55,13 @@ const GallerySettings: React.FC<GallerySettingsProps> = () => {
 
             <div className='input-group'>
                 <label htmlFor="showHubbenrattanButton">Show Hubbenråttan:</label>
-                <input type='checkbox' id='showHubbenrattanButton' name='showHubbenrattanButton' checked={showHubbenRattan} onChange={() => setShowHubbenRattan(!showHubbenRattan)} />
+                <input 
+                    type='checkbox' 
+                    id='showHubbenrattanButton' 
+                    name='showHubbenrattanButton' 
+                    checked={showHubbenRattan} 
+                    onChange={() => setShowHubbenRattan(!showHubbenRattan)} 
+                />
             </div>
 
             <div className='input-group'>
