@@ -4,7 +4,7 @@ import './Gallery.css';
 import Sidebar from '@/components/sidebar/Sidebar';
 import GallerySettings from '@/components/gallerySettings/GallerySettings';
 import EventsDisplay from '@/components/posterDisplay/PosterDisplay';
-import UploadEventDiv from '@/components/createEventPopup/CreateEventPopup';
+import CreateEventPopup from '@/components/createEventPopup/CreateEventPopup';
 import AccountPopup from '@/components/accountPopup/AccountPopup';
 import HubbenRattan from '@/components/hubbenRattan/HubbenRattan';
 
@@ -15,7 +15,7 @@ const Gallery: React.FC = () => {
             <Sidebar />
             <EventsDisplay />
             <GallerySettings />
-            <UploadEventDiv />
+            <CreateEventPopup />
             <AccountPopup />
             <HubbenRattan />
         </div>

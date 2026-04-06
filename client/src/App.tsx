@@ -1,9 +1,9 @@
 import React from 'react';
-import './App.css'
+import './styles/App.css'
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Providers from './Providers.tsx';
-import Navigation from './components/navigation/Navigation.tsx';
+import Navigation from './components/toolbar/Toolbar.tsx';
 import Gallery from './pages/gallery/Gallery.tsx';
 import OAuthCallback from './pages/OAuthCallback/OAuthCallback.tsx';
 import Footer from "./layout/Footer/Footer.tsx";
