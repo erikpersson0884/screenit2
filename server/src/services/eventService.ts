@@ -41,7 +41,7 @@ export const createEventService = (client: PrismaClient = prismaClient): IEventS
 
     deleteEvent: async (id: string): Promise<boolean> => {
         try {
-            await client.event.delete({
+            const event = await client.event.delete({
                 where: { id: id }
             });
             return true;

@@ -4,8 +4,7 @@ import { IUserController } from "../models/controllers/IUserController.js";
 import { AuthenticatedRequest } from "../types/AuthenticatedRequest.js";
 import { UserResponseSchema, UserResponseArraySchema } from '../models/dtos/UserDTOs.js';
 import { sendValidatedResponse } from "../middleware/validateResponseMiddleware.js";
-import { MissingUserIDError } from "../errors/MissingUserIDError.js";
-import { UnauthorizedActionError } from "../errors/UnauthorizedActionError.js";
+import { MissingUserIDError, UnauthorizedActionError } from "../errors/CustomErrors.js";
 import { User } from "../../prisma/generated/prisma/client.js";
 
 const userService = createUserService();

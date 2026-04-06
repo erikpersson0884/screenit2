@@ -7,10 +7,11 @@ import { AuthenticatedRequest } from "../types/AuthenticatedRequest.js";
 import { EventsResponseSchema, EventResponseSchema } from "../models/dtos/EventDTO.js";
 import { getChalmersITEvents } from "../repositories/chalmersITRepository.js";
 import "dotenv/config.js";
+import { NotAllowedToModifyEventError, MissingFileError } from "../errors/CustomErrors.js";
 
 const defaultEventService = createEventService();
 
-const createEventController = (eventService: IEventService = defaultEventService): IEventController => ({
+export const createEventController = (eventService: IEventService = defaultEventService): IEventController => ({
 
     getAllEvents: async (req, res) => {
         const events: Event[] = await eventService.getAllEvents();
@@ -26,7 +27,7 @@ const createEventController = (eventService: IEventService = defaultEventService
         const user: User = req.user;
         const { name, date }: {name: string, date: Date} = req.body;
 
-        if (!req.file) throw new Error("File was not uploaded");
+        if (!req.file) throw new MissingFileError();
         const imagePath: string = req.file.filename;
 
         const newEvent: Event = await eventService.createEvent(date, user.id, name, imagePath);
@@ -46,7 +47,7 @@ const createEventController = (eventService: IEventService = defaultEventService
         const eventToUpdate: Event | null = await eventService.getEventById(id);
         if (!eventToUpdate) throw new Error(`Event with id ${id} not found so it cannot be updated`);
 
-        if (user.id !== eventToUpdate.createdById || user.role == "admin") throw new Error("Only admins or the creator of the event can update it");
+        if (user.id !== eventToUpdate.createdById || user.role == "admin") throw new NotAllowedToModifyEventError();
 
         const eventData: {name: string, date: Date} = req.body;
         const updatedEvent: Event | null = await eventService.updateEvent(id, eventData);
@@ -60,7 +61,9 @@ const createEventController = (eventService: IEventService = defaultEventService
         const event: Event | null = await eventService.getEventById(id);
         if (!event) throw new Error(`Event with id ${id} not found so it cannot be deleted`);
 
-        if (user.id !== event.createdById || user.role == "admin") throw new Error("Only admins can delete events");
+        if (user.id !== event.createdById || user.role == "admin") throw new NotAllowedToModifyEventError();
+
+        await eventService.deleteEvent(id);
 
         sendValidatedResponse(res, EventResponseSchema, event);
     }
