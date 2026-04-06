@@ -9,6 +9,10 @@ export const parseWithSchema = <T>(schema: z.ZodSchema<T>, data: unknown): T => 
 }
 
 // Request Schemas
+export const GetAllEventsQuerySchema = z.object({
+    includeChalmersIT: z.string().transform((val) => val === "true").optional(),
+});
+
 export const CreateEventSchema = z.object({
     name: z.string(),
     date: z.string().datetime().transform((val) => new Date(val)),
