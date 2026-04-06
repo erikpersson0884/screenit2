@@ -5,6 +5,8 @@ const defaultDisplayTime = 10; // seconds
 const defaultHubbenRattanDisplayTime = 5; // seconds
 const defaultHubbenRattanDisplayInterval = 10; // seconds between the times Hubbenråttan is displayed, if enabled
 const defaultFetchInterval = 10; // seconds. How often to fetch new events and images from the server
+const defaultShowSidebar = false; // Whether to show the sidebar by default
+const defaultShowHubbenRattan = false; // Whether to show Hubbenråttan by default
 
 
 type GalleryContextType = {
@@ -60,10 +62,10 @@ const GalleryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
     );
 
     const [showSidebar, setShowSidebar] = React.useState<boolean>(
-        () => JSON.parse(localStorage.getItem("showSidebar") || "false")
+        () => JSON.parse(localStorage.getItem("showSidebar") || defaultShowSidebar.toString())
     );
     const [showHubbenRattan, setShowHubbenRattan] = React.useState<boolean>(
-        () => JSON.parse(localStorage.getItem("showHubbenRattan") || "true")
+        () => JSON.parse(localStorage.getItem("showHubbenRattan") || defaultShowHubbenRattan.toString())
     );
 
     const [fetchInterval, setFetchInterval] = React.useState<number>(

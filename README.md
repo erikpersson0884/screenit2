@@ -117,7 +117,10 @@ npx prisma db seed
 
 # Good to know
 * Frontend reloads every 6 hours to clear any potential issues. This can be changed in `./client/src/App.tsx` by modifying the `reloadInterval` variable.
-
+* Posters are also fetched from chalemrs.it, the criteria for events to be included are set in `chalmersITRepository.ts`, and are currently:
+    * The newspost must have a connected event
+    * The connected event must have a start time, and the start time must be in the future
+    * The newspost must have an image (in case of multiple images, the first one in swedish descriptoin is used)
 
 # Contribute
 Any contributions you make are **greatly appreciated**.
