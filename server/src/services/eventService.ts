@@ -10,25 +10,25 @@ export const createEventService = (client: PrismaClient = prismaClient): IEventS
         return await client.event.findMany();
     },
 
-    getEventById: async (id: string): Promise<Event> => {
-        const event = await client.event.findUnique({
+    getEventById: async (id: string): Promise<Event | null> => {
+        const event: Event | null = await client.event.findUnique({
             where: { id: id }
         });
-        if (!event) throw new Error(`Event with id ${id} not found`);
         return event;
     },
 
-    createEvent: async (date: Date, userId: string, name: string, imagePath: string): Promise<Event> => {
+    createEvent: async (date: Date, userId: string, name: string, fileName: string): Promise<Event> => {
         const newEvent: Event =  await client.event.create({
             data: {
                 date,
                 createdById: userId,
                 name: name,
-                imagePath: imagePath,
+                imagePath: "/api/uploads/" + fileName,
                 createdAt: new Date(),
                 updatedAt: new Date()
             }
         });
+        console.log("created", newEvent.imagePath)
         return newEvent;
     },
 

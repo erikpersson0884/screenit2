@@ -40,37 +40,37 @@ async function main() {
         {
             name: "Ghibli-pub",
             date: new Date("2026-05-10T18:00:00Z"),
-            imagePath: "pub.jpg",
+            imagePath: "/api/uploads/pub.jpg",
             createdById: user.id,
         },
         {
             name: "Pluggfrukost",
             date: new Date("2026-06-20T15:00:00Z"),
-            imagePath: "breakfast.png",
+            imagePath: "/api/uploads/breakfast.png",
             createdById: user.id,
         },
         {
             name: "Vinvolly",
             date: new Date("2026-05-25T17:30:00Z"),
-            imagePath: "vinvolley.png",
+            imagePath: "/api/uploads/vinvolley.png",
             createdById: user.id,
         },
         {
             name: "Kandidatmiddag",
             date: new Date("2026-05-18T12:00:00Z"),
-            imagePath: "kandidatmiddag.png",
+            imagePath: "/api/uploads/kandidatmiddag.png",
             createdById: user.id,
         },
         {
             name: "Spelkväll",
             date: new Date("2026-04-11T05:00:00Z"),
-            imagePath: "gamenight.png",
+            imagePath: "/api/uploads/gamenight.png",
             createdById: user.id,
         },
         {
             name: "Vinprovning",
             date: new Date("2026-06-05T19:00:00Z"),
-            imagePath: "wine-tasting.png",
+            imagePath: "/api/uploads/wine-tasting.png",
             createdById: user.id,
         },
     ]

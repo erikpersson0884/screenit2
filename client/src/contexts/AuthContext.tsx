@@ -19,8 +19,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const [ isAuthenticated, setIsAuthenticated ] = useState<boolean>(!!currentUser);
 
     const getCurrentUser = async (): Promise<void> => {
-        const user = await userApi.getCurrentUser();
-        user.isAdmin = user.role === 'admin';
+        const user: User | null = await userApi.getCurrentUser();
+        if (user) user.isAdmin = user.role === 'admin';
         setCurrentUser(user);
     }
 
