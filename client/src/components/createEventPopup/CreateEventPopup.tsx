@@ -6,7 +6,7 @@ import { useAuthContext } from "@/contexts/AuthContext";
 import { useGalleryContext } from '@/contexts/GalleryContext';
 import { useEventContext } from '@/contexts/EventContext';
 
-const UploadEventDiv = () => {
+const CreateEventPopup = () => {
     const { isAuthenticated } = useAuthContext();
     const { showUpload, setShowUpload } = useGalleryContext();
     const { createEvent } = useEventContext();
@@ -94,4 +94,4 @@ const UploadEventDiv = () => {
     );
 };
 
-export default UploadEventDiv;
+export default CreateEventPopup;
