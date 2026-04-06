@@ -1,11 +1,10 @@
 
-.navigation {
+.toolbar {
     display: flex;
     justify-content: space-between;
     gap: 1rem;
     flex-wrap: wrap;
     
-
     position: absolute;
     top: 1rem;
     right: 1rem;
@@ -15,17 +14,16 @@
     z-index: 10;
 }
 
-.navigation button a {
+.toolbar button a {
     color: inherit;
     text-decoration: inherit;
 }
 
 
 @media screen and (max-width: 600px) {
-    .navigation {
+    .toolbar {
         flex-direction: column;
         width: 90%;
         right: 0;
     }
-    
 }
