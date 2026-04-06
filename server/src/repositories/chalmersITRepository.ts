@@ -1,5 +1,5 @@
 import { Event } from '../../prisma/generated/prisma/client.js';
-import { CustomError } from '../errors/CustomErrors.js';
+
 
 interface ChalmersITNewsEvent {
     id: number;
@@ -16,7 +16,51 @@ interface ChalmersITNewsEvent {
         gammaSuperGroupId: string;
         prettyName: string;
     };
+    connectedEvents: {
+        id: number;
+        titleEn: string;
+        titleSv: string;
+        descriptionEn: string;
+        descriptionSv: string;
+        fullDay: boolean;
+        startTime: string;
+        endTime: string;
+        location: string;
+        createdAt: string;
+        updatedAt: string;
+    }[];
 }
+
+
+
+const getImagePath = (event: ChalmersITNewsEvent): string | null => {
+    const content: string = event.contentSv || event.contentEn;
+
+    const match: RegExpMatchArray | null = content.match(/!\[.*?\]\((.*?)\)/);
+    if (!match) return null;
+
+    const url = match[1];
+
+    // only allow chalmers media images
+    if (!url.startsWith("/api/media/")) return null;
+
+    return url;
+};
+
+const isValidEvent = (event: ChalmersITNewsEvent): boolean => {
+    // If post has no connected events, it is not an event
+    if (event.connectedEvents.length === 0) return false;
+
+    // If the event has already started, it is not relevant
+    const now = new Date();
+    if (!event.connectedEvents[0].startTime) return false;
+
+    // If the event dont have a poster image, it is not relevant
+    const imagePath: string | null = getImagePath(event);
+    if (!imagePath) return false;
+
+    return true;
+};
 
 export const getChalmersITEvents: () => Promise<Event[]> = async (): Promise<Event[]> => {
     let response: Response;
@@ -24,35 +68,20 @@ export const getChalmersITEvents: () => Promise<Event[]> = async (): Promise<Eve
         response = await fetch("https://chalmers.it/api/news");
     } catch (error) {
         console.error("Failed to fetch Chalmers IT events:", error);
-
         return [];
     }
 
     const chalmersITEvents: ChalmersITNewsEvent[] = await response.json();
 
-    const getImagePath = (event: ChalmersITNewsEvent): string | null => {
-        const content: string = event.contentSv || event.contentEn;
-
-        const match: RegExpMatchArray | null = content.match(/!\[.*?\]\((.*?)\)/);
-        if (!match) return null;
-
-        const url = match[1];
-
-        // only allow chalmers media images
-        if (!url.startsWith("/api/media/")) return null;
-
-        return url;
-    };
-
     const events: Event[] = chalmersITEvents
         .map((newsEvent: ChalmersITNewsEvent): Event | null => {
-            const imagePath: string | null = getImagePath(newsEvent);
-            if (!imagePath) return null; // Skip events without an image
+            if (!isValidEvent(newsEvent)) return null; // Skip invalid events
+
             const event: Event = {
                 id: "chalmers-it-event" + newsEvent.id.toString(),
                 name: newsEvent.titleSv || newsEvent.titleEn,
                 date: new Date(newsEvent.scheduledPublish),
-                imagePath: "https://chalmers.it" + imagePath,
+                imagePath: "https://chalmers.it" + getImagePath(newsEvent),
                 createdById: "chalmers-it",
                 createdAt: new Date(newsEvent.createdAt),
                 updatedAt: new Date(newsEvent.updatedAt)
