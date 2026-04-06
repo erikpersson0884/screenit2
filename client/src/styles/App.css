@@ -57,6 +57,12 @@
     width: 100%;
 }
 
+.error {
+    color: #e92121;
+
+    text-align: center;
+}
+
 @media screen and (max-width: 450px) {
     .popup {
         box-sizing: border-box;
