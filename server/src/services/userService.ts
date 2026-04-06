@@ -2,8 +2,7 @@ import { PrismaClient, Role } from "../../prisma/generated/prisma/client.js";
 import prismaClient from "../lib/prisma.js";
 import { User } from '../../prisma/generated/prisma/client.js';
 import { IUserService } from '../models/services/IUserService.js';
-import { UserNotFoundError } from '../errors/UserNotFoundError.js';
-import { UserAlreadyExistsError } from '../errors/UserAlreadyExistsError.js';
+import { UserAlreadyExistsError, UserNotFoundError } from '../errors/CustomErrors.js';
 
 export class UserService implements IUserService {
     private prisma: PrismaClient;
@@ -45,7 +44,7 @@ export class UserService implements IUserService {
 
     async createUser(id: string, username: string): Promise<User> {
         if (await this.checkIfUserExists(id)) {
-            throw new UserAlreadyExistsError(`User with username ${username} already exists`);
+            throw new UserAlreadyExistsError(`User with id ${id} and/or ${username} already exists`);
         }
 
         const role: Role = 'user'; // Default role, can be adjusted as needed
