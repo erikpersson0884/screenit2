@@ -16,6 +16,8 @@ const CreateEventPopup = () => {
     const [date, setDate] = React.useState<string>("");
     const [eventName, setEventName] = React.useState<string>("");
 
+    const [ errorText, setErrorText ] = React.useState<string>("");
+
     const imageChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
 
@@ -42,9 +44,16 @@ const CreateEventPopup = () => {
     const uploadEventHandler = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        if (!image || !date || !eventName) {
+        if (!image) {
+            setErrorText("Please select an image for the event.");
             return;
+        } else if (!date) {
+            setErrorText("Please select a date for the event.");
+            return;
+        } else {
+            setErrorText("");
         }
+
         const success = await createEvent(new Date(date), eventName, image);
         if (success) {
             setShowUpload(false);
@@ -85,6 +94,7 @@ const CreateEventPopup = () => {
                 </div>
 
                 <button type="submit">Upload</button>
+                { errorText && <p className='error'>{errorText}</p> }
             </form>
         </Modal>
     )

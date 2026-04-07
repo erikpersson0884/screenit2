@@ -14,7 +14,7 @@ const Sidebar: React.FC = () => {
             <h2>Upcoming events</h2>
             <hr />
             <ul>
-                {events.map((event: IEvent) => (
+                {events.filter(event => event.name !== "").map((event: IEvent) => (
                     <li key={event.id}>
                         <p>{event.date.toLocaleDateString('sv-SE', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
                         <p>{event.name}</p>

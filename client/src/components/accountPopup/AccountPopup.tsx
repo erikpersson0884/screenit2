@@ -25,7 +25,7 @@ const AccountPopup: React.FC = () => {
             <ul className="no-list-styling">
                 {events.filter((event) => event.createdById === currentUser?.id).map((event) => (
                     <li key={event.id}>
-                        <img src={"/api/uploads/" + event.imagePath} className='event-image' alt={event.name} width={30}/>
+                        <img src={event.imagePath} className='event-image' alt={event.name} width={30}/>
                         <div>
                             <p>{event.name}</p>
                             <p>{event.date.toLocaleDateString()}</p>
