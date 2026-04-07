@@ -8,14 +8,15 @@
 }
 
 .create-event-popup .postImagePreview {
-    background-color: rgba(255, 255, 255, 0.13);
+    background-color: var(--background-color);
     background-image: url('/src/assets/upload-image.svg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 
-    width: 80%;
     aspect-ratio: 1/1;
+    width: 100%;
+    border-radius: .5rem;
 }
 
 .create-event-popup #uploadNewEventImageInput {

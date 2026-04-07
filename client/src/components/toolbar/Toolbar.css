@@ -10,8 +10,10 @@
     right: 1rem;
 
     padding-inline: 1rem;
+}
 
-    z-index: 10;
+.toolbar button {
+    z-index: 140;
 }
 
 .toolbar button a {
