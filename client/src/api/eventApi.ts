@@ -24,11 +24,12 @@ export const eventApi = {
         }
     },
 
-    createEvent: async (date: Date, name: string, imageFile: File) => {
+    createEvent: async (date: Date, name: string, imageFile: File, groupId?: string) => {
         const eventData = new FormData();
         eventData.append("image", imageFile);
         eventData.append("date", date.toISOString());
         eventData.append("name", name);
+        if (groupId) eventData.append("groupId", groupId);
 
         try {
             const response = await api.post('/event', eventData, {

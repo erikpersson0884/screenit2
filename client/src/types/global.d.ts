@@ -6,6 +6,13 @@ declare global {
         updatedAt: Date;
         role: Role;
         isAdmin: boolean;
+        groups: Group[];
+    }
+
+    interface Group {
+        id: string;
+        name: string;
+        prettyName: string;
     }
 
     type Role = 'user' | 'admin';

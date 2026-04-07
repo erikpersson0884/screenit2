@@ -25,3 +25,41 @@
     padding: 0;
     border: 0;
 }
+
+.create-event-popup .upload-as {
+    display: flex;
+    gap: 0rem;
+    align-items: flex-start;
+    flex-direction: column;
+    
+}
+
+.create-event-popup .upload-as p {
+    margin: 0;
+}
+
+.create-event-popup input[type="radio"] {
+    aspect-ratio: 1/1;
+    min-width: 1rem;
+    border-radius: 0;
+    accent-color: green;
+    
+}
+
+.create-event-popup .commitees {
+    margin-left: 2rem;
+}
+
+.create-event-popup .radio-group {
+    width: 100%;
+    gap: .5rem;
+}
+
+.create-event-popup .radio-group .selected-option {
+    /* font-weight: bold; */
+}
+
+
+.create-event-popup h3 {
+    margin: 0;
+}

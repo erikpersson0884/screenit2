@@ -3,7 +3,7 @@ import './AccountPopup.css'
 
 import { useAuthContext } from "@/contexts/AuthContext"
 import { useEventContext } from "@/contexts/EventContext"
-import { useGalleryContext } from '@/contexts/GalleryContext'
+import { useModalContext } from '@/contexts/ModalContext'
 
 import deleteIcon from '@/assets/delete.svg'
 import editIcon from '@/assets/edit.svg'
@@ -11,7 +11,7 @@ import editIcon from '@/assets/edit.svg'
 const AccountPopup: React.FC = () => {
     const { logout, currentUser, isAuthenticated } = useAuthContext()
     const { events, deleteEvent } = useEventContext()
-    const { showAccount, setShowAccount } = useGalleryContext()
+    const { closeModal } = useModalContext()
 
     if (!isAuthenticated) return <div>Accountpopup was opened when user was not logged in, this should not be possible... Magic?</div>;
 
@@ -50,7 +50,7 @@ const AccountPopup: React.FC = () => {
     return (
         <div className="account-popup popup" onClick={(e) => e.stopPropagation()}>
             {userHasUploadedEvents ? uploadedEvents : <p>You currently have no<br/>uploaded posters :(</p>}
-            <button onClick={logout}>Log out</button>
+            <button onClick={() => {logout(); closeModal();}}>Log out</button>
         </div>
     )
 }
