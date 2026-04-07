@@ -6,6 +6,8 @@ import { ClientApi, UserInfo, GroupWithPost, UserId as GammaUserId, GroupId as G
 import { PrismaClient, User } from '../../prisma/generated/prisma/client.js';
 
 import prismaClient from "../lib/prisma.js";
+import IUserService from "../models/services/IUserService.js";
+import { IGroupService } from "../models/services/IGroupService.js";
 
 function getJwtSecret(): string {
     const secret = process.env.JWT_SECRET;
@@ -28,6 +30,8 @@ class authService implements IAuthService {
     private readonly JWT_SECRET: string = JWT_SECRET;
     private readonly JWT_EXPIRATION_TIME = "1h";
     private prisma: PrismaClient;
+    private userService: IUserService;
+    private groupservice: IGroupService;
 
     private readonly clientapi = new ClientApi({
         authorization: PRE_SHARED_AUTH
@@ -35,10 +39,11 @@ class authService implements IAuthService {
 
     constructor(prismaClient: PrismaClient) {
         this.prisma = prismaClient;
+        this.userService = createUserService(prismaClient);
+        this.groupservice = createGroupService(prismaClient);
     }
 
-    userService = createUserService();
-    groupservice = createGroupService();
+    
 
     async loginWithGamma(profile: UserInfo): Promise<string> {
         const gammaId: GammaUserId = profile.sub;

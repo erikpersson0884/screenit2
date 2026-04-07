@@ -31,29 +31,31 @@ export class GroupService implements IGroupService {
         return userWithGroups?.groups || [];
     }
 
-    async upsertGroups(groups: GroupWithPost[]) {
-        const groupsToUpsert = groups.filter(g => g.superGroup.type === "committee");
-
-        return Promise.all(
-            groupsToUpsert.map(group =>
+    async upsertGroups(groups: GroupWithPost[]): Promise<void> {
+        await Promise.all(
+             groups.map(group =>
                 this.prisma.group.upsert({
                     where: { id: group.id },
                     update: {
                         name: group.name,
-                        prettyName: group.name,
+                        prettyName: group.prettyName,
                     },
                     create: {
                         id: group.id,
                         name: group.name,
-                        prettyName: group.name,
+                        prettyName: group.prettyName,
                     },
                 })
             )
-        );
+        )
     }
 
     async syncUserGroups(userId: string, groups: GroupWithPost[]) {
-        const groupsToSync = groups.filter(g => g.superGroup.type === "committee");
+        const groupsToSync = groups.filter(
+            g => g.superGroup.type === "committee"
+        );
+
+        await this.upsertGroups(groupsToSync);
 
         await this.prisma.user.update({
             where: { id: userId },
