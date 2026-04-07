@@ -1,3 +1,5 @@
+import { UserInfo } from "gammait";
+
 export interface IAuthService {
-    loginWithGamma(gammaId: string, profile: any): Promise<string>;
+    loginWithGamma(profile: UserInfo): Promise<string>;
 }

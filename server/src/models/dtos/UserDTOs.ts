@@ -1,7 +1,5 @@
 import { z } from 'zod';
-
-const usernameMinLength = 1;
-const passwordMinLength = 4;
+import { GroupResponseSchema } from './GroupDTO.js';
 
 export const parseWithSchema = <T>(schema: z.ZodSchema<T>, data: unknown): T => {
     const parseResult = schema.safeParse(data);
@@ -17,6 +15,7 @@ export const UserResponseSchema = z.object({
     username: z.string(),
     role: z.string(),
     createdAt: z.date(),
+    groups: z.array(GroupResponseSchema).optional(),
 });
 
 export const UserResponseArraySchema = z.array(UserResponseSchema);
