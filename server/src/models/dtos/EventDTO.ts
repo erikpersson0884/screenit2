@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { GroupResponseSchema } from './GroupDTO.js';
 
 export const parseWithSchema = <T>(schema: z.ZodSchema<T>, data: unknown): T => {
     const parseResult = schema.safeParse(data);
@@ -16,6 +17,8 @@ export const GetAllEventsQuerySchema = z.object({
 export const CreateEventSchema = z.object({
     name: z.string(),
     date: z.string().datetime().transform((val) => new Date(val)),
+    groupIds: z.string().transform((val) => JSON.parse(val) as string[]).optional(),
+    byGroups: GroupResponseSchema.array().optional(),
 });
 
 export const UpdateEventSchema = z.object({
@@ -33,6 +36,7 @@ export const EventResponseSchema = z.object({
     createdById: z.string(),
     createdAt: z.date(),
     updatedAt: z.date(),
+    byGroups: GroupResponseSchema.array().optional(),
 });
 
 export const EventsResponseSchema = z.array(EventResponseSchema);

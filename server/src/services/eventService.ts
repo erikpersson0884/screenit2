@@ -7,7 +7,14 @@ import { Event } from '../../prisma/generated/prisma/client.js';
 
 export const createEventService = (client: PrismaClient = prismaClient): IEventService => ({
     getAllEvents: async (): Promise<Event[]> => {
-        return await client.event.findMany();
+        const events =  await client.event.findMany(
+            {
+                include: {
+                    byGroups: true
+                }
+            }
+        );
+        return events;
     },
 
     getEventById: async (id: string): Promise<Event | null> => {
@@ -17,7 +24,7 @@ export const createEventService = (client: PrismaClient = prismaClient): IEventS
         return event;
     },
 
-    createEvent: async (date: Date, userId: string, name: string, fileName: string): Promise<Event> => {
+    createEvent: async (date: Date, userId: string, name: string, fileName: string, groupIds?: string[]): Promise<Event> => {
         const newEvent: Event =  await client.event.create({
             data: {
                 date,
@@ -25,10 +32,13 @@ export const createEventService = (client: PrismaClient = prismaClient): IEventS
                 name: name,
                 imagePath: "/api/uploads/" + fileName,
                 createdAt: new Date(),
-                updatedAt: new Date()
+                updatedAt: new Date(),
+                byGroups: groupIds ? {
+                    connect: groupIds.map(groupId => ({ id: groupId }))
+                } : undefined
             }
         });
-        console.log("created", newEvent.imagePath)
+        console.log("Created event:", newEvent.name);
         return newEvent;
     },
 

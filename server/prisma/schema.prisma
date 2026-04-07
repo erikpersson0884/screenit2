@@ -24,6 +24,7 @@ model Event {
   updatedAt     DateTime @updatedAt
 
   createdBy     User @relation("createdBy", fields: [createdById], references: [id])
+  byGroups      Group[] @relation("EventGroups")
 }
 
 model User {
@@ -44,4 +45,5 @@ model Group {
     name        String
     prettyName  String
     users       User[] @relation("UserGroups")
+    events      Event[] @relation("EventGroups")
 }

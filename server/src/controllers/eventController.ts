@@ -8,6 +8,7 @@ import { EventsResponseSchema, EventResponseSchema } from "../models/dtos/EventD
 import { getChalmersITEvents } from "../repositories/chalmersITRepository.js";
 import "dotenv/config.js";
 import { NotAllowedToModifyEventError, MissingFileError } from "../errors/CustomErrors.js";
+import { CreateEventDTO } from "../models/dtos/EventDTO.js";
 
 const defaultEventService = createEventService();
 
@@ -25,12 +26,12 @@ export const createEventController = (eventService: IEventService = defaultEvent
 
     createEvent: async (req: AuthenticatedRequest, res) => {
         const user: User = req.user;
-        const { name, date }: {name: string, date: Date} = req.body;
+        const { name, date, groupIds }: CreateEventDTO = req.body;
 
         if (!req.file) throw new MissingFileError();
         const imagePath: string = req.file.filename;
 
-        const newEvent: Event = await eventService.createEvent(date, user.id, name, imagePath);
+        const newEvent: Event = await eventService.createEvent(date, user.id, name, imagePath, groupIds);
         sendValidatedResponse(res, EventResponseSchema, newEvent);
     },
 
