@@ -5,6 +5,8 @@ import { useAuthContext } from "@/contexts/AuthContext";
 import { useEventContext } from '@/contexts/EventContext';
 import { useModalContext } from '@/contexts/ModalContext';
 
+import groupIcon from "@/assets/group.svg";
+
 const CreateEventPopup = () => {
     const { isAuthenticated, currentUser } = useAuthContext();
     const { createEvent } = useEventContext();
@@ -15,6 +17,7 @@ const CreateEventPopup = () => {
     const [ date, setDate ] = React.useState<string>("");
     const [ eventName, setEventName ] = React.useState<string>("");
     const [ uploadAs, setUploadAs ] = React.useState<string>("user");
+    const [ showUploadAsOptions, setShowUploadAsOptions ] = React.useState<boolean>(false);
 
     const [ errorText, setErrorText ] = React.useState<string>("");
 
@@ -151,9 +154,19 @@ const CreateEventPopup = () => {
             <hr />
             <DateInput />
             <EventNameInput />
-            <hr />
+            
+            {showUploadAsOptions ? 
+                <UploadAsOptions /> 
+                :
+                <div className='open-upload-as-option' onClick={() => setShowUploadAsOptions(true)}>
+                    <img src={groupIcon} alt="Change icon" height={21} />
+                    <p>Upload as group</p>
+                </div>
+            }
+                
+            {/* <hr />
             <h3>Upload as:</h3>
-            <UploadAsOptions />
+            <UploadAsOptions /> */}
 
             <button type="submit">Upload</button>
             { errorText && <p className='error'>{errorText}</p> }

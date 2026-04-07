@@ -63,6 +63,18 @@
     text-align: center;
 }
 
+.close-button {
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
 @media screen and (max-width: 450px) {
     .popup {
         box-sizing: border-box;

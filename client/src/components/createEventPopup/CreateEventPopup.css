@@ -1,4 +1,9 @@
 
+.create-event-popup {
+    max-height: 90%;
+    overflow: scroll;
+}
+
 .create-event-popup h2{
     margin: 0;
 }
@@ -55,11 +60,29 @@
     gap: .5rem;
 }
 
-.create-event-popup .radio-group .selected-option {
-    /* font-weight: bold; */
-}
-
-
 .create-event-popup h3 {
     margin: 0;
 }
+
+.create-event-popup .open-upload-as-option {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    cursor: pointer;
+
+    opacity: .8;
+
+    transition: opacity .2s ease-in-out;
+}
+
+.create-event-popup .open-upload-as-option:hover {
+    opacity: 1;
+}
+
+.create-event-popup .open-upload-as-option p {
+    font-style: italic;
+    
+    margin: 0;
+}
+
+

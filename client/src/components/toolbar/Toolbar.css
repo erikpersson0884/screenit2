@@ -28,4 +28,8 @@
         width: 90%;
         right: 0;
     }
+
+    .toolbar button {
+        z-index: 100;
+    }
 }
