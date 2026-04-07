@@ -20,6 +20,7 @@ const CreateEventPopup = () => {
     const [ showUploadAsOptions, setShowUploadAsOptions ] = React.useState<boolean>(false);
 
     const [ errorText, setErrorText ] = React.useState<string>("");
+    const fileInputRef = React.useRef<HTMLInputElement>(null);
 
     const imageChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
@@ -36,8 +37,11 @@ const CreateEventPopup = () => {
 
         const fileReader = new FileReader();
         fileReader.onload = () => setPreviewUrl(fileReader.result as string);
-
         fileReader.readAsDataURL(image);
+
+        return () => {
+            fileReader.abort();
+        };
     }, [image]);
 
     const uploadEventHandler = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -53,7 +57,7 @@ const CreateEventPopup = () => {
             setErrorText("");
         }
 
-        const success = await createEvent(new Date(date), eventName, image, uploadAs);
+        const success = await createEvent(new Date(date), eventName, image, uploadAs === "user" ? undefined : [uploadAs]);
         if (success) {
             closeModal();
         } else setErrorText("Failed to create event. Please try again.");
@@ -70,23 +74,26 @@ const CreateEventPopup = () => {
                     backgroundImage: previewUrl ? `url(${previewUrl})` : undefined
                 }}
                 className='postImagePreview'
-                onClick={() => document.getElementById('uploadNewEventImageInput')?.click()}
+                onClick={() => fileInputRef.current?.click()}
             ></div>
-            <input id="uploadNewEventImageInput" type="file" onChange={e => imageChangeHandler(e)} />
+            <input 
+                id="uploadNewEventImageInput" 
+                ref={fileInputRef} 
+                type="file" 
+                accept='image/*'
+                onChange={e => imageChangeHandler(e)} 
+            />
         </>
     );
 
     const DateInput: React.FC = () => (
         <div className='input-group'>
             <label htmlFor="date">Date</label>
-            <input type="date" onChange={(e) => setDate(e.target.value)}/>
-        </div>
-    );
-
-    const EventNameInput: React.FC = () => (
-        <div className='input-group'>
-            <label htmlFor="event">Event name</label>
-            <input type="text" placeholder="Event name" onChange={(e) => setEventName(e.target.value)}/>
+            <input 
+                type="date" 
+                onChange={(e) => setDate(e.target.value)}
+                value={date}
+            />
         </div>
     );
 
@@ -111,7 +118,7 @@ const CreateEventPopup = () => {
     );
 
     const UploadAsGroup: React.FC = () => {
-        const isSeleted = uploadAs !== "user";
+        const isSelected = uploadAs !== "user";
         if (currentUser.groups.length === 0) return null;
         else return (
             <li className='radio-group' onClick={() => setUploadAs(currentUser.groups[0].id)}>
@@ -119,10 +126,10 @@ const CreateEventPopup = () => {
                     type="radio"
                     name="uploadAs"
                     value={currentUser.groups[0].id}
-                    checked={isSeleted}
+                    checked={isSelected}
                     onChange={(e) => setUploadAs(e.target.value)}
                 />
-                <label className={isSeleted ? "selected-option" : undefined}>Group</label>
+                <label className={isSelected ? "selected-option" : undefined}>Group</label>
             </li>
         );
     };
@@ -137,7 +144,7 @@ const CreateEventPopup = () => {
                             name="uploadAsCommitee"
                             value={group.id}
                             checked={uploadAs === group.id}
-                            onChange={(e) => setUploadAs(e.target.value)}
+                            readOnly
                         />
                         <label className={uploadAs === group.id ? "selected-option" : undefined}>{group.prettyName}</label>
                     </li>
@@ -153,7 +160,19 @@ const CreateEventPopup = () => {
             <ImageInput />
             <hr />
             <DateInput />
-            <EventNameInput />
+
+            {
+                // Event name input (cannot be its own component because of the error text that needs to be shown)
+            }
+            <div className='input-group'>
+                <label htmlFor="event">Event name</label>
+                <input 
+                    type="text" 
+                    placeholder="Event name" 
+                    value={eventName}
+                    onChange={(e) => setEventName(e.target.value)}
+                />
+            </div>
             
             {showUploadAsOptions ? 
                 <UploadAsOptions /> 
