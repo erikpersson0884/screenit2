@@ -3,18 +3,20 @@ import React from 'react';
 import Modal from '@/components/modal/Modal';
 
 import { useAuthContext } from "@/contexts/AuthContext";
-import { useGalleryContext } from '@/contexts/GalleryContext';
 import { useEventContext } from '@/contexts/EventContext';
+import { useModalContext } from '@/contexts/ModalContext';
 
 const CreateEventPopup = () => {
     const { isAuthenticated } = useAuthContext();
-    const { showUpload, setShowUpload } = useGalleryContext();
     const { createEvent } = useEventContext();
+    const { closeModal } = useModalContext();
 
     const [image, setImage] = React.useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = React.useState<string | null>(null);
     const [date, setDate] = React.useState<string>("");
     const [eventName, setEventName] = React.useState<string>("");
+
+    const [ errorText, setErrorText ] = React.useState<string>("");
 
     const imageChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
@@ -42,56 +44,54 @@ const CreateEventPopup = () => {
     const uploadEventHandler = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        if (!image || !date || !eventName) {
+        if (!image) {
+            setErrorText("Please select an image for the event.");
             return;
+        } else if (!date) {
+            setErrorText("Please select a date for the event.");
+            return;
+        } else {
+            setErrorText("");
         }
+
         const success = await createEvent(new Date(date), eventName, image);
         if (success) {
-            setShowUpload(false);
-        } 
-        // else {
-        //     alert("Failed to upload event. Please try again.");
-        // }
+            closeModal();
+        } else setErrorText("Failed to create event. Please try again.");
     };
 
-    if (!showUpload) return null;
-
-    if (isAuthenticated) return (
-        <Modal onClose={() => setShowUpload(false)}>
-            <form className="create-event-popup popup" onSubmit={uploadEventHandler} onClick={(e) => e.stopPropagation()}>
-                <h2>Upload Event</h2>
-
-                <hr />
-
-                <div
-                    style={{
-                        backgroundImage: previewUrl ? `url(${previewUrl})` : undefined
-                    }}
-                    className='postImagePreview'
-                    onClick={() => document.getElementById('uploadNewEventImageInput')?.click()}
-                ></div>
-                <input id="uploadNewEventImageInput" type="file" onChange={e => imageChangeHandler(e)} />
-
-                <hr />
-
-                <div className='input-group'>
-                    <label htmlFor="date">Date</label>
-                    <input type="date" onChange={(e) => setDate(e.target.value)}/>
-                </div>
-
-                <div className='input-group'>
-                    <label htmlFor="event">Event name</label>
-                    <input type="text" placeholder="Event name" onChange={(e) => setEventName(e.target.value)}/>
-                </div>
-
-                <button type="submit">Upload</button>
-            </form>
-        </Modal>
-    )
-
+    if (!isAuthenticated) return <p className="uploadEventDiv popupbox">You must be logged in to upload new posts</p>;
     else return (
-        <p  className="uploadEventDiv popupbox">You must be logged in to upload new posts</p>
-    );
+        <form className="create-event-popup popup" onSubmit={uploadEventHandler} onClick={(e) => e.stopPropagation()}>
+            <h2>Upload Event</h2>
+
+            <hr />
+
+            <div
+                style={{
+                    backgroundImage: previewUrl ? `url(${previewUrl})` : undefined
+                }}
+                className='postImagePreview'
+                onClick={() => document.getElementById('uploadNewEventImageInput')?.click()}
+            ></div>
+            <input id="uploadNewEventImageInput" type="file" onChange={e => imageChangeHandler(e)} />
+
+            <hr />
+
+            <div className='input-group'>
+                <label htmlFor="date">Date</label>
+                <input type="date" onChange={(e) => setDate(e.target.value)}/>
+            </div>
+
+            <div className='input-group'>
+                <label htmlFor="event">Event name</label>
+                <input type="text" placeholder="Event name" onChange={(e) => setEventName(e.target.value)}/>
+            </div>
+
+            <button type="submit">Upload</button>
+            { errorText && <p className='error'>{errorText}</p> }
+        </form>
+    )
 };
 
 export default CreateEventPopup;

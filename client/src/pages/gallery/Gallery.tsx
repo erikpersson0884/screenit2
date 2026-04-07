@@ -1,22 +1,16 @@
 import React from 'react';
 import './Gallery.css';
 
-import Sidebar from '@/components/sidebar/Sidebar';
-import GallerySettings from '@/components/gallerySettings/GallerySettings';
 import EventsDisplay from '@/components/posterDisplay/PosterDisplay';
-import CreateEventPopup from '@/components/createEventPopup/CreateEventPopup';
-import AccountPopup from '@/components/accountPopup/AccountPopup';
+import Sidebar from '@/components/sidebar/Sidebar';
 import HubbenRattan from '@/components/hubbenRattan/HubbenRattan';
 
 const Gallery: React.FC = () => {
 
     return (
         <div className='gallery'>
-            <Sidebar />
             <EventsDisplay />
-            <GallerySettings />
-            <CreateEventPopup />
-            <AccountPopup />
+            <Sidebar />
             <HubbenRattan />
         </div>
     );

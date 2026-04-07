@@ -1,6 +1,5 @@
 import React from 'react'
 import './AccountPopup.css'
-import Modal from '@/components/modal/Modal'
 
 import { useAuthContext } from "@/contexts/AuthContext"
 import { useEventContext } from "@/contexts/EventContext"
@@ -14,7 +13,7 @@ const AccountPopup: React.FC = () => {
     const { events, deleteEvent } = useEventContext()
     const { showAccount, setShowAccount } = useGalleryContext()
 
-    if (!showAccount || !isAuthenticated) return null;
+    if (!isAuthenticated) return <div>Accountpopup was opened when user was not logged in, this should not be possible... Magic?</div>;
 
     const userHasUploadedEvents = events.some((event) => event.createdById === currentUser?.id);
 
@@ -25,7 +24,7 @@ const AccountPopup: React.FC = () => {
             <ul className="no-list-styling">
                 {events.filter((event) => event.createdById === currentUser?.id).map((event) => (
                     <li key={event.id}>
-                        <img src={"/api/uploads/" + event.imagePath} className='event-image' alt={event.name} width={30}/>
+                        <img src={event.imagePath} className='event-image' alt={event.name} width={30}/>
                         <div>
                             <p>{event.name}</p>
                             <p>{event.date.toLocaleDateString()}</p>
@@ -49,14 +48,10 @@ const AccountPopup: React.FC = () => {
     )
 
     return (
-        <Modal onClose={() => setShowAccount(false)}>
-            <div className="account-popup popup" onClick={(e) => e.stopPropagation()}>
-                
-                {userHasUploadedEvents ? uploadedEvents : <p>You currently have no<br/>uploaded posters :(</p>}
-
-                <button onClick={logout}>Log out</button>
-            </div>
-        </Modal>
+        <div className="account-popup popup" onClick={(e) => e.stopPropagation()}>
+            {userHasUploadedEvents ? uploadedEvents : <p>You currently have no<br/>uploaded posters :(</p>}
+            <button onClick={logout}>Log out</button>
+        </div>
     )
 }
 

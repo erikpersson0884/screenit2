@@ -3,8 +3,8 @@ import React from "react";
 import { AuthProvider } from './contexts/AuthContext.tsx';
 import { EventProvider } from './contexts/EventContext.tsx';
 import { UsersProvider } from './contexts/UsersContext.tsx';
-
 import { GalleryProvider } from './contexts/GalleryContext.tsx';
+import { ModalProvider } from './contexts/ModalContext.tsx';
 
 
 const Providers: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -13,7 +13,9 @@ const Providers: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             <AuthProvider>
                 <GalleryProvider>
                     <EventProvider>
-                        {children}
+                        <ModalProvider>
+                            {children}
+                        </ModalProvider>
                     </EventProvider>
                 </GalleryProvider>
             </AuthProvider>

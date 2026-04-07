@@ -80,7 +80,7 @@ export const getChalmersITEvents: () => Promise<Event[]> = async (): Promise<Eve
             const event: Event = {
                 id: "chalmers-it-event" + newsEvent.id.toString(),
                 name: newsEvent.titleSv || newsEvent.titleEn,
-                date: new Date(newsEvent.scheduledPublish),
+                date: new Date(newsEvent.connectedEvents[0].startTime),
                 imagePath: "https://chalmers.it" + getImagePath(newsEvent),
                 createdById: "chalmers-it",
                 createdAt: new Date(newsEvent.createdAt),
