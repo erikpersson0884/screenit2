@@ -1,13 +1,11 @@
 import React from "react";
 
-
 const defaultDisplayTime = 10; // seconds
 const defaultHubbenRattanDisplayTime = 5; // seconds
 const defaultHubbenRattanDisplayInterval = 10; // seconds between the times Hubbenråttan is displayed, if enabled
 const defaultFetchInterval = 10; // seconds. How often to fetch new events and images from the server
 const defaultShowSidebar = false; // Whether to show the sidebar by default
 const defaultShowHubbenRattan = false; // Whether to show Hubbenråttan by default
-
 
 type GalleryContextType = {
     // Which popups to show
@@ -49,6 +47,7 @@ type GalleryContextType = {
 const GalleryContext = React.createContext<GalleryContextType | undefined>(undefined);
 
 const GalleryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+
     const [postDisplayTime, setEventDisplayTime] = React.useState<number>(
         () => Number(localStorage.getItem("postDisplayTime")) || defaultDisplayTime
     );
@@ -77,7 +76,6 @@ const GalleryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
     const [showSettings, setShowSettings] = React.useState<boolean>(false);
 
     const [postIndex, setEventIndex] = React.useState<number>(0);
-    const activePopup = React.useState<"account" | "upload" | "settings" | null>(null);
 
     // Persist variables saved to localStorage whenever they changes
     React.useEffect(() => {
@@ -103,17 +101,10 @@ const GalleryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
     React.useEffect(() => {
         localStorage.setItem("fetchInterval", fetchInterval.toString());
     }, [fetchInterval]);
+        
 
-    React.useEffect(() => {
-        [showAccount, showUpload, showSettings].forEach((state, index) => {
-            if (state) {
-                activePopup[1](index === 0 ? "account" : index === 1 ? "upload" : "settings");
-            }
-        });
-        if (!showAccount && !showUpload && !showSettings) {
-            activePopup[1](null);
-        }
-    }, [showAccount, showUpload, showSettings]);
+
+
 
 
 

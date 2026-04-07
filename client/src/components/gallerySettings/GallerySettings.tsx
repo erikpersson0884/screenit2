@@ -4,16 +4,13 @@ import Modal from '@/components/modal/Modal';
 
 import { useGalleryContext } from '@/contexts/GalleryContext';
 
+
 interface GallerySettingsProps {
     // Define any props for the component here
 }
 
 const GallerySettings: React.FC<GallerySettingsProps> = () => {
     const { 
-        // Which popups to show
-        showSettings,
-        setShowSettings,
-
         // Poster settings
         postDisplayTime, 
         setEventDisplayTime,
@@ -36,7 +33,49 @@ const GallerySettings: React.FC<GallerySettingsProps> = () => {
         setShowSidebar,
     } = useGalleryContext();
 
-    if (!showSettings) return null;
+
+    // Poster settings components
+    const EventDisplayTimeSetting: React.FC = () => (
+        <div className='input-group'>
+            <label htmlFor="postDisplayTime">Event Display Time (seconds):</label>
+            <input type="number" id="postDisplayTime" name="postDisplayTime" value={postDisplayTime} onChange={(e) => setEventDisplayTime(Number(e.target.value))}/>
+        </div>
+    );
+
+    const EventFetchIntervalSetting: React.FC = () => (
+        <div className='input-group'>
+            <label htmlFor="fetchInterval">Fetch Interval (minutes):</label>
+            <input type="number" id="fetchInterval" name="fetchInterval" value={fetchInterval} onChange={(e) => setFetchInterval(Number(e.target.value))}/>
+        </div>
+    );
+
+    // Sidebar settings components
+    const ShowSidebarSetting: React.FC = () => (
+        <div className='input-group'>
+            <label htmlFor="showSidebarButton">Show Sidebar:</label>
+            <input
+                type='checkbox'
+                id='showSidebarButton'
+                name='showSidebar'
+                checked={showSidebar}
+                onChange={(e) => setShowSidebar(!showSidebar)}
+            />
+        </div>
+    );
+
+    // Hubbenråttan settings components
+    const ShowHubbenRattanSetting: React.FC = () => (
+        <div className='input-group'>
+            <label htmlFor="showHubbenrattanButton">Show Hubbenråttan:</label>
+            <input 
+                type='checkbox' 
+                id='showHubbenrattanButton'
+                name='showHubbenrattanButton'
+                checked={showHubbenRattan}
+                onChange={() => setShowHubbenRattan(!showHubbenRattan)}
+            />
+        </div>
+    );
 
     const HubbenRattanDisplayTimeSetting: React.FC = () => (
         <div className='input-group'>
@@ -53,63 +92,25 @@ const GallerySettings: React.FC<GallerySettingsProps> = () => {
     )
 
     return (
-        <Modal onClose={() => setShowSettings(false)}>
-            <div className='gallerySettings popup' onClick={(e) => e.stopPropagation()}>
-                <h2>Gallery Settings</h2>
+        <div className='gallerySettings popup' onClick={(e) => e.stopPropagation()}>
+            <h2>Gallery Settings</h2>
 
-                <hr /> 
-                <div className='input-group'>
-                    <label htmlFor="postDisplayTime">Event Display Time (seconds):</label>
-                    <input
-                        type="number"
-                        id="postDisplayTime"
-                        name="postDisplayTime"
-                        value={postDisplayTime}
-                        onChange={(e) => setEventDisplayTime(Number(e.target.value))}
-                    />
-                </div>
+            <hr /> 
+            <EventDisplayTimeSetting />
 
-                <div className='input-group'>
-                    <label htmlFor="fetchInterval">Fetch Interval (minutes):</label>
-                    <input
-                        type="number"
-                        id="fetchInterval"
-                        name="fetchInterval"
-                        value={fetchInterval}
-                        onChange={(e) => setFetchInterval(Number(e.target.value))}
-                    />
-                </div>
+            <EventFetchIntervalSetting />
 
-                <hr />
+            <hr />
 
-                <div className='input-group'>
-                    <label htmlFor="showSidebarButton">Show Sidebar:</label>
-                    <input
-                        type='checkbox'
-                        id='showSidebarButton'
-                        name='showSidebar'
-                        checked={showSidebar}
-                        onChange={(e) => setShowSidebar(!showSidebar)}
-                    />
-                </div>
+            <ShowSidebarSetting />
 
-                <hr />
+            <hr />
 
-                <div className='input-group'>
-                    <label htmlFor="showHubbenrattanButton">Show Hubbenråttan:</label>
-                    <input 
-                        type='checkbox' 
-                        id='showHubbenrattanButton' 
-                        name='showHubbenrattanButton' 
-                        checked={showHubbenRattan} 
-                        onChange={() => setShowHubbenRattan(!showHubbenRattan)} 
-                    />
-                </div>
+            <ShowHubbenRattanSetting />
 
-                {showHubbenRattan && <HubbenRattanDisplayTimeSetting />}
-                {showHubbenRattan && <HubbenRattanDisplayIntervalSetting />}
-            </div>
-        </Modal>
+            {showHubbenRattan && <HubbenRattanDisplayTimeSetting />}
+            {showHubbenRattan && <HubbenRattanDisplayIntervalSetting />}
+        </div>
     );
 };
 
