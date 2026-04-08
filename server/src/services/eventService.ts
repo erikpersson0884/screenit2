@@ -5,6 +5,7 @@ import { Event, EventType } from '../../prisma/generated/prisma/client.js';
 import { EventWithRelations } from "../types/types.js";
 import { ClientApi } from "gammait";
 import { getChalmersITEvents } from "../repositories/chalmersITRepository.js";
+import logger from "../lib/logger.js";
 
 
 function getPreSharedAuth(): string {
@@ -65,7 +66,7 @@ class EventService implements IEventService {
                 byGroups: true
             }
         });
-        console.log("Created event:", newEvent.name);
+        logger.info(`Created event named: ${newEvent.name} with id: ${newEvent.id}`);
         return newEvent;
     }
 

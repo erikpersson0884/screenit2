@@ -30,6 +30,7 @@
         "multer": "^2.0.2",
         "prisma": "^7.6.0",
         "vitest": "^3.2.4",
+        "winston": "^3.19.0",
         "zod": "^4.1.11"
     },
     "devDependencies": {
