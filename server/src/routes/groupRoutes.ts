@@ -2,15 +2,14 @@ import express from "express";
 import { Request, Response } from "express";
 import { AuthenticatedRequest } from "../types/AuthenticatedRequest.js";
 
-import { createGroupController } from "../controllers/GroupController.js";
+import { createGroupController } from "../controllers/groupController.js";
 
 import { strictAuth} from "../middleware/authMiddleware.js";
 import asyncHandler from "../middleware/asyncHandler.js";
+import { IGroupController } from "../models/controllers/IGroupController.js";
 
 const router = express.Router();
-
-const groupController = createGroupController();
-
+const groupController: IGroupController = createGroupController();
 
 
 // Get all users or a specific user by ID

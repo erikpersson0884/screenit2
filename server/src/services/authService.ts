@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { IAuthService } from "../models/services/IAuthService.js";
 import { createUserService } from "./userService.js";
-import { createGroupService } from "./GroupService.js";
+import { createGroupService } from "./groupService.js";
 import { ClientApi, UserInfo, GroupWithPost, UserId as GammaUserId, GroupId as GammaGroupId } from "gammait";
 import { PrismaClient, User } from '../../prisma/generated/prisma/client.js';
 

@@ -24,6 +24,7 @@ export const CreateEventSchema = z.object({
 export const UpdateEventSchema = z.object({
     name: z.string().min(1).optional(),
     date: z.string().datetime().transform((val) => new Date(val)).optional(),
+    visible: z.boolean().optional(),
 });
 
 
@@ -33,9 +34,11 @@ export const EventResponseSchema = z.object({
     name: z.string().min(0).optional(),
     date: z.date(),
     imagePath: z.string(),
+    visible: z.boolean(),
     createdById: z.string(),
     createdAt: z.date(),
     updatedAt: z.date(),
+    type: z.string(),
     byGroups: GroupResponseSchema.array(),
 });
 

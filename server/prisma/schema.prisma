@@ -14,6 +14,11 @@ enum Role {
     user
 }
 
+enum EventType {
+    chalmersIT
+    userCreated
+}
+
 model Event {
   id            String   @id @default(uuid()) // Use Auto Increment for ID
   name          String
@@ -22,8 +27,9 @@ model Event {
   createdById   String
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  visible       Boolean  @default(true)
+  type          EventType
 
-  createdBy     User @relation("createdBy", fields: [createdById], references: [id])
   byGroups      Group[] @relation("EventGroups")
 }
 
@@ -37,7 +43,6 @@ model User {
     updatedAt   DateTime @updatedAt
 
     groups      Group[] @relation("UserGroups")
-    events      Event[] @relation("createdBy")
 }
 
 model Group {

@@ -1,7 +1,8 @@
 
 import createEventService from "../services/eventService.js";
+import { IEventService } from "../models/services/IEventService.js";
 
-const eventService = createEventService();
+const eventService: IEventService = createEventService;
 const DELETE_OLD_EVENTS_INTERVAL = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
 export const deleteOldEvents = async () => {

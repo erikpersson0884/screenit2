@@ -1,7 +1,7 @@
 import express from 'express';
 import { Request, Response } from 'express';
 import { AuthenticatedRequest } from '../types/AuthenticatedRequest.js';
-import { createEventController } from '../controllers/eventController.js';
+import createEventController from '../controllers/eventController.js';
 import { CreateEventSchema, UpdateEventSchema } from '../models/dtos/EventDTO.js';
 import { validateRequest } from '../middleware/validateRequestMiddleware.js';
 import asyncHandler from '../middleware/asyncHandler.js';
@@ -10,7 +10,7 @@ import { upload } from '../multner/upload.js';
 
 const router = express.Router();
 
-const eventController = createEventController();
+const eventController = createEventController;
 
 router.get('/', (req: Request, res: Response) => {
     eventController.getAllEvents(req, res);

@@ -18,6 +18,7 @@ declare global {
     }
 
     type Role = 'user' | 'admin';
+    type EventType = 'userCreated' | 'chalmersIT';
 
     interface IEvent {
         id: string;
@@ -27,6 +28,8 @@ declare global {
         createdAt: Date;
         updatedAt: Date;
         createdById: string;
+        visible: boolean;
+        type: EventType;
         byGroups: Group[];
     }
 }

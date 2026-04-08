@@ -1,36 +1,6 @@
-import { Event } from '../../prisma/generated/prisma/client.js';
-
-
-interface ChalmersITNewsEvent {
-    id: number;
-    titleEn: string;
-    titleSv: string;
-    contentEn: string;
-    contentSv: string;
-    createdAt: string;
-    updatedAt: string;
-    scheduledPublish: string;
-    writtenByGammaUserId: string;
-    status: string;
-    writtenFor: {
-        gammaSuperGroupId: string;
-        prettyName: string;
-    };
-    connectedEvents: {
-        id: number;
-        titleEn: string;
-        titleSv: string;
-        descriptionEn: string;
-        descriptionSv: string;
-        fullDay: boolean;
-        startTime: string;
-        endTime: string;
-        location: string;
-        createdAt: string;
-        updatedAt: string;
-    }[];
-}
-
+import { EventType } from '../../prisma/generated/prisma/client.js';
+import { ChalmersITNewsEvent } from "../types/types.js";
+import { EventWithRelations } from "../types/types.js";
 
 
 const getImagePath = (event: ChalmersITNewsEvent): string | null => {
@@ -45,24 +15,46 @@ const getImagePath = (event: ChalmersITNewsEvent): string | null => {
 };
 
 const isValidEvent = (event: ChalmersITNewsEvent): boolean => {
-    // If post has no connected events, it is not an event
+    // 1. If news post has no connected events, it is not an event
     if (event.connectedEvents.length === 0) return false;
 
-    // If the event has already started, it is not relevant
+    // 2. If the event has already started, it is not relevant
     const now = new Date();
-    if (!event.connectedEvents[0].startTime) return false;
+    const startTime = new Date(event.connectedEvents[0].startTime);
+    if (startTime <= now) return false;
 
-    // If the event dont have a poster image, it is not relevant
+    // 3. If the event dont have a poster image, it is not relevant
     const imagePath: string | null = getImagePath(event);
     if (!imagePath) return false;
 
-    // If the event poster image is not from chalmers media, it is not relevant
+    // 4. If the event poster image is not from chalmers media, it is not relevant
     if (!imagePath.startsWith("/api/media/")) return false;
 
     return true;
 };
 
-export const getChalmersITEvents: () => Promise<Event[]> = async (): Promise<Event[]> => {
+const convertChalmersITEventToEvent = (newsEvent: ChalmersITNewsEvent): EventWithRelations => {
+    const event: EventWithRelations = {
+        id: "chalmers-it-event" + newsEvent.id.toString(),
+        name: newsEvent.titleSv || newsEvent.titleEn,
+        date: new Date(newsEvent.connectedEvents[0].startTime),
+        imagePath: "https://chalmers.it" + getImagePath(newsEvent),
+        createdById: newsEvent.writtenByGammaUserId,
+        createdAt: new Date(newsEvent.createdAt),
+        updatedAt: new Date(newsEvent.updatedAt),
+        visible: true,
+        type: EventType.chalmersIT,
+        byGroups: [{
+            id: newsEvent.writtenFor.gammaSuperGroupId,
+            name: newsEvent.writtenFor.prettyName,
+            prettyName: newsEvent.writtenFor.prettyName,
+            superGroupId: newsEvent.writtenFor.gammaSuperGroupId,
+        }],
+    };
+    return event;
+};
+
+export const getChalmersITEvents = async():Promise<EventWithRelations[]> => {
     let response: Response;
     try {
         response = await fetch("https://chalmers.it/api/news");
@@ -73,37 +65,13 @@ export const getChalmersITEvents: () => Promise<Event[]> = async (): Promise<Eve
 
     const chalmersITEvents: ChalmersITNewsEvent[] = await response.json();
 
-    interface ApiEvent extends Event {
-        byGroups: {
-            id: string;
-            name: string;
-            prettyName: string;
-            superGroupId: string;
-        }[];
-    }
-
-    const events: Event[] = chalmersITEvents
-        .map((newsEvent: ChalmersITNewsEvent): Event | null => {
+    const unfilteredEvents: (EventWithRelations | null)[] = chalmersITEvents.map((newsEvent: ChalmersITNewsEvent): EventWithRelations | null => {
             if (!isValidEvent(newsEvent)) return null; // Skip invalid events
 
-            const event: ApiEvent = {
-                id: "chalmers-it-event" + newsEvent.id.toString(),
-                name: newsEvent.titleSv || newsEvent.titleEn,
-                date: new Date(newsEvent.connectedEvents[0].startTime),
-                imagePath: "https://chalmers.it" + getImagePath(newsEvent),
-                createdById: newsEvent.writtenByGammaUserId,
-                createdAt: new Date(newsEvent.createdAt),
-                updatedAt: new Date(newsEvent.updatedAt),
-                byGroups: [{
-                    id: newsEvent.writtenFor.gammaSuperGroupId,
-                    name: newsEvent.writtenFor.prettyName,
-                    prettyName: newsEvent.writtenFor.prettyName,
-                    superGroupId: newsEvent.writtenFor.gammaSuperGroupId,
-                }],
-            };
-            return event;
-        })
-        .filter((event: Event | null): event is Event => event !== null);
+            return convertChalmersITEventToEvent(newsEvent)
+    })
+        
+    const events: EventWithRelations[] = unfilteredEvents.filter((event: EventWithRelations | null): event is EventWithRelations => event !== null);
 
     return events;
 }

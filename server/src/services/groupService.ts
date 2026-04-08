@@ -72,3 +72,5 @@ export class GroupService implements IGroupService {
 export const createGroupService = (prisma: PrismaClient = prismaClient): IGroupService => {
     return new GroupService(prisma);
 }
+
+export default createGroupService();
