@@ -4,7 +4,7 @@ import { useGalleryContext } from "./GalleryContext";
 
 type EventsContextType = {
     events: IEvent[];
-    createEvent: (date: Date, name: string, imageFile: File, groupId?: string[]) => Promise<boolean>;
+    createEvent: (date: Date, name: string, imageFile: File, groupId: string[]) => Promise<boolean>;
     updateEvent: (eventId: string, newDate: Date, newName: string) => Promise<boolean>;
     deleteEvent: (eventId: string) => void;
 };
@@ -41,7 +41,7 @@ const EventProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         }
     };
 
-    const createEvent = async (date: Date, name: string, imageFile: File, groupIds?: string[]): Promise<boolean> => {
+    const createEvent = async (date: Date, name: string, imageFile: File, groupIds: string[]): Promise<boolean> => {
         try {
             await eventApi.createEvent(date, name, imageFile, groupIds);
             fetchEvents();

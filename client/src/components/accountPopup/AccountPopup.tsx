@@ -12,17 +12,30 @@ const AccountPopup: React.FC = () => {
     const { logout, currentUser, isAuthenticated } = useAuthContext()
     const { events, deleteEvent } = useEventContext()
     const { closeModal } = useModalContext()
+    const [ filterEventsUserMayModify, setFilterEventsUserMayModify ] = React.useState(events);
 
-    if (!isAuthenticated) return <div>Accountpopup was opened when user was not logged in, this should not be possible... Magic?</div>;
+    if (!isAuthenticated || !currentUser) return <div>Accountpopup was opened when user was not logged in, this should not be possible... Magic?</div>;
 
-    const userHasUploadedEvents = events.some((event) => event.createdById === currentUser?.id);
+    React.useEffect(() => {
+        if (!currentUser) return;
+
+        const filtered = events.filter(event =>
+            event.createdById === currentUser.gammaId ||
+            event.byGroups?.some(group => currentUser.groups.some(userGroup => userGroup.id === group.id))
+        );
+
+        console.log("Filtered events for user:", filtered);
+
+        setFilterEventsUserMayModify(filtered);
+    }, [events, currentUser]);
+
 
     const uploadedEvents = (
         <>
             <h2>Your uploaded posters</h2>
 
             <ul className="no-list-styling">
-                {events.filter((event) => event.createdById === currentUser?.id).map((event) => (
+                {filterEventsUserMayModify.map((event) => (
                     <li key={event.id}>
                         <img src={event.imagePath} className='event-image' alt={event.name} width={30}/>
                         <div>
@@ -49,7 +62,7 @@ const AccountPopup: React.FC = () => {
 
     return (
         <div className="account-popup popup" onClick={(e) => e.stopPropagation()}>
-            {userHasUploadedEvents ? uploadedEvents : <p>You currently have no<br/>uploaded posters :(</p>}
+            {filterEventsUserMayModify.length > 0 ? uploadedEvents : <p>You currently have no<br/>uploaded posters :(</p>}
             <button onClick={() => {logout(); closeModal();}}>Log out</button>
         </div>
     )

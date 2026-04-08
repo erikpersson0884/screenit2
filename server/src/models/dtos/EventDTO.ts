@@ -17,8 +17,8 @@ export const GetAllEventsQuerySchema = z.object({
 export const CreateEventSchema = z.object({
     name: z.string(),
     date: z.string().datetime().transform((val) => new Date(val)),
-    groupIds: z.string().transform((val) => JSON.parse(val) as string[]).optional(),
-    byGroups: GroupResponseSchema.array().optional(),
+    groupIds: z.string().transform((val) => JSON.parse(val) as string[]),
+    byGroups: GroupResponseSchema.array(),
 });
 
 export const UpdateEventSchema = z.object({
@@ -36,7 +36,7 @@ export const EventResponseSchema = z.object({
     createdById: z.string(),
     createdAt: z.date(),
     updatedAt: z.date(),
-    byGroups: GroupResponseSchema.array().optional(),
+    byGroups: GroupResponseSchema.array(),
 });
 
 export const EventsResponseSchema = z.array(EventResponseSchema);

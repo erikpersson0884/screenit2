@@ -57,7 +57,7 @@ const CreateEventPopup = () => {
             setErrorText("");
         }
 
-        const success = await createEvent(new Date(date), eventName, image, uploadAs === "user" ? undefined : [uploadAs]);
+        const success = await createEvent(new Date(date), eventName, image, uploadAs === "user" ? [] : [uploadAs]);
         if (success) {
             closeModal();
         } else setErrorText("Failed to create event. Please try again.");

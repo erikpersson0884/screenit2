@@ -1,6 +1,7 @@
 declare global {
     interface User {
         id: string;
+        gammaId: string;
         username: string;
         createdAt: Date;
         updatedAt: Date;
@@ -13,6 +14,7 @@ declare global {
         id: string;
         name: string;
         prettyName: string;
+        superGroupId: string;
     }
 
     type Role = 'user' | 'admin';
@@ -25,6 +27,7 @@ declare global {
         createdAt: Date;
         updatedAt: Date;
         createdById: string;
+        byGroups: Group[];
     }
 }
 

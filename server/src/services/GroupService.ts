@@ -44,6 +44,7 @@ export class GroupService implements IGroupService {
                         id: group.id,
                         name: group.name,
                         prettyName: group.prettyName,
+                        superGroupId: group.superGroup.id,
                     },
                 })
             )

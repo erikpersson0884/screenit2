@@ -12,6 +12,7 @@ export const parseWithSchema = <T>(schema: z.ZodSchema<T>, data: unknown): T => 
 // Response Schemas
 export const UserResponseSchema = z.object({
     id: z.string(),
+    gammaId: z.string(),
     username: z.string(),
     role: z.string(),
     createdAt: z.date(),

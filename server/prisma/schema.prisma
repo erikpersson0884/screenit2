@@ -41,9 +41,10 @@ model User {
 }
 
 model Group {
-    id          String @id @default(uuid())
-    name        String
-    prettyName  String
-    users       User[] @relation("UserGroups")
-    events      Event[] @relation("EventGroups")
+    id              String @id @default(uuid())
+    name            String
+    prettyName      String
+    users           User[] @relation("UserGroups")
+    events          Event[] @relation("EventGroups")
+    superGroupId    String
 }

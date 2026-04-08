@@ -7,7 +7,13 @@ const convertToClientEvents = (serverEvents: any): IEvent[] => {
         date: new Date(event.date),
         createdAt: new Date(event.createdAt),
         name: String(event.name),
-        imagePath: String(event.imagePath)
+        imagePath: String(event.imagePath),
+        byGroups: event.byGroups.map((group: any) => ({
+            id: String(group.id),
+            name: String(group.name),
+            prettyName: String(group.prettyName),
+            superGroupId: String(group.superGroupId),
+        })),
     }));
 
     return clientEvents;
@@ -24,12 +30,12 @@ export const eventApi = {
         }
     },
 
-    createEvent: async (date: Date, name: string, imageFile: File, groupIds?: string[]) => {
+    createEvent: async (date: Date, name: string, imageFile: File, groupIds: string[]) => {
         const eventData = new FormData();
         eventData.append("image", imageFile);
         eventData.append("date", date.toISOString());
         eventData.append("name", name);
-        if (groupIds) eventData.append("groupIds", JSON.stringify(groupIds));
+        eventData.append("groupIds", JSON.stringify(groupIds));
 
         try {
             const response = await api.post('/event', eventData, {
