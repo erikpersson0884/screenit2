@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt, { SignOptions } from "jsonwebtoken";
 import { IAuthService } from "../models/services/IAuthService.js";
 import { createUserService } from "./userService.js";
 import { createGroupService } from "./groupService.js";
@@ -28,7 +28,8 @@ const PRE_SHARED_AUTH: string = getPreSharedAuth();
 
 class authService implements IAuthService {
     private readonly JWT_SECRET: string = JWT_SECRET;
-    private readonly JWT_EXPIRATION_TIME = process.env.JWT_EXPIRATION_TIME || "1h";
+    private readonly JWT_EXPIRATION_TIME: SignOptions["expiresIn"] =
+    (process.env.JWT_EXPIRATION_TIME as SignOptions["expiresIn"]) || "1h";
     private prisma: PrismaClient;
     private userService: IUserService;
     private groupservice: IGroupService;

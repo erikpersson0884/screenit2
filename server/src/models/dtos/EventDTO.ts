@@ -18,7 +18,6 @@ export const CreateEventSchema = z.object({
     name: z.string(),
     date: z.string().datetime().transform((val) => new Date(val)),
     groupIds: z.string().transform((val) => JSON.parse(val) as string[]),
-    byGroups: GroupResponseSchema.array(),
 });
 
 export const UpdateEventSchema = z.object({

@@ -5,6 +5,7 @@ import { useGalleryContext } from "./GalleryContext";
 type EventsContextType = {
     events: IEvent[];
     visibleEvents: IEvent[];
+    fetchEvents: () => void;
     createEvent: (date: Date, name: string, imageFile: File, groupId: string[]) => Promise<boolean>;
     updateEvent: (eventId: string, newDate: Date, newName: string, visible: boolean) => Promise<boolean>;
     deleteEvent: (eventId: string) => void;
@@ -89,9 +90,10 @@ const EventProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     };
 
     return (
-        <EventContext.Provider value={{ 
+        <EventContext.Provider value={{
             events, 
             visibleEvents,
+            fetchEvents,
             createEvent, 
             updateEvent, 
             deleteEvent 

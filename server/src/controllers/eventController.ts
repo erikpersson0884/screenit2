@@ -83,7 +83,7 @@ class EventController implements IEventController {
     }
 }
 
-export const createEventController = (eventService: IEventService = createEventService, groupService: IGroupService = createGroupService): IEventController => {
+export const createEventController = (eventService: IEventService = createEventService(), groupService: IGroupService = createGroupService()): IEventController => {
     return new EventController(eventService, groupService);
 }
 

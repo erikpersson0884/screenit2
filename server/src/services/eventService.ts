@@ -6,6 +6,7 @@ import { EventWithRelations } from "../types/types.js";
 import { ClientApi } from "gammait";
 import { getChalmersITEvents } from "../repositories/chalmersITRepository.js";
 import logger from "../lib/logger.js";
+import { isDbReady } from "../dbState.js";
 
 
 function getPreSharedAuth(): string {
@@ -92,8 +93,13 @@ class EventService implements IEventService {
         }
     }
 
-    async upsertEvents(events: EventWithRelations[]): Promise<void> {
-        await Promise.all(
+    async upsertEvents(events: EventWithRelations[]): Promise<EventWithRelations[]> {
+        if (!isDbReady()) {
+            logger.warn("DB not ready → skipping event sync");
+            return [];
+        }
+
+        const upsertedEvents: EventWithRelations[] = await Promise.all(
             events.map(event =>
                 this.prisma.event.upsert({
                     where: { id: event.id },
@@ -128,12 +134,13 @@ class EventService implements IEventService {
                 })
             )
         );
+        return upsertedEvents;
     }
 
-    async syncEventsFromChalmersIT(): Promise<void> {
+    async syncEventsFromChalmersIT(): Promise<EventWithRelations[]> {
         const chalmersITEvents: EventWithRelations[] = await getChalmersITEvents(); // or whatever method
 
-        await this.upsertEvents(chalmersITEvents);
+        return await this.upsertEvents(chalmersITEvents);
     }
 };
 
@@ -141,4 +148,4 @@ function createEventService(prisma: PrismaClient = prismaClient): IEventService 
     return new EventService(prisma);
 }
 
-export default createEventService();
+export default createEventService;

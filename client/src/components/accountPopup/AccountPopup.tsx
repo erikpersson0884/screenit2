@@ -60,12 +60,12 @@ const AccountPopup: React.FC = () => {
                         
                         <div className='action-buttons'>
 
-                            <button onClick={() => changeEventVisibility(event.id)}>
+                            <button title="Hide event" onClick={() => changeEventVisibility(event.id)}>
                                 <img src={event.visible ? visibleIcon : NotVisibleIcon} alt="Toggle visibility" width={20}/>
                             </button>
 
                             {event.type === "userCreated" ?
-                                <button onClick={() => deleteEvent(event.id)}>
+                                <button title="Delete event?" onClick={() => deleteEvent(event.id)}>
                                     <img src={deleteIcon} alt="Delete" width={20}/>
                                 </button> : null
                             }

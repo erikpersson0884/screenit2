@@ -8,7 +8,7 @@ export interface IEventService {
     updateEvent(id: string, eventData: Partial<Event>): Promise<Event>;
     deleteEvent(id: string): Promise<boolean>;
     
-    syncEventsFromChalmersIT(): Promise<void>;
+    syncEventsFromChalmersIT(): Promise<EventWithRelations[]>;
 }
 
 export default IEventService;

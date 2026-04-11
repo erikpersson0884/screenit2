@@ -2,6 +2,8 @@ import { PrismaClient, Group } from "../../prisma/generated/prisma/client.js";
 import prismaClient from "../lib/prisma.js";
 import { GroupWithPost, UserWithGroups } from "gammait";
 import { IGroupService } from "../models/services/IGroupService.js";
+import logger from "../lib/logger.js";
+import { isDbReady } from "../dbState.js";
 
 export class GroupService implements IGroupService {
     private prisma: PrismaClient;
@@ -52,6 +54,11 @@ export class GroupService implements IGroupService {
     }
 
     async syncUserGroups(userId: string, groups: GroupWithPost[]) {
+        if (!isDbReady()) {
+            logger.warn("DB not ready → skipping group sync");
+            return;
+        }
+
         const groupsToSync = groups.filter(
             g => g.superGroup.type === "committee"
         );
@@ -73,4 +80,4 @@ export const createGroupService = (prisma: PrismaClient = prismaClient): IGroupS
     return new GroupService(prisma);
 }
 
-export default createGroupService();
+export default createGroupService;
