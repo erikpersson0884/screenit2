@@ -19,7 +19,7 @@ const JWT_SECRET: string = getJwtSecret();
 
 function getPreSharedAuth(): string {
     const auth = process.env.GAMMA_PRE_SHARED_AUTH;
-    if (!auth) throw new Error("Gamma API configuration is missing. Please set PRE_SHARED_AUTH in your environment variables.");
+    if (!auth) throw new Error(`.env variable "GAMMA_PRE_SHARED_AUTH" is missing`);
     return auth;
 }
 

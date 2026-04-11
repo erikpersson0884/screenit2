@@ -1,4 +1,5 @@
 import { EventType } from '../../prisma/generated/prisma/client.js';
+import logger from '../lib/logger.js';
 import { ChalmersITNewsEvent } from "../types/types.js";
 import { EventWithRelations } from "../types/types.js";
 
@@ -72,6 +73,8 @@ export const getChalmersITEvents = async():Promise<EventWithRelations[]> => {
     })
         
     const events: EventWithRelations[] = unfilteredEvents.filter((event: EventWithRelations | null): event is EventWithRelations => event !== null);
+
+    logger.info(`Fetched ${unfilteredEvents.length} events from chalmers.it, out of which ${events.length} was valid events.`);
 
     return events;
 }

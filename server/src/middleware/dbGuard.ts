@@ -1,9 +1,9 @@
-import { getDbReady } from "../lib/dbState.js";
+import { isDbReady } from "../lib/dbState.js";
 import { Request, Response, NextFunction } from "express";
 
 
 export function dbGuard(req: Request, res: Response, next: NextFunction) {
-    if (!getDbReady()) {
+    if (!isDbReady()) {
         return res.status(503).json({
             error: "Database unavailable"
         });

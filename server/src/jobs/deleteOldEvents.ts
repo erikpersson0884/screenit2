@@ -1,7 +1,7 @@
 import createEventService from "../services/eventService.js";
 import { IEventService } from "../models/services/IEventService.js";
 import logger from "../lib/logger.js";
-import { isDbReady } from "../dbState.js";
+import { isDbReady } from "../lib/dbState.js";
 
 const eventService: IEventService = createEventService();
 
@@ -9,17 +9,7 @@ const DELETE_OLD_EVENTS_INTERVAL = 24 * 60 * 60 * 1000;
 
 export const deleteOldEvents = async () => {
     try {
-        if (!isDbReady()) {
-            logger.warn("DB not ready → skipping group sync");
-            return;
-        }
-        
         const allEvents = await eventService.getAllEvents();
-
-        if (!allEvents || allEvents.length === 0) {
-            logger.info("No events found or DB was unavailable, aborting deleteOldEvents job");
-            return;
-        }
 
         const now = new Date();
 
@@ -43,7 +33,7 @@ export const deleteOldEvents = async () => {
     }
 };
 
-export const startDeleteOldEventsJob = () => {
+export const startDeleteOldEventsJob = async () => {
     const safeRun = async () => {
         try {
             if (!isDbReady()) {

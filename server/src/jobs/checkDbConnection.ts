@@ -18,9 +18,8 @@ export async function checkDatabase() {
     }
 }
 
-export function startDbHealthCheck() {
-    // run immediately
-    checkDatabase();
+export async function startDbHealthCheck() {
+    await checkDatabase();
 
     // keep checking
     setInterval(checkDatabase, CHECK_INTERVAL);
