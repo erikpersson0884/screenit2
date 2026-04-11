@@ -9,10 +9,9 @@ dotenv.config();
 
 const PORT = process.env.PORT || 3001;
 
-
+await startDbHealthCheck();
 startDeleteOldEventsJob();
 startSyncChalmersEventsJob();
-startDbHealthCheck();
 
 app.listen(PORT, () => {
     logger.info(`Server is running on port ${PORT}`);

@@ -4,4 +4,4 @@ export const setDbReady = (value: boolean) => {
     dbReady = value;
 };
 
-export const getDbReady = () => dbReady;
+export const isDbReady = () => dbReady;

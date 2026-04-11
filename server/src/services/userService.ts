@@ -5,7 +5,7 @@ import { IUserService } from '../models/services/IUserService.js';
 import { UserAlreadyExistsError, UserNotFoundError } from '../errors/CustomErrors.js';
 import { ClientApi, UserInfo, GroupWithPost, GroupId as GammaGroupId, UserId as GammaUserId } from "gammait";
 
-if (!process.env.GAMMA_PRE_SHARED_AUTH) throw new Error("Gamma API configuration is missing. Please set PRE_SHARED_AUTH in your environment variables.");
+if (!process.env.GAMMA_PRE_SHARED_AUTH) throw new Error(`.env variable "GAMMA_PRE_SHARED_AUTH" is missing`);
 const clientapi = new ClientApi({
         // The authorization header that identifies our client with Gamma.
         authorization: process.env.GAMMA_PRE_SHARED_AUTH,

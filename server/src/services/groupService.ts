@@ -3,7 +3,7 @@ import prismaClient from "../lib/prisma.js";
 import { GroupWithPost, UserWithGroups } from "gammait";
 import { IGroupService } from "../models/services/IGroupService.js";
 import logger from "../lib/logger.js";
-import { isDbReady } from "../dbState.js";
+import { isDbReady } from "../lib/dbState.js";
 
 export class GroupService implements IGroupService {
     private prisma: PrismaClient;

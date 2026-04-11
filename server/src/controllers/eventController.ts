@@ -5,7 +5,6 @@ import IEventService from "../models/services/IEventService.js";
 import createEventService from "../services/eventService.js";
 import { AuthenticatedRequest } from "../types/AuthenticatedRequest.js";
 import { EventsResponseSchema, EventResponseSchema } from "../models/dtos/EventDTO.js";
-import { getChalmersITEvents } from "../repositories/chalmersITRepository.js";
 import "dotenv/config.js";
 import CustomError, { NotAllowedToModifyEventError, MissingFileError } from "../errors/CustomErrors.js";
 import { CreateEventDTO } from "../models/dtos/EventDTO.js";
@@ -27,7 +26,7 @@ class EventController implements IEventController {
         const groups: Group[] = await this.groupService.getGroupsForUser(user.id);
 
         // Is allowed to modify if:
-        return user.gammaId === event.createdById ||                                                  // User created the event
+        return user.gammaId === event.createdById ||                                             // User created the event
             user.role === "admin" ||                                                             // User is an admin
             (event.byGroups.some(group => groups.some(userGroup => userGroup.id === group.id))); // User is in a group that has access to the event
     }
@@ -79,7 +78,7 @@ class EventController implements IEventController {
         if (!(await this.checkIfUserCanModifyEvent(user, eventToDelete))) throw new NotAllowedToModifyEventError();
 
         await this.eventService.deleteEvent(id);
-        sendValidatedResponse(res, EventResponseSchema, event);
+        sendValidatedResponse(res, EventResponseSchema, eventToDelete);
     }
 }
 

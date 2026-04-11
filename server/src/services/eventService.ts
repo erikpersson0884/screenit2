@@ -6,7 +6,7 @@ import { EventWithRelations } from "../types/types.js";
 import { ClientApi } from "gammait";
 import { getChalmersITEvents } from "../repositories/chalmersITRepository.js";
 import logger from "../lib/logger.js";
-import { isDbReady } from "../dbState.js";
+import { isDbReady } from "../lib/dbState.js";
 
 
 function getPreSharedAuth(): string {
