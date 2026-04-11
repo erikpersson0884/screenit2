@@ -4,8 +4,10 @@ import { useGalleryContext } from "./GalleryContext";
 
 type EventsContextType = {
     events: IEvent[];
-    createEvent: (date: Date, name: string, imageFile: File) => Promise<boolean>;
-    updateEvent: (eventId: string, newDate: Date, newName: string) => Promise<boolean>;
+    visibleEvents: IEvent[];
+    fetchEvents: () => void;
+    createEvent: (date: Date, name: string, imageFile: File, groupId: string[]) => Promise<boolean>;
+    updateEvent: (eventId: string, newDate: Date, newName: string, visible: boolean) => Promise<boolean>;
     deleteEvent: (eventId: string) => void;
 };
 
@@ -15,6 +17,7 @@ const EventContext = React.createContext<EventsContextType | undefined>(undefine
 const EventProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { fetchInterval } = useGalleryContext();
     const [ events, setEvents ] = React.useState<IEvent[]>([]);
+    const visibleEvents = React.useMemo(() => events.filter(event => event.visible), [events]);
 
     const getEventFromId = (eventId: String): IEvent => {
         const event: IEvent | undefined = events.find((event) => event.id === eventId);
@@ -41,9 +44,9 @@ const EventProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         }
     };
 
-    const createEvent = async (date: Date, name: string, imageFile: File): Promise<boolean> => {
+    const createEvent = async (date: Date, name: string, imageFile: File, groupIds: string[]): Promise<boolean> => {
         try {
-            await eventApi.createEvent(date, name, imageFile);
+            await eventApi.createEvent(date, name, imageFile, groupIds);
             fetchEvents();
             return true;
         }
@@ -53,17 +56,18 @@ const EventProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         return false;
     };
 
-    const updateEvent = async (eventId: string, newDate: Date, newName: string): Promise<boolean> => {
+    const updateEvent = async (eventId: string, newDate: Date, newName: string, visible: boolean): Promise<boolean> => {
         const updatedEvent: Partial<IEvent> = { };
         const currentEvent: IEvent = getEventFromId(eventId);
 
         if (newDate !== currentEvent.date) updatedEvent.date = newDate;
         if (newName !== currentEvent.name) updatedEvent.name = newName;
+        if (visible !== currentEvent.visible) updatedEvent.visible = visible;
 
         if (Object.keys(updatedEvent).length === 0) return false; // No changes to update
 
         try {
-            eventApi.updateEvent(eventId, updatedEvent);
+            await eventApi.updateEvent(eventId, updatedEvent);
             fetchEvents();
             return true
         }
@@ -86,7 +90,14 @@ const EventProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     };
 
     return (
-        <EventContext.Provider value={{ events, createEvent, updateEvent, deleteEvent }}>
+        <EventContext.Provider value={{
+            events, 
+            visibleEvents,
+            fetchEvents,
+            createEvent, 
+            updateEvent, 
+            deleteEvent 
+        }}>
             {children}
         </EventContext.Provider>
     );

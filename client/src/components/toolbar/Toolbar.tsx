@@ -10,16 +10,16 @@ import AccountPopup from '@/components/accountPopup/AccountPopup';
 
 const Navigation: React.FC = () => {
     const { isAuthenticated, authenticate } = useAuthContext();
-    const { openModal, closeModal } = useModalContext();
+    const { openModal, closeModal, modalIsOpen } = useModalContext();
 
     return (
         <div className='toolbar'>
-            {isAuthenticated && <button onClick={() => openModal(<CreateEventPopup />)}>Upload</button>}
+            {isAuthenticated && <button onClick={() => modalIsOpen? closeModal() :  openModal(<CreateEventPopup />)}>Upload</button>}
 
-            <button onClick={() => openModal(<GallerySettings />)}>Settings</button>
+            <button onClick={() => modalIsOpen? closeModal() : openModal(<GallerySettings />)}>Settings</button>
 
-            <button onClick={isAuthenticated ? () => openModal(<AccountPopup />) : authenticate}>
-                {isAuthenticated ? 'Account' : 'Login'}  
+            <button onClick={isAuthenticated ? () => modalIsOpen? closeModal() : openModal(<AccountPopup />) : authenticate}>
+                {isAuthenticated ? 'Account' : 'Login'}
             </button>
         </div>
     );

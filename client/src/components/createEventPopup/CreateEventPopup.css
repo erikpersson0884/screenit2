@@ -1,4 +1,9 @@
 
+.create-event-popup {
+    max-height: 90%;
+    overflow: scroll;
+}
+
 .create-event-popup h2{
     margin: 0;
 }
@@ -8,14 +13,15 @@
 }
 
 .create-event-popup .postImagePreview {
-    background-color: rgba(255, 255, 255, 0.13);
+    background-color: var(--background-color);
     background-image: url('/src/assets/upload-image.svg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 
-    width: 80%;
     aspect-ratio: 1/1;
+    width: 100%;
+    border-radius: .5rem;
 }
 
 .create-event-popup #uploadNewEventImageInput {
@@ -24,3 +30,59 @@
     padding: 0;
     border: 0;
 }
+
+.create-event-popup .upload-as {
+    display: flex;
+    gap: 0rem;
+    align-items: flex-start;
+    flex-direction: column;
+    
+}
+
+.create-event-popup .upload-as p {
+    margin: 0;
+}
+
+.create-event-popup input[type="radio"] {
+    aspect-ratio: 1/1;
+    min-width: 1rem;
+    border-radius: 0;
+    accent-color: green;
+    
+}
+
+.create-event-popup .commitees {
+    margin-left: 2rem;
+}
+
+.create-event-popup .radio-group {
+    width: 100%;
+    gap: .5rem;
+}
+
+.create-event-popup h3 {
+    margin: 0;
+}
+
+.create-event-popup .open-upload-as-option {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    cursor: pointer;
+
+    opacity: .8;
+
+    transition: opacity .2s ease-in-out;
+}
+
+.create-event-popup .open-upload-as-option:hover {
+    opacity: 1;
+}
+
+.create-event-popup .open-upload-as-option p {
+    font-style: italic;
+    
+    margin: 0;
+}
+
+

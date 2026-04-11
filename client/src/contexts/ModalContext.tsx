@@ -4,24 +4,34 @@ import Modal from '@/components/modal/Modal';
 type ModalContextType = {
     openModal: (content: React.ReactNode) => void;
     closeModal: () => void;
+    modalIsOpen: boolean;
 };
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [modalContent, setModalContent] = useState<React.ReactNode | null>(null);
+    const [ modalContent, setModalContent ] = useState<React.ReactNode | null>(null);
+    const [ modalIsOpen, setModalIsOpen ] = useState(false);
+
+    React.useEffect(() => {
+        setModalIsOpen(modalContent !== null);
+    }, [modalContent]);
 
     const openModal = (content: React.ReactNode) => setModalContent(content);
     const closeModal = () => setModalContent(null);
 
     return (
-        <ModalContext.Provider value={{ openModal, closeModal }}>
-        {children}
-        {modalContent && (
-            <Modal onClose={closeModal}>
-                {modalContent}
-            </Modal>
-        )}
+        <ModalContext.Provider value={{ 
+            openModal, 
+            closeModal,
+            modalIsOpen
+        }}>
+            {children}
+            {modalContent && (
+                <Modal onClose={closeModal}>
+                    {modalContent}
+                </Modal>
+            )}
         </ModalContext.Provider>
     );
 };

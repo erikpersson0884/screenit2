@@ -2,7 +2,7 @@ import { describe } from 'node:test';
 import { vi, beforeAll, it, expect } from 'vitest';
 
 import IEventController from '../../models/controllers/IEventController.js';
-import createEventController from '../../controllers/eventController.js';
+import { createEventController } from '../../controllers/eventController.js';
 
 // Mock event service
 const mockEventService: Partial<IEventController> = {
@@ -10,7 +10,6 @@ const mockEventService: Partial<IEventController> = {
         id: '1',
         name: 'Test Event',
         date: new Date(),
-        createdBy: 'user1',
         createdAt: new Date(),
         updatedAt: new Date()
     })

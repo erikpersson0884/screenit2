@@ -1,5 +1,7 @@
 :root {
-    background-color: #2a2a2a;
+    --background-color: #2a2a2a;
+
+    background-color: var(--background-color);
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
@@ -67,4 +69,9 @@ input {
     border-radius: .5rem;
     border: #fff .1rem solid;
     outline: none;
+}
+
+input[type="checkbox"] {
+    aspect-ratio: 1/1;
+    height: 1.3rem;
 }

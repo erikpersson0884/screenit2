@@ -3,7 +3,11 @@
     top: 1rem;
     left: 1rem;
 
-    max-width: 20%;
+    max-width: 20rem;
+}
+
+.sidebar h2 {
+    margin-top: 0;
 }
 
 .sidebar ul{
@@ -19,9 +23,13 @@
     align-items: center;
     justify-content: space-between;
     flex-direction: row;
-    gap: 1rem;    
+    gap: 2rem;    
 }
 
-.sidebar h2 {
-    margin-top: 0;
+.sidebar .event-name {
+    max-width: 12rem;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

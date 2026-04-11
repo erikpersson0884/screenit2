@@ -4,8 +4,14 @@ import './Gallery.css';
 import EventsDisplay from '@/components/posterDisplay/PosterDisplay';
 import Sidebar from '@/components/sidebar/Sidebar';
 import HubbenRattan from '@/components/hubbenRattan/HubbenRattan';
+import { useEventContext } from '@/contexts/EventContext';
 
 const Gallery: React.FC = () => {
+    const { fetchEvents } = useEventContext();
+
+    React.useEffect(() => {
+        fetchEvents();
+    }, []);
 
     return (
         <div className='gallery'>

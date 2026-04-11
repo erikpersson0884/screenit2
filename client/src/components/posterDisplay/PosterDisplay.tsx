@@ -5,7 +5,7 @@ import { useEventContext } from '@/contexts/EventContext';
 
 const PosterDisplay: React.FC = () => {
     const { postDisplayTime } = useGalleryContext();
-    const { events } = useEventContext();
+    const { visibleEvents: events } = useEventContext();
 
     const [currentIndex, setCurrentIndex] = React.useState<number>(0);
 
@@ -13,7 +13,7 @@ const PosterDisplay: React.FC = () => {
         if (events.length === 0) return;
 
         const interval = setInterval(() => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % events.length);
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % events.length);
         }, postDisplayTime * 1000);
 
         return () => clearInterval(interval); // cleanup on unmount

@@ -42,6 +42,36 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
     }, []);
 
+    useEffect(() => {
+        const token = localStorage.getItem('authToken');
+        if (!token) return;
+
+        try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            if (!payload.exp) return;
+
+            const currentTime = Math.floor(Date.now() / 1000);
+            const timeUntilExpiry = (payload.exp - currentTime) * 1000; // ms
+
+            if (timeUntilExpiry <= 0) {
+                logout();
+                return;
+            }
+
+            // Set a timer to logout automatically when token expires
+            const timer = setTimeout(() => {
+                console.log('JWT expired, logging out.');
+                logout();
+            }, timeUntilExpiry);
+
+            return () => clearTimeout(timer);
+
+        } catch (err) {
+            console.error('Error parsing token for auto-logout', err);
+            logout();
+        }
+    }, []);
+
     const authenticate = async (): Promise<void> => {
         window.location.replace("/api/auth/gamma");
     };
@@ -52,7 +82,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     };
 
     return (
-        <AuthContext.Provider value={{ currentUser, isAuthenticated, logout, authenticate, setAuthToken }}>
+        <AuthContext.Provider value={{ 
+            currentUser, 
+            isAuthenticated, 
+            logout, 
+            authenticate, 
+            setAuthToken 
+        }}>
             {children}
         </AuthContext.Provider>
     );

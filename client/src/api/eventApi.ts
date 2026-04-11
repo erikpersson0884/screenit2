@@ -7,7 +7,15 @@ const convertToClientEvents = (serverEvents: any): IEvent[] => {
         date: new Date(event.date),
         createdAt: new Date(event.createdAt),
         name: String(event.name),
-        imagePath: String(event.imagePath)
+        imagePath: String(event.imagePath),
+        visible: Boolean(event.visible),
+        type: String(event.type) as EventType,
+        byGroups: event.byGroups.map((group: any) => ({
+            id: String(group.id),
+            name: String(group.name),
+            prettyName: String(group.prettyName),
+            superGroupId: String(group.superGroupId),
+        })),
     }));
 
     return clientEvents;
@@ -24,11 +32,12 @@ export const eventApi = {
         }
     },
 
-    createEvent: async (date: Date, name: string, imageFile: File) => {
+    createEvent: async (date: Date, name: string, imageFile: File, groupIds: string[]) => {
         const eventData = new FormData();
         eventData.append("image", imageFile);
         eventData.append("date", date.toISOString());
         eventData.append("name", name);
+        eventData.append("groupIds", JSON.stringify(groupIds));
 
         try {
             const response = await api.post('/event', eventData, {
@@ -45,7 +54,7 @@ export const eventApi = {
 
     updateEvent: async (eventId: string, eventData: Partial<IEvent>) => {
         try {
-            const response = await api.put(`/event/${eventId}`, eventData);
+            const response = await api.patch(`/event/${eventId}`, eventData);
             return response.data;
         } catch (error) {
             console.error('Error updating event:', error);

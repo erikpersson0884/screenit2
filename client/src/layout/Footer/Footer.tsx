@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
         <footer className='page-footer'>
             <p>Made with</p>
             <img src={pixelnHeart} alt="Pixeln Heart" height={20} />
-            <p>by <a href="https://github.com/erikpersson0884/">Göken</a></p>
+            <p>by <a href="https://github.com/erikpersson0884/" title="A cool dude">Göken</a></p>
         </footer>
     );
 };
