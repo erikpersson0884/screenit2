@@ -29,8 +29,11 @@
 
 ## Features
 
+![Screenshot of screenIT2](images/main-page.png)
 
-## Screenshots
+<img src="images/upload.png" alt="Screenshot of upload popup" width="30%">
+<img src="images/settings.png" alt="Screenshot of settings popup" width="30%">
+<img src="images/account.png" alt="Screenshot of account popup" width="30%">
 
 
 # Getting started
