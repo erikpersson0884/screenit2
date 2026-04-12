@@ -72,6 +72,11 @@ input {
 }
 
 input[type="checkbox"] {
+
     aspect-ratio: 1/1;
     height: 1.3rem;
+}
+
+input[type="radio"], input[type="checkbox"], input[type="date"], input[type="file"] {
+    cursor: pointer;
 }

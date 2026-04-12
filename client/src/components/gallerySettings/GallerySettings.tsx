@@ -1,8 +1,8 @@
 import React from 'react';
 import './GallerySettings.css';
-import Modal from '@/components/modal/Modal';
 
 import { useGalleryContext } from '@/contexts/GalleryContext';
+import fullScreenIcon from '@/assets/fullscreen-icon.svg';
 
 
 interface GallerySettingsProps {
@@ -33,6 +33,15 @@ const GallerySettings: React.FC<GallerySettingsProps> = () => {
         setShowSidebar,
     } = useGalleryContext();
 
+    const toggleFullscreen = () => {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }    
+    };
 
     // Poster settings components
     const EventDisplayTimeSetting: React.FC = () => (
@@ -94,6 +103,10 @@ const GallerySettings: React.FC<GallerySettingsProps> = () => {
     return (
         <div className='gallerySettings popup' onClick={(e) => e.stopPropagation()}>
             <h2>Gallery Settings</h2>
+
+            <button onClick={toggleFullscreen} title='Fullscreen' className='fullscreen-button'>
+                <img src={fullScreenIcon} alt="Full Screen Icon" className='fullScreenIcon' height={20}/>
+            </button>
 
             <hr /> 
             <EventDisplayTimeSetting />

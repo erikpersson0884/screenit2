@@ -33,3 +33,9 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+@media screen and (max-width: 450px) {
+    .sidebar {
+        left: 50%;
+    }
+}

@@ -10,3 +10,21 @@
 .input-group input {
     max-width: 4rem;
 }
+
+.gallerySettings .fullscreen-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
+    padding: 0;
+    border: 0
+}
+
+.gallerySettings .fullscreen-button img {
+    height: 2rem;
+    transition: transform 0.2s ease;
+}
+
+.gallerySettings .fullscreen-button:hover img {
+    transform: scale(1.1);
+}

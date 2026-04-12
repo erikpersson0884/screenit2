@@ -5,6 +5,7 @@ type ModalContextType = {
     openModal: (content: React.ReactNode) => void;
     closeModal: () => void;
     modalIsOpen: boolean;
+    modalContent: React.ReactNode | null;
 };
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
@@ -24,7 +25,8 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         <ModalContext.Provider value={{ 
             openModal, 
             closeModal,
-            modalIsOpen
+            modalIsOpen,
+            modalContent
         }}>
             {children}
             {modalContent && (

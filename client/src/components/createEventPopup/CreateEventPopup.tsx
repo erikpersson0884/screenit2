@@ -121,7 +121,12 @@ const CreateEventPopup = () => {
         const isSelected = uploadAs !== "user";
         if (currentUser.groups.length === 0) return null;
         else return (
-            <li className='radio-group' onClick={() => setUploadAs(currentUser.groups[0].id)}>
+            <li
+                className='radio-group'
+                onClick={() => {
+                    if (uploadAs === "user") setUploadAs(currentUser.groups[0].id);
+                }}
+            >
                 <input
                     type="radio"
                     name="uploadAs"
