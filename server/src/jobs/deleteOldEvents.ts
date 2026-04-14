@@ -2,10 +2,17 @@ import createEventService from "../services/eventService.js";
 import { IEventService } from "../models/services/IEventService.js";
 import logger from "../lib/logger.js";
 import { isDbReady } from "../lib/dbState.js";
+import { EventWithRelations } from "../types/types.js";
 
 const eventService: IEventService = createEventService();
 
 const DELETE_OLD_EVENTS_INTERVAL = 24 * 60 * 60 * 1000;
+
+const shouldEventBeDeleted = (event: EventWithRelations): boolean => {
+    const now = new Date();
+    if (event.date < now) return true;
+    else return false;
+}
 
 export const deleteOldEvents = async () => {
     try {
@@ -15,7 +22,7 @@ export const deleteOldEvents = async () => {
 
         for (const event of allEvents) {
             try {
-                if (event.date < now) {
+                if (shouldEventBeDeleted(event)) {
                     await eventService.deleteEvent(event.id);
                     logger.info(
                         `Deleted old event: ${event.name} (${event.id})`
@@ -34,6 +41,7 @@ export const deleteOldEvents = async () => {
 };
 
 export const startDeleteOldEventsJob = async () => {
+    logger.info("Starting DeleteOldEvents job");
     const safeRun = async () => {
         try {
             if (!isDbReady()) {
