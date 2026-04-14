@@ -1,8 +1,10 @@
 # screenIT2
-## A digital event screen
 [![Last Commit][last-commit-shield]][last-commit-url]
 [![Repo Size][repo-size-shield]][repo-size-url]
 [![Author][author-shield]][author-url]
+
+## A digital event screen
+ScreenIT2 is a digital event screen built for Chalmers IT division. It displays upcoming events from chalmers.it, allows users to upload custom posters, and provides an admin panel for managing events and posters. It is currently used in the IT division's premises "Hubben 2.2" and is open source for anyone to use and contribute to.
 
 
 ## Table of Contents
@@ -16,7 +18,6 @@
 
 # About the Project
 
-
 ## Built with
 ![Vite][vite-shield]
 ![React][react-shield]
@@ -26,8 +27,15 @@
 ![TypeScript][typescript-shield]
 ![Express][express-shield]
 
+# Features
+- Display events from chalmers.it with posters and details
+- Upload custom posters for events
+- User authentication with Gamma SSO
+- Admin panel for managing events and posters
+- Settings for customizing the display
 
-## Features
+
+## Screenshots
 
 ![Screenshot of screenIT2](images/main-page.png)
 

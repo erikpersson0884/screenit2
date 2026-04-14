@@ -1,9 +1,4 @@
 
-.create-event-popup {
-    max-height: 90%;
-    overflow: scroll;
-}
-
 .create-event-popup h2{
     margin: 0;
 }
@@ -22,7 +17,7 @@
     cursor: pointer;
 
     aspect-ratio: 1/1;
-    width: 100%;
+    width: 50%;
     border-radius: .5rem;
 }
 
