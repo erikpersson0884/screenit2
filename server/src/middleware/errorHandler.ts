@@ -10,6 +10,7 @@ export const errorHandler: ErrorRequestHandler = (err: any, req: Request, res: R
         res.status(err.statusCode).json({ message: err.message });
     } else {
         // Generic error if it's not a custom one
+        logger.error('Unexpected error in request:', err);
         res.status(500).json({
             message: 'Internal server error',
             error: 'Something went wrong',

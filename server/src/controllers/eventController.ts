@@ -44,7 +44,7 @@ class EventController implements IEventController {
         if (!req.file) throw new MissingFileError();
         const imagePath: string = req.file.filename;
 
-        const newEvent: Event = await this.eventService.createEvent(date, user.id, name, imagePath, EventType.userCreated, groupIds);
+        const newEvent: Event = await this.eventService.createEvent(date, user.gammaId, name, imagePath, EventType.userCreated, groupIds);
         sendValidatedResponse(res, EventResponseSchema, newEvent);
     }
 
