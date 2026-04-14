@@ -14,9 +14,13 @@ const UPLOAD_DIR = "uploads";
 
 const getAllImages = async (): Promise<string[]> => {
     const uploadsDir = path.join(process.cwd(), UPLOAD_DIR);
-    const files = await fs.readdir(uploadsDir);
-    return files.map((file: string) => path.join(UPLOAD_DIR, file));
-}
+
+    const entries = await fs.readdir(uploadsDir, { withFileTypes: true });
+
+    return entries
+        .filter(entry => entry.isFile())
+        .map(entry => entry.name)
+};
 
 console.log( await getAllImages() );
 
@@ -39,7 +43,7 @@ export const deleteOldImages = async () => {
         for (const image of allImages) {
             try {
                 if (await shouldImageBeDeleted(image)) {
-                    deleteImage(image);
+                    await deleteImage(image);
                 }
             } catch (err) {
                 logger.error(`Failed to delete event ${image}`, err);

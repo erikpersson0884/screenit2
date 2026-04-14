@@ -40,37 +40,37 @@ async function main() {
         {
             name: "Ghibli-pub",
             date: new Date("2026-05-10T18:00:00Z"),
-            imagePath: "/api/uploads/pub.jpg",
+            imagePath: "pub.jpg",
             createdById: user.id,
         },
         {
             name: "Pluggfrukost",
             date: new Date("2026-06-20T15:00:00Z"),
-            imagePath: "/api/uploads/breakfast.png",
+            imagePath: "breakfast.png",
             createdById: user.id,
         },
         {
             name: "Vinvolly",
             date: new Date("2026-05-25T17:30:00Z"),
-            imagePath: "/api/uploads/vinvolley.png",
+            imagePath: "vinvolley.png",
             createdById: user.id,
         },
         {
             name: "Kandidatmiddag",
             date: new Date("2026-05-18T12:00:00Z"),
-            imagePath: "/api/uploads/kandidatmiddag.png",
+            imagePath: "kandidatmiddag.png",
             createdById: user.id,
         },
         {
             name: "Spelkväll",
             date: new Date("2026-04-11T05:00:00Z"),
-            imagePath: "/api/uploads/gamenight.png",
+            imagePath: "gamenight.png",
             createdById: user.id,
         },
         {
             name: "Vinprovning",
             date: new Date("2026-06-05T19:00:00Z"),
-            imagePath: "/api/uploads/wine-tasting.png",
+            imagePath: "wine-tasting.png",
             createdById: user.id,
         },
     ]
@@ -79,14 +79,14 @@ async function main() {
         data: eventsData,
     });
 
-    console.log("✅ 6 events created");
+    console.log("✅", eventsData.length, "events created");
 
     // 3. Copy images to uploads
     for (const e of eventsData) {
         await copySeedImage(e.imagePath);
     }
 
-    console.log("✅ 6 seed images copied to uploads");
+    console.log("✅", eventsData.length, "seed images copied to uploads");
 
 }
 

@@ -1,4 +1,4 @@
-FROM node:24-slim AS builder
+FROM node:24-slim
 
 WORKDIR /app
 
@@ -9,19 +9,19 @@ COPY prisma ./prisma
 # Install deps
 RUN npm install
 
-# Copy source and tsconfig
+# Copy rest of app
 COPY . .
-COPY prisma.config.ts ./prisma.config.ts
-COPY tsconfig*.json ./
 
-ARG DATABASE_URL="postgres://dummy-string" # Dummy value so that it builds 
+ARG DATABASE_URL="postgres://dummy-string"
 ENV DATABASE_URL=$DATABASE_URL
 
-# Generate Prisma Client
+# Ensure uploads directory exists
+RUN mkdir -p /app/uploads
+
+# Generate Prisma client
 RUN npx prisma generate
 
 # Build TypeScript
 RUN npm run build
 
-# Push Prisma schema to DB then start app
 CMD ["sh", "-c", "npx prisma db push && node dist/server.js"]

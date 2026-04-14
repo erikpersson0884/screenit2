@@ -54,7 +54,7 @@ class EventService implements IEventService {
                 date,
                 createdById: userId,
                 name,
-                imagePath: "/api/uploads/" + fileName,
+                imagePath: fileName,
                 visible: true,
                 type: type,
                 createdAt: new Date(),
