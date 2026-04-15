@@ -7,7 +7,7 @@ import { z } from "zod";
  */
 registry.registerPath({
     method: "get",
-    path: "/auth/gamma",
+    path: "/api/auth/gamma",
     tags: ["🔐 Auth"],
     responses: {
         302: {
@@ -22,7 +22,7 @@ registry.registerPath({
  */
 registry.registerPath({
     method: "get",
-    path: "/auth/gamma/callback",
+    path: "/api/auth/gamma/callback",
     tags: ["🔐 Auth"],
     request: {
         query: z.object({
