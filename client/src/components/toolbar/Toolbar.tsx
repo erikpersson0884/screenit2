@@ -9,6 +9,7 @@ import CreateEventPopup from '@/components/createEventPopup/CreateEventPopup';
 import GallerySettings from '@/components/gallerySettings/GallerySettings';
 import AccountPopup from '@/components/accountPopup/AccountPopup';
 
+const TOOLBAR_VISIBILITY_TIMEOUT = 2_000; // 5 seconds
 
 interface ToolBarButtonProps {
     buttonText: string;
@@ -33,9 +34,41 @@ const ToolBarButton: React.FC<ToolBarButtonProps> = ({ buttonText, popupToOpen }
 
 const Navigation: React.FC = () => {
     const { isAuthenticated, currentUser, authenticate } = useAuthContext();
-    
+    const [ toolBarIsHidden, setToolBarIsHidden ] = React.useState<boolean>(false);
+    const { modalIsOpen } = useModalContext();
+
     const location = useLocation();
     const isAdminPage = location.pathname === '/admin';
+
+
+
+    React.useEffect(() => {
+        let inactivityTimeout: NodeJS.Timeout;
+
+        const handleMouseActivity = () => {
+            setToolBarIsHidden(false);
+            clearTimeout(inactivityTimeout);
+
+            inactivityTimeout = setTimeout(() => {
+                if (!modalIsOpen) {
+                    setToolBarIsHidden(true);
+                }
+            }, TOOLBAR_VISIBILITY_TIMEOUT);
+        };
+
+        window.addEventListener('mousemove', handleMouseActivity);
+
+        inactivityTimeout = setTimeout(() => {
+            if (!modalIsOpen) {
+                setToolBarIsHidden(true);
+            }
+        }, TOOLBAR_VISIBILITY_TIMEOUT);
+
+        return () => {
+            window.removeEventListener('mousemove', handleMouseActivity);
+            clearTimeout(inactivityTimeout);
+        };
+    }, [modalIsOpen]);
 
     if (isAdminPage) return (
         <div className='toolbar'>
@@ -46,7 +79,7 @@ const Navigation: React.FC = () => {
     );
 
     return (
-        <div className='toolbar'>
+        <div className={"toolbar" + (toolBarIsHidden ? " hidden" : "")}>
             {isAuthenticated && (
                 <ToolBarButton buttonText="Create Event" popupToOpen={<CreateEventPopup />} />
             )}
