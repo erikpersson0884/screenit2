@@ -64,7 +64,8 @@ input {
 
     font-size: 1rem;
     /* font-family: "Roboto"; */
-        
+    
+    box-sizing: border-box;
     padding: .5rem 1rem;
     border-radius: .5rem;
     border: #fff .1rem solid;

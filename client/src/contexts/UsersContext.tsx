@@ -6,6 +6,7 @@ interface UsersContextType {
     loadingUsers: boolean;
     users: User[];
     getUserById: (id: string) => User;
+    updateUser: (userId: string, blocked: boolean) => Promise<boolean>;
 }
 
 const UsersContext = createContext<UsersContextType | undefined>(undefined);
@@ -39,8 +40,23 @@ export const UsersProvider = ({ children }: { children: ReactNode }) => {
         else return user;
     }
 
+    const updateUser = async (userId: string, blocked: boolean): Promise<boolean> => {
+        const sucessfull = await userApi.updateUser(userId, blocked);
+        if (sucessfull) {
+            setUsers(prevUsers => prevUsers.map(user => user.id === userId ? { ...user, blocked } : user));
+            return sucessfull;
+        } else {
+            return false;
+        }
+    };
+
     return (
-        <UsersContext.Provider value={{ loadingUsers, users, getUserById }}>
+        <UsersContext.Provider value={{ 
+            loadingUsers, 
+            users, 
+            getUserById,
+            updateUser
+        }}>
             {children}
         </UsersContext.Provider>
     );

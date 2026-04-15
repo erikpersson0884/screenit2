@@ -34,7 +34,10 @@ class EventService implements IEventService {
             {
                 include: {
                     byGroups: true
-                }
+                },
+                orderBy: [
+                    { date: 'desc' },
+                ]
             }
         );
     }

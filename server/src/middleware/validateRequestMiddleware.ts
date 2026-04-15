@@ -1,12 +1,14 @@
-import { ZodSchema } from 'zod';
+import { z, ZodSchema } from 'zod';
 import { RequestHandler } from 'express';
 
-export const validateRequest = (schema: ZodSchema): RequestHandler => {
+export const validateRequest = <T>(
+    schema: ZodSchema<T>
+): RequestHandler<{}, any, T> => {
     return (req, res, next) => {
         const result = schema.safeParse(req.body);
+
         if (!result.success) {
-            res.status(400).json(result.error.format());
-            return; // just return, no explicit Response type
+            return res.status(400).json(result.error.format());
         }
 
         req.body = result.data;

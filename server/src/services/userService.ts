@@ -1,6 +1,5 @@
-import { PrismaClient, Role } from "../../prisma/generated/prisma/client.js";
+import { PrismaClient, User, Role } from "../../prisma/generated/prisma/client.js";
 import prismaClient from "../lib/prisma.js";
-import { User } from '../../prisma/generated/prisma/client.js';
 import { IUserService } from '../models/services/IUserService.js';
 import { UserAlreadyExistsError, UserNotFoundError } from '../errors/CustomErrors.js';
 import { ClientApi, UserInfo, GroupWithPost, GroupId as GammaGroupId, UserId as GammaUserId } from "gammait";
@@ -19,7 +18,12 @@ export class UserService implements IUserService {
     }
 
     async getAllUsers(): Promise<User[]> {
-        const users: User[] = await this.prisma.user.findMany();
+        const users: User[] = await this.prisma.user.findMany({
+            orderBy: [
+                { role: 'asc' },
+                { username: 'asc'},
+            ],
+        });
         return users;
     }
 
@@ -55,7 +59,7 @@ export class UserService implements IUserService {
     }
 
     async checkIfUserExists(id: string): Promise<boolean> {
-        const user = await this.prisma.user.findUnique({
+        const user: User | null = await this.prisma.user.findUnique({
             where: {
                 id: id,
             },
@@ -68,13 +72,23 @@ export class UserService implements IUserService {
             throw new UserAlreadyExistsError(`User with gamma id ${gammaId} and/or ${username} already exists`);
         }
 
-        const role: Role = 'user'; // Default role, can be adjusted as needed
+        let role: Role = 'user'; // Default role, can be adjusted as needed
+
+        const userAuthorities: string[] = await clientapi.getAuthoritiesFor(gammaId as GammaUserId);
+        userAuthorities.forEach((authority) => {
+            if (authority === 'admin') {
+                role = 'admin';
+            }
+        });
+
+        console.log(`Assigning role ${role} to user with gammaId ${gammaId} and username ${username}`);
+
 
         const createdUser = await this.prisma.user.create({
             data: {
                 gammaId,
                 username,
-                role, // Default role, can be adjusted as needed
+                role,
             },
         });
 
@@ -85,7 +99,7 @@ export class UserService implements IUserService {
         return createdUser;
     }
 
-    async updateUser(id: string, data: Partial<{ username: string }>): Promise<User> {
+    async updateUser(id: string, data: Partial<{ username: string, blocked: boolean }>): Promise<User> {
         const updatedUser = await this.prisma.user.update({
             where: { id },
             data,

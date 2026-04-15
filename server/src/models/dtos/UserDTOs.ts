@@ -9,6 +9,11 @@ export const parseWithSchema = <T>(schema: z.ZodSchema<T>, data: unknown): T => 
     else return parseResult.data;
 }
 
+// Request Schemas
+export const UpdateUserRequestSchema = z.object({
+    blocked: z.boolean().optional(),
+});
+
 // Response Schemas
 export const UserResponseSchema = z.object({
     id: z.string(),
@@ -16,11 +21,11 @@ export const UserResponseSchema = z.object({
     username: z.string(),
     role: z.string(),
     createdAt: z.date(),
+    blocked: z.boolean(),
     groups: z.array(GroupResponseSchema).optional(),
 });
 
 export const UserResponseArraySchema = z.array(UserResponseSchema);
 
-  
+export type UpdateUserRequestDTO = z.infer<typeof UpdateUserRequestSchema>;
 export type UserResponseDTO = z.infer<typeof UserResponseSchema>;
-export type UserResponseArrayDTO = z.infer<typeof UserResponseArraySchema>;

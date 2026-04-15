@@ -6,6 +6,7 @@ import Providers from './Providers.tsx';
 import Navigation from './components/toolbar/Toolbar.tsx';
 import Gallery from './pages/gallery/Gallery.tsx';
 import OAuthCallback from './pages/OAuthCallback/OAuthCallback.tsx';
+import AdminPage from './pages/adminPage/AdminPage.tsx';
 import Footer from "./layout/Footer/Footer.tsx";
 import { useHealth } from './hooks/useHealth.ts';
 
@@ -31,9 +32,8 @@ function App() {
                 <BrowserRouter>
                     <Navigation />
                     <Routes>
-                        <Route path="/" element={
-                            <MainContent />
-                        }></Route>
+                        <Route path="/" element={<MainContent />}></Route>
+                        <Route path="/admin" element={<AdminPage />}></Route>
                         <Route path="/oauth/callback" element={<OAuthCallback />}></Route>
                     </Routes>
                 </BrowserRouter>

@@ -38,6 +38,7 @@ model User {
     gammaId     String @unique
     username    String @unique
     role        Role @default(user)
+    blocked     Boolean @default(false)
     
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt

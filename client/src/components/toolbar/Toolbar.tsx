@@ -3,6 +3,7 @@ import './Toolbar.css';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { useGalleryContext } from '@/contexts/GalleryContext';
 import { useModalContext } from "@/contexts/ModalContext";
+import { Link, useLocation  } from 'react-router-dom';
 
 import CreateEventPopup from '@/components/createEventPopup/CreateEventPopup';
 import GallerySettings from '@/components/gallerySettings/GallerySettings';
@@ -17,6 +18,7 @@ interface ToolBarButtonProps {
 const ToolBarButton: React.FC<ToolBarButtonProps> = ({ buttonText, popupToOpen }) => {
     const { openModal, closeModal, modalIsOpen, modalContent } = useModalContext();
 
+
     const handleButtonClick = () => {
         if (modalIsOpen) closeModal();
         if (modalContent !== popupToOpen) openModal(popupToOpen);
@@ -30,7 +32,18 @@ const ToolBarButton: React.FC<ToolBarButtonProps> = ({ buttonText, popupToOpen }
 }
 
 const Navigation: React.FC = () => {
-    const { isAuthenticated, authenticate } = useAuthContext();
+    const { isAuthenticated, currentUser, authenticate } = useAuthContext();
+    
+    const location = useLocation();
+    const isAdminPage = location.pathname === '/admin';
+
+    if (isAdminPage) return (
+        <div className='toolbar'>
+            <Link to="/">
+                <button>Back to Gallery</button>
+            </Link>
+        </div>
+    );
 
     return (
         <div className='toolbar'>
@@ -39,6 +52,12 @@ const Navigation: React.FC = () => {
             )}
 
             <ToolBarButton buttonText='Settings' popupToOpen={<GallerySettings />} />
+
+            { currentUser && currentUser.role == "admin" && 
+                <button>
+                    <Link to="/admin">Admin</Link>
+                </button>
+            }
 
             { isAuthenticated ?
                 <ToolBarButton buttonText="Account" popupToOpen={<AccountPopup />} /> :

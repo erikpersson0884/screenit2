@@ -34,6 +34,22 @@ export const userApi = {
             throw error;
         }
     },
+
+    updateUser: async (userId: string, blocked: boolean): Promise<boolean> => {
+        const body: {
+            blocked: boolean;
+        } = {
+            blocked: blocked,
+        };
+
+        try {
+            const response = await api.patch(`/user/${userId}`, body);
+            return true;
+        } catch (error) {
+            console.error('Error updating user:', error);
+            return false;
+        }
+    },
 };
 
 export default userApi;

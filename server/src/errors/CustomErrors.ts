@@ -31,8 +31,9 @@ export class UserAlreadyExistsError extends CustomError {
 }
 
 export class UserNotFoundError extends CustomError {
-    constructor(message: string = 'User was not found') {
-        super(404, message);
+    constructor(message: string = 'User was not found', userId?: string) {
+        const finalMessage = userId ? `User was not found: ${userId}` : message;
+        super(404, finalMessage);
     }
 }
 

@@ -3,6 +3,8 @@
     flex-direction: row;
     align-items: center;
     gap: .5rem;
+
+    margin-top: auto;
 }
 
 .page-footer img {

@@ -4,7 +4,7 @@ import { Event, User, EventType, Group } from '../../prisma/generated/prisma/cli
 import IEventService from "../models/services/IEventService.js";
 import createEventService from "../services/eventService.js";
 import { AuthenticatedRequest } from "../types/AuthenticatedRequest.js";
-import { EventsResponseSchema, EventResponseSchema } from "../models/dtos/EventDTO.js";
+import { EventsResponseSchema, EventResponseSchema, UpdateEventDTO } from "../models/dtos/EventDTO.js";
 import "dotenv/config.js";
 import CustomError, { NotAllowedToModifyEventError, MissingFileError } from "../errors/CustomErrors.js";
 import { CreateEventDTO } from "../models/dtos/EventDTO.js";
@@ -37,24 +37,26 @@ class EventController implements IEventController {
         sendValidatedResponse(res, EventsResponseSchema, events);
     }
 
-    async createEvent(req: AuthenticatedRequest, res: any): Promise<void> {
+    async getEventById(req: any, res: any): Promise<void> {
+        const id: string = req.params.id as string;
+        const event: Event | null = await this.eventService.getEventById(id);
+        sendValidatedResponse(res, EventsResponseSchema, event ? [event] : []);
+    }
+    
+    async createEvent(req: AuthenticatedRequest<CreateEventDTO>, res: any): Promise<void> {
         const user: User = req.user;
         const { name, date, groupIds }: CreateEventDTO = req.body;
 
-        if (!req.file) throw new MissingFileError();
+        if (user.blocked) throw new CustomError(403, "Action was not allowed");
+
+        if (!req.file || req.file == undefined) throw new MissingFileError();
         const imagePath: string = req.file.filename;
 
         const newEvent: Event = await this.eventService.createEvent(date, user.gammaId, name, imagePath, EventType.userCreated, groupIds);
         sendValidatedResponse(res, EventResponseSchema, newEvent);
     }
 
-    async getEventById(req: any, res: any): Promise<void> {
-        const id: string = req.params.id as string;
-        const event: Event | null = await this.eventService.getEventById(id);
-        sendValidatedResponse(res, EventsResponseSchema, event ? [event] : []);
-    }
-
-    async updateEvent(req: AuthenticatedRequest, res: any): Promise<void> {
+    async updateEvent(req: AuthenticatedRequest<UpdateEventDTO, {id: string}>, res: any): Promise<void> {
         const user: User = req.user as User;
         const id: string = req.params.id as string;
 
@@ -63,12 +65,12 @@ class EventController implements IEventController {
 
         if (!(await this.checkIfUserCanModifyEvent(user, eventToUpdate))) throw new NotAllowedToModifyEventError();
 
-        const eventData: {name: string, date: Date} = req.body;
+        const eventData: UpdateEventDTO = req.body;
         const updatedEvent: Event | null = await this.eventService.updateEvent(id, eventData);
         sendValidatedResponse(res, EventResponseSchema, updatedEvent ? updatedEvent : {});
     }
 
-    async deleteEvent(req: AuthenticatedRequest, res: any): Promise<void> {
+    async deleteEvent(req: AuthenticatedRequest<{}, {id: string}>, res: any): Promise<void> {
         const user: User = req.user as User;
         const id = req.params.id as string;
                              

@@ -26,16 +26,16 @@ const EventManager: React.FC<EventManagerProps> = ({events}) => {
 
         const success = await updateEvent(eventId, eventToUpdate.date, eventToUpdate.name, newVisibility);
         if (!success) alert('Failed to update event visibility');
-    };
+    };        
 
     return (
-        <ul className="event-manager no-list-styling">
+        <ul className="event-manager manager no-list-styling">
             {events.map((event) => (
                 <li key={event.id}>
                     <img src={event.imagePath} className='event-image' alt={event.name} width={30}/>
                     <div>
                         <p>{event.name}</p>
-                        <p>{event.date.toLocaleDateString()}</p>
+                        <p>{event.date.toLocaleDateString('en-CA')}</p>
                     </div>
                     
                     <div className='action-buttons'>
@@ -50,7 +50,6 @@ const EventManager: React.FC<EventManagerProps> = ({events}) => {
                             </button> : null
                         }
                     </div>
-                    
                 </li>
             ))}
         </ul>

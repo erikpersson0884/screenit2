@@ -6,6 +6,7 @@ declare global {
         createdAt: Date;
         updatedAt: Date;
         role: Role;
+        blocked: boolean;
         isAdmin: boolean;
         groups: Group[];
     }

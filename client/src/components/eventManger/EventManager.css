@@ -1,48 +1,4 @@
 
-
-
-.event-manager {
-    width: 100%;
-    max-height: 16rem;
-    border: 1px solid #fff;
-    padding: .5rem;
-    border-radius: 1rem;
-
-    overflow: scroll;
-}
-
-.event-manager li {
-    background: #222222;
-
-    padding: 1rem;
-    border-radius: .5rem;
-}
-
-.event-manager li p {
-    padding: 0;
-    margin: 0;
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 8rem;
-}
-
-.event-manager .action-buttons {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-
-    margin-left: auto;
-}
-.event-manager .action-buttons button {
-    background-color: inherit;
-    padding: 0;
-    border: 0;
-    margin-left: auto;
-    /* height: ; */
-}
-
 .event-manager .event-image {
     height: 2rem;
 }

@@ -1,0 +1,38 @@
+
+.admin-page {
+    margin-top: 2rem;
+    flex: 1;
+}
+
+.admin-page>h1, .admin-page>h2 {
+    text-align: center;
+}
+
+.admin-page .admin-panel {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 3rem;
+}
+
+.admin-page .searchbar {
+    width: 100%;
+}
+.admin-page .manager {
+    min-height: 20rem;
+}
+
+
+/* --- When user is not allowed to view the page --- */
+.not-allowed-to-view-text {
+    margin-top: 40vh;
+    max-width: 40ch;
+    text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+    .admin-page .admin-panel {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}

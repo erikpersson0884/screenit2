@@ -4,9 +4,9 @@ import { IUserController } from "../models/controllers/IUserController.js";
 import { AuthenticatedRequest } from "../types/AuthenticatedRequest.js";
 import { UserResponseSchema, UserResponseArraySchema } from '../models/dtos/UserDTOs.js';
 import { sendValidatedResponse } from "../middleware/validateResponseMiddleware.js";
-import { MissingUserIDError, UnauthorizedActionError } from "../errors/CustomErrors.js";
+import { UnauthorizedActionError, UserNotFoundError } from "../errors/CustomErrors.js";
 import { User } from "../../prisma/generated/prisma/client.js";
-
+import { UpdateUserRequestDTO } from '../models/dtos/UserDTOs.js';
 const userService = createUserService();
 
 export const createUserController = (service = userService): IUserController => ({
@@ -28,4 +28,20 @@ export const createUserController = (service = userService): IUserController => 
         const user: User = req.user;
         if (user) sendValidatedResponse(res, UserResponseSchema, user);
     },
+
+    updateUser: async (req: AuthenticatedRequest<UpdateUserRequestDTO, {id: string}>, res: Response) => {
+        const authenticatedUser: User = req.user;
+        const userIdToUpdate: string = req.params.id;
+        if (!(await userService.checkIfUserExists(userIdToUpdate))) throw new UserNotFoundError(undefined, userIdToUpdate);
+
+        if (!(authenticatedUser.id == userIdToUpdate || authenticatedUser.role == "admin")) throw new UnauthorizedActionError();
+
+        const updateData: UpdateUserRequestDTO = req.body;
+
+        const updatedUser: User = await service.updateUser(userIdToUpdate, updateData);
+
+        if (updatedUser) {
+            sendValidatedResponse(res, UserResponseSchema, updatedUser);
+        }
+    }
 });
