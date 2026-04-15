@@ -5,6 +5,7 @@ import { UpdateUserRequestSchema } from "../../models/dtos/UserDTOs.js";
 registry.registerPath({
     method: "get",
     path: "/api/user",
+    tags: ["👤 User"],
     responses: {
         200: {
             description: "Get all users",
@@ -26,6 +27,7 @@ registry.registerPath({
 registry.registerPath({
     method: "get",
     path: "/api/user/{id}",
+    tags: ["👤 User"],
     request: {
         params: z.object({
             id: z.string(),
@@ -50,6 +52,7 @@ registry.registerPath({
 registry.registerPath({
     method: "get",
     path: "/api/user/me",
+    tags: ["👤 User"],
     security: [{ bearerAuth: [] }],
     responses: {
         200: {
@@ -73,6 +76,7 @@ registry.registerPath({
 registry.registerPath({
     method: "patch",
     path: "/api/user/{id}",
+    tags: ["👤 User"],
     security: [{ bearerAuth: [] }],
     request: {
         params: z.object({

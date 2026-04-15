@@ -3,6 +3,7 @@ import { createAuthService } from "../services/authService.js";
 import IAuthController from "../models/controllers/IAuthController.js";
 import { IAuthService } from "../models/services/IAuthService.js";
 import { AuthorizationCode, UserInfo } from "gammait";
+import { CustomError } from "../errors/CustomErrors.js";
 
 
 const defualtAuthService: IAuthService = createAuthService();
@@ -28,7 +29,7 @@ export const createAuthController = (authService: IAuthService = defualtAuthServ
         const code = req.query.code;
 
         if (!code) {
-            throw new Error("Authorization code is missing from the callback request."); // TODO: Add more specific error handling for missing authorization code
+            throw new CustomError(400, "Authorization code is missing from the callback request."); // TODO: Add more specific error handling for missing authorization code
         }
 
         await authorizedClient.generateToken(code.toString());
