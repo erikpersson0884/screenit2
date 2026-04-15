@@ -6,6 +6,8 @@ import authRoutes from "./routes/authRoutes.js";
 import healthRoutes from "./routes/health.routes.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import dbGuard from "./middleware/dbGuard.js";
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./docs/swagger.js";
 
 const app = express();
 
@@ -18,6 +20,7 @@ app.use("/api/auth", dbGuard, authRoutes);
 app.use("/api/user", dbGuard, userRoutes);
 app.use("/api/event", dbGuard, eventRoutes);
 app.use("/api/uploads", express.static(path.join(process.cwd(), "uploads")));
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(errorHandler);
 
