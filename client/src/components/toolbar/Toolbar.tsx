@@ -79,11 +79,11 @@ const Navigation: React.FC = () => {
     }, [modalIsOpen, autoHideToolbar]);
 
     if (isAdminPage) return (
-        <div className='toolbar'>
-            <Link to="/">
-                <button>Back to Gallery</button>
-            </Link>
-        </div>
+        <Link to="/">
+            <div className='toolbar'>
+                    <button>Back to Gallery</button>
+            </div>
+         </Link>
     );
 
     return (
@@ -95,9 +95,11 @@ const Navigation: React.FC = () => {
             <ToolBarButton buttonText='Settings' popupToOpen={<GallerySettings />} />
 
             { currentUser && currentUser.role == "admin" && 
-                <button>
-                    <Link to="/admin">Admin</Link>
-                </button>
+                <Link to="/admin">
+                    <button>
+                        Admin
+                    </button>
+                </Link>
             }
 
             { isAuthenticated ?
