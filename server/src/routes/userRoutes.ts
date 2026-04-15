@@ -32,7 +32,7 @@ router.patch(
     validateRequest<UpdateUserRequestDTO>(UpdateUserRequestSchema),
     asyncHandler(
         async (
-            req: AuthenticatedRequest<UpdateUserRequestDTO>,
+            req: AuthenticatedRequest<UpdateUserRequestDTO, {id: string}>,
             res: Response
         ) => {
             return userController.updateUser(req, res);
