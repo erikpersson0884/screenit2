@@ -16,8 +16,8 @@ const Sidebar: React.FC = () => {
             <ul>
                 {events.filter(event => event.name !== "").map((event: IEvent) => (
                     <li key={event.id}>
-                        <p>{event.date.toLocaleDateString('sv-SE', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
                         <p className='event-name'>{event.name}</p>
+                        <p>{event.date.toLocaleDateString('en-CA')}</p>
                     </li>
                 ))}
             </ul>

@@ -3,7 +3,7 @@
     top: 1rem;
     left: 1rem;
 
-    max-width: 20rem;
+    max-width: 13rem;
 }
 
 .sidebar h2 {
@@ -11,6 +11,10 @@
 }
 
 .sidebar ul{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
     list-style-type: none;
 
     width: 100%;
@@ -22,8 +26,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-direction: row;
-    gap: 2rem;    
+    flex-direction: column;
+    gap: .0rem
+}
+
+.sidebar li p {
+    margin: 0;
 }
 
 .sidebar .event-name {

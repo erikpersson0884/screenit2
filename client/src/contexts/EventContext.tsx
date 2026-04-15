@@ -17,7 +17,12 @@ const EventContext = React.createContext<EventsContextType | undefined>(undefine
 const EventProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { fetchInterval } = useGalleryContext();
     const [ events, setEvents ] = React.useState<IEvent[]>([]);
-    const visibleEvents = React.useMemo(() => events.filter(event => event.visible), [events]);
+
+    const isVisibleEvenet = (event: IEvent): boolean => event.visible && 
+        event.date > new Date() 
+        // event.date < new Date().getFullYear() + 1; // Only show events that are in the future and within the next year, to avoid showing outdated events or events too far in the future
+    new Date(new Date().getFullYear() + 1)
+    const visibleEvents = React.useMemo(() => events.filter(isVisibleEvenet), [events]);
 
     const getEventFromId = (eventId: String): IEvent => {
         const event: IEvent | undefined = events.find((event) => event.id === eventId);

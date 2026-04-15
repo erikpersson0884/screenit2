@@ -1,4 +1,5 @@
 import React from 'react'
+import "./AccountPopup.css"
 
 import { useAuthContext } from "@/contexts/AuthContext"
 import { useEventContext } from "@/contexts/EventContext"

@@ -36,7 +36,7 @@ class EventService implements IEventService {
                     byGroups: true
                 },
                 orderBy: [
-                    { date: 'desc' },
+                    { date: 'asc' },
                 ]
             }
         );

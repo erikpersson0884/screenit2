@@ -6,6 +6,7 @@ interface UsersContextType {
     loadingUsers: boolean;
     users: User[];
     getUserById: (id: string) => User;
+    getUserByGammaId: (id: string) => User;
     updateUser: (userId: string, blocked: boolean) => Promise<boolean>;
 }
 
@@ -40,6 +41,12 @@ export const UsersProvider = ({ children }: { children: ReactNode }) => {
         else return user;
     }
 
+    const getUserByGammaId = (id: string): User => {
+        const user: User | undefined = users.find(user => user.gammaId === id);
+        if (!user) throw new Error(`User with id ${id} not found`);
+        else return user;
+    }
+
     const updateUser = async (userId: string, blocked: boolean): Promise<boolean> => {
         const sucessfull = await userApi.updateUser(userId, blocked);
         if (sucessfull) {
@@ -55,6 +62,7 @@ export const UsersProvider = ({ children }: { children: ReactNode }) => {
             loadingUsers, 
             users, 
             getUserById,
+            getUserByGammaId,
             updateUser
         }}>
             {children}
