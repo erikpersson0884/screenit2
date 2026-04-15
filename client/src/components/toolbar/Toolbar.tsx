@@ -21,8 +21,16 @@ const ToolBarButton: React.FC<ToolBarButtonProps> = ({ buttonText, popupToOpen }
 
 
     const handleButtonClick = () => {
-        if (modalIsOpen) closeModal();
-        if (modalContent !== popupToOpen) openModal(popupToOpen);
+        if (!modalIsOpen) {
+            openModal(popupToOpen);
+        } else if (
+            React.isValidElement(modalContent) &&
+            modalContent.type === popupToOpen.type
+        ) {
+            closeModal();
+        } else {
+            openModal(popupToOpen);
+        }
     };
 
     return (
@@ -41,8 +49,6 @@ const Navigation: React.FC = () => {
 
     const location = useLocation();
     const isAdminPage = location.pathname === '/admin';
-
-
 
     React.useEffect(() => {
         let inactivityTimeout: NodeJS.Timeout;

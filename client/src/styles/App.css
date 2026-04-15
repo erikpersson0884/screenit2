@@ -11,18 +11,6 @@
     min-height: 100vh;
 }
 
-.input-group {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    
-    gap: 1rem;
-
-    width: 100%;
-}
-
 .shadowBox {
     background-color: var(--shadowBoxColor);
 
@@ -35,6 +23,7 @@
     min-height: 100vh;
 }
 
+/* ---- Popup styles --- */
 .popup {
     background-color: #000000f1;
 
@@ -62,6 +51,19 @@
     width: 100%;
 }
 
+.input-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    
+    gap: 1rem;
+
+    width: 100%;
+}
+
+/* ---- Other styles --- */
 .error {
     color: #e92121;
 

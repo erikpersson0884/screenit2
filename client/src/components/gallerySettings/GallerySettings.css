@@ -7,10 +7,6 @@
     gap: 1rem;
 }
 
-.input-group input {
-    max-width: 4rem;
-}
-
 .gallerySettings .fullscreen-button {
     position: absolute;
     top: 1rem;

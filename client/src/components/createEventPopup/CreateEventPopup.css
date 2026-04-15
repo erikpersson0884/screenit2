@@ -4,7 +4,7 @@
 }
 
 .create-event-popup input {
-    min-width: 6rem;
+    width: 9rem;
 }
 
 .create-event-popup .postImagePreview {

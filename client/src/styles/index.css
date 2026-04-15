@@ -63,7 +63,6 @@ input {
     color: #fff;
 
     font-size: 1rem;
-    /* font-family: "Roboto"; */
     
     box-sizing: border-box;
     padding: .5rem 1rem;
@@ -72,8 +71,11 @@ input {
     outline: none;
 }
 
-input[type="checkbox"] {
+input[type="number"] {
+    width: 5rem;
+}
 
+input[type="checkbox"] {
     aspect-ratio: 1/1;
     height: 1.3rem;
 }
