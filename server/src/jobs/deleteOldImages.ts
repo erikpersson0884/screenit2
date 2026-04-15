@@ -22,8 +22,6 @@ const getAllImages = async (): Promise<string[]> => {
         .map(entry => entry.name)
 };
 
-console.log( await getAllImages() );
-
 const shouldImageBeDeleted = async (imagePath: string): Promise<boolean> => {
     const events: EventWithRelations[] = await eventService.getAllEvents();
     const imageUsedInEvent: boolean = events.some(event => event.imagePath === imagePath);
@@ -31,7 +29,7 @@ const shouldImageBeDeleted = async (imagePath: string): Promise<boolean> => {
 }
 
 const deleteImage = async (imagePath: string): Promise<void> => {
-    const fullPath = path.join(process.cwd(), imagePath);
+    const fullPath = path.join(process.cwd(), UPLOAD_DIR, imagePath);
     await fs.unlink(fullPath);
     logger.info(`Deleted image: ${imagePath}`);
 }

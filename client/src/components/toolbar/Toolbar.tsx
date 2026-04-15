@@ -34,8 +34,10 @@ const ToolBarButton: React.FC<ToolBarButtonProps> = ({ buttonText, popupToOpen }
 
 const Navigation: React.FC = () => {
     const { isAuthenticated, currentUser, authenticate } = useAuthContext();
-    const [ toolBarIsHidden, setToolBarIsHidden ] = React.useState<boolean>(false);
     const { modalIsOpen } = useModalContext();
+    const { autoHideToolbar, setAutoHideToolbar } = useGalleryContext();
+
+    const [ toolBarIsHidden, setToolBarIsHidden ] = React.useState<boolean>(false);
 
     const location = useLocation();
     const isAdminPage = location.pathname === '/admin';
@@ -50,7 +52,7 @@ const Navigation: React.FC = () => {
             clearTimeout(inactivityTimeout);
 
             inactivityTimeout = setTimeout(() => {
-                if (!modalIsOpen) {
+                if (!modalIsOpen && autoHideToolbar) {
                     setToolBarIsHidden(true);
                 }
             }, TOOLBAR_VISIBILITY_TIMEOUT);
@@ -59,7 +61,7 @@ const Navigation: React.FC = () => {
         window.addEventListener('mousemove', handleMouseActivity);
 
         inactivityTimeout = setTimeout(() => {
-            if (!modalIsOpen) {
+            if (!modalIsOpen && autoHideToolbar) {
                 setToolBarIsHidden(true);
             }
         }, TOOLBAR_VISIBILITY_TIMEOUT);
@@ -68,7 +70,7 @@ const Navigation: React.FC = () => {
             window.removeEventListener('mousemove', handleMouseActivity);
             clearTimeout(inactivityTimeout);
         };
-    }, [modalIsOpen]);
+    }, [modalIsOpen, autoHideToolbar]);
 
     if (isAdminPage) return (
         <div className='toolbar'>

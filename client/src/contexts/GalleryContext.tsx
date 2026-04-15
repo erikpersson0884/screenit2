@@ -42,14 +42,23 @@ type GalleryContextType = {
     showSidebar: boolean;
     setShowSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 
+    autoHideToolbar: boolean;
+    setAutoHideToolbar: React.Dispatch<React.SetStateAction<boolean>>;
+
+    autoHideToolbarTimeout: number;
+    setAutoHideToolbarTimeout: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const GalleryContext = React.createContext<GalleryContextType | undefined>(undefined);
 
 const GalleryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-
     const [postDisplayTime, setEventDisplayTime] = React.useState<number>(
         () => Number(localStorage.getItem("postDisplayTime")) || defaultDisplayTime
+    );
+
+    // Hubbenråttan settings
+    const [showHubbenRattan, setShowHubbenRattan] = React.useState<boolean>(
+        () => JSON.parse(localStorage.getItem("showHubbenRattan") || defaultShowHubbenRattan.toString())
     );
 
     const [hubbenRattanDisplayTime, setHubbenRattanDisplayTime] = React.useState<number>(
@@ -60,12 +69,18 @@ const GalleryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
         () => Number(localStorage.getItem("hubbenRattanDisplayInterval")) || defaultHubbenRattanDisplayInterval
     );
 
+    // Other settings
     const [showSidebar, setShowSidebar] = React.useState<boolean>(
         () => JSON.parse(localStorage.getItem("showSidebar") || defaultShowSidebar.toString())
     );
-    const [showHubbenRattan, setShowHubbenRattan] = React.useState<boolean>(
-        () => JSON.parse(localStorage.getItem("showHubbenRattan") || defaultShowHubbenRattan.toString())
+
+    const [autoHideToolbar, setAutoHideToolbar] = React.useState<boolean>(
+        () => JSON.parse(localStorage.getItem("autoHideToolbar") || "false")
     );
+    const [autoHideToolbarTimeout, setAutoHideToolbarTimeout] = React.useState<number>(
+        () => Number(localStorage.getItem("autoHideToolbarTimeout")) || 5
+    ); // seconds
+
 
     const [fetchInterval, setFetchInterval] = React.useState<number>(
         () => Number(localStorage.getItem("fetchInterval")) || defaultFetchInterval
@@ -101,11 +116,14 @@ const GalleryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
     React.useEffect(() => {
         localStorage.setItem("fetchInterval", fetchInterval.toString());
     }, [fetchInterval]);
-        
 
+    React.useEffect(() => {
+        localStorage.setItem("autoHideToolbar", JSON.stringify(autoHideToolbar));
+    }, [autoHideToolbar]);
 
-
-
+    React.useEffect(() => {
+        localStorage.setItem("autoHideToolbarTimeout", autoHideToolbarTimeout.toString());
+    }, [autoHideToolbarTimeout]);
 
 
     return (
@@ -144,6 +162,12 @@ const GalleryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
             // Other settings
             showSidebar, 
             setShowSidebar, 
+
+            autoHideToolbar,
+            setAutoHideToolbar,
+
+            autoHideToolbarTimeout,
+            setAutoHideToolbarTimeout,
         }}>
             {children}
         </GalleryContext.Provider>

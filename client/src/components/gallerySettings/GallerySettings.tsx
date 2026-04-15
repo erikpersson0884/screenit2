@@ -31,6 +31,9 @@ const GallerySettings: React.FC<GallerySettingsProps> = () => {
         // Other settings
         showSidebar,
         setShowSidebar,
+
+        autoHideToolbar,
+        setAutoHideToolbar
     } = useGalleryContext();
 
     const toggleFullscreen = () => {
@@ -68,6 +71,20 @@ const GallerySettings: React.FC<GallerySettingsProps> = () => {
                 name='showSidebar'
                 checked={showSidebar}
                 onChange={(e) => setShowSidebar(!showSidebar)}
+            />
+        </div>
+    );
+
+    // Auto-hide toolbar settings components
+    const AutoHideToolbarSetting: React.FC = () => (
+        <div className='input-group'>
+            <label htmlFor="autoHideToolbarButton">Auto-hide Toolbar:</label>
+            <input
+                type='checkbox'
+                id='autoHideToolbarButton'
+                name='autoHideToolbar'
+                checked={autoHideToolbar}
+                onChange={(e) => setAutoHideToolbar(!autoHideToolbar)}
             />
         </div>
     );
@@ -116,6 +133,8 @@ const GallerySettings: React.FC<GallerySettingsProps> = () => {
             <hr />
 
             <ShowSidebarSetting />
+
+            <AutoHideToolbarSetting />
 
             <hr />
 
