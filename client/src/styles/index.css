@@ -58,6 +58,14 @@ ul>li {
     gap: 1rem;
 }
 
+hr {
+    background-color: #fff;
+
+    width: 100%;
+    height: 1px;
+    border: none;
+}
+
 input {
     background-color: inherit;
     color: #fff;

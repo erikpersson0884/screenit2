@@ -43,7 +43,8 @@ const AccountPopup: React.FC = () => {
         <div className="account-popup popup" onClick={(e) => e.stopPropagation()}>
             {filterEventsUserMayModify.length > 0 ? 
                 <UploadedEvents /> : 
-                <p>You currently have no<br/>uploaded posters :</p>}
+                <p>You currently have no<br/>uploaded posters :</p>
+            }
             <button onClick={() => {logout(); closeModal();}}>Log out</button>
         </div>
     )

@@ -45,12 +45,6 @@
     right: 2rem;
 }
 
-.popup hr {
-    border-color: #fff;
-
-    width: 100%;
-}
-
 .input-group {
     display: flex;
     flex-direction: row;
