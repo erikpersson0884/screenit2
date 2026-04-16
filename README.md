@@ -13,6 +13,7 @@ ScreenIT2 is a digital event screen built for Chalmers IT division. It displays 
 - [Screenshots](#screenshots)
 - [Built with](#built-with)
 - [Getting started](#getting-started)
+- [API Documentation](#api-documentation)
 - [Contribute](#contribute)
 - [Acknowledgements](#acknowledgements)
 
@@ -120,6 +121,27 @@ npm run start-client   # Run frontend only (production)
 npm start            # Run production server
 ```
 
+## API Documentation
+
+The backend provides a fully documented REST API using OpenAPI (Swagger).
+
+Once the server is running, you can access the interactive API documentation at: <a href="localhost:3001/api/docs">localhost:3001/api/docs</a> (or <a href="localhost:3000/api/docs">localhost:3000/api/docs</a> proxxied through the frontend).
+
+
+### Features
+- Interactive endpoint testing directly in the browser
+- JWT authentication support (via "Authorize" button)
+- Fully typed request/response schemas (powered by Zod)
+- Organized by domain (Auth, Users, Events, Groups, System)
+
+### Authentication
+Some endpoints require authentication. To use them:
+
+1. Obtain a JWT token (e.g. via OAuth login)
+2. Click the **"Authorize"** button in Swagger
+3. Enter your token
+
+
 ### Seeding the database
 To seed the database with initial data, run the following command from the ./server directory:
 ```sh
@@ -147,8 +169,8 @@ Don't forget to give the project a star! Thanks again!
 5. Open a Pull Request
 
 
-
-
+# Acknowledgements
+- [Alfred Berglöf](https://github.com/affe4ever) for spending a lot of time helping to deploy this project to the IT division server
 
 
 
