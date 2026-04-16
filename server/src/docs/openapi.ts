@@ -1,5 +1,5 @@
 import "../docs/register.js";
-import tags from "./tags.js";
+import tags from "../docs/tags.js";
 
 import { OpenApiGeneratorV3 } from "@asteasolutions/zod-to-openapi";
 import { registry } from "./registry.js";
