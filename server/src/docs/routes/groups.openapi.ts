@@ -1,5 +1,6 @@
 import { registry } from "../registry.js";
 import { z } from "zod";
+import { tagNames } from "../tags.js";
 
 import { GroupResponseSchema } from "../../models/dtos/GroupDTO.js";
 
@@ -10,7 +11,7 @@ const IdParamSchema = z.object({
 registry.registerPath({
     method: "get",
     path: "/api/groups",
-    tags: ["👥 Groups"],
+    tags: [tagNames.groups],
     summary: "Get all groups",
     description: "Returns a list of all groups in the system.",
     responses: {
@@ -28,7 +29,7 @@ registry.registerPath({
 registry.registerPath({
     method: "get",
     path: "/api/groups/{id}",
-    tags: ["👥 Groups"],
+    tags: [tagNames.groups],
     summary: "Get group by id",
     description: "Returns group information based on the provided group id",
     request: {
@@ -52,7 +53,7 @@ registry.registerPath({
 registry.registerPath({
     method: "get",
     path: "/api/groups/me",
-    tags: ["👥 Groups"],
+    tags: [tagNames.groups],
     security: [{ bearerAuth: [] }],
     summary: "Get groups for current authenticated user",
     description: "Returns a list of groups that the currently authenticated user is a member of based on the provided JWT token",

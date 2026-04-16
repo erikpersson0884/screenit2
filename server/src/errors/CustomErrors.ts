@@ -11,13 +11,20 @@ export class CustomError extends Error {
     }
 }
 
-
+// Event related errors
 export class NotAllowedToModifyEventError extends CustomError {
     constructor(message: string = "You are not allowed to modify this event (only admins or the creator of the event can do so)") {
         super(403, message);
     }
 }
 
+export class EventNotFoundError extends CustomError {
+    constructor(message: string = "Event was not found") {
+        super(404, message);
+    }
+}
+
+// Authentication and user related errors
 export class UnauthorizedActionError extends CustomError {
     constructor(message: string = 'This aciton is prohibited for your user role.') {
         super(400, message);

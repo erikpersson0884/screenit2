@@ -1,5 +1,6 @@
 import { registry } from "../registry.js";
 import { z } from "zod";
+import { tagNames } from "../tags.js";
 
 import {
     EventsResponseSchema,
@@ -15,9 +16,9 @@ const IdParamSchema = z.object({
 
 registry.registerPath({
     method: "get",
-    path: "/api/events",
+    path: "/api/event",
 
-    tags: ["📅 Events"],
+    tags: [tagNames.events],
 
     responses: {
         200: {
@@ -33,9 +34,9 @@ registry.registerPath({
 
 registry.registerPath({
     method: "get",
-    path: "/api/events/{id}",
+    path: "/api/event/{id}",
 
-    tags: ["📅 Events"],
+    tags: [tagNames.events],
 
     request: {
         params: IdParamSchema,
@@ -55,8 +56,8 @@ registry.registerPath({
 
 registry.registerPath({
     method: "post",
-    path: "/api/events",
-    tags: ["📅 Events"],
+    path: "/api/event",
+    tags: [tagNames.events],
     security: [{ bearerAuth: [] }],
     summary: "Create new event",
     description: "Allows creating new events with name, date and associated groups. Only accessible by authenticated users.",
@@ -97,8 +98,8 @@ registry.registerPath({
 
 registry.registerPath({
     method: "patch",
-    path: "/api/events/{id}",
-    tags: ["📅 Events"],
+    path: "/api/event/{id}",
+    tags: [tagNames.events],
     security: [{ bearerAuth: [] }],
     summary: "Update event information",
     description: "Allows updating event information such as name, date and associated groups. Only accessible by admins, the user that created the event or the groups assosiated with the event.",
@@ -133,9 +134,9 @@ registry.registerPath({
 
 registry.registerPath({
     method: "delete",
-    path: "/api/events/{id}",
+    path: "/api/event/{id}",
 
-    tags: ["📅 Events"],
+    tags: [tagNames.events],
 
     security: [{ bearerAuth: [] }],
 

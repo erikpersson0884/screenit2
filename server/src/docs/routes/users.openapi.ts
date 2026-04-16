@@ -1,12 +1,13 @@
 import { registry } from "../registry.js";
 import { z } from "zod";
 import { UserResponseSchema, UpdateUserRequestSchema } from "../../models/dtos/UserDTOs.js";
+import { tagNames } from "../tags.js";
 
 
 registry.registerPath({
     method: "get",
     path: "/api/user",
-    tags: ["👤 User"],
+    tags: [tagNames.users],
     summary: "Get all users",
     description: "Returns a list of all users in the system.",
     responses: {
@@ -24,7 +25,7 @@ registry.registerPath({
 registry.registerPath({
     method: "get",
     path: "/api/user/{id}",
-    tags: ["👤 User"],
+    tags: [tagNames.users],
     summary: "Get user by id",
     description: "Returns user information based on the provided user id",
     request: {
@@ -51,7 +52,7 @@ registry.registerPath({
 registry.registerPath({
     method: "get",
     path: "/api/user/me",
-    tags: ["👤 User"],
+    tags: [tagNames.users],
     security: [{ bearerAuth: [] }],
     summary: "Get current authenticated user",
     description: "Returns information about the currently authenticated user based on the provided JWT token",
@@ -77,7 +78,7 @@ registry.registerPath({
 registry.registerPath({
     method: "patch",
     path: "/api/user/{id}",
-    tags: ["👤 User"],
+    tags: [tagNames.users],
     security: [{ bearerAuth: [] }],
     summary: "Update user information",
     description: "Allows updating user information such as username and role. Only accessible by admins or the user themselfs.",

@@ -6,7 +6,7 @@ import createEventService from "../services/eventService.js";
 import { AuthenticatedRequest } from "../types/AuthenticatedRequest.js";
 import { EventsResponseSchema, EventResponseSchema, UpdateEventDTO } from "../models/dtos/EventDTO.js";
 import "dotenv/config.js";
-import CustomError, { NotAllowedToModifyEventError, MissingFileError } from "../errors/CustomErrors.js";
+import CustomError, { NotAllowedToModifyEventError, MissingFileError, EventNotFoundError } from "../errors/CustomErrors.js";
 import { CreateEventDTO } from "../models/dtos/EventDTO.js";
 import { EventWithRelations } from "../types/types.js";
 import { IGroupService } from "../models/services/IGroupService.js";
@@ -40,7 +40,8 @@ class EventController implements IEventController {
     async getEventById(req: any, res: any): Promise<void> {
         const id: string = req.params.id as string;
         const event: Event | null = await this.eventService.getEventById(id);
-        sendValidatedResponse(res, EventsResponseSchema, event ? [event] : []);
+        if (!event) throw new EventNotFoundError(`Event with id ${id} not found`);
+        sendValidatedResponse(res, EventResponseSchema, event);
     }
     
     async createEvent(req: AuthenticatedRequest<CreateEventDTO>, res: any): Promise<void> {

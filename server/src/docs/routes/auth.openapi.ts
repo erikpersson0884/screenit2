@@ -1,5 +1,6 @@
 import { registry } from "../registry.js";
 import { z } from "zod";
+import { tagNames } from "../tags.js";
 
 /**
  * GET /auth/gamma
@@ -8,7 +9,7 @@ import { z } from "zod";
 registry.registerPath({
     method: "get",
     path: "/api/auth/gamma",
-    tags: ["🔐 Auth"],
+    tags: [tagNames.auth],
     summary: "Initiate Gamma OAuth Login",
     description: "Initiates Gamma OAuth login flow by redirecting user to Gamma's authorization endpoint",
     responses: {
@@ -25,7 +26,7 @@ registry.registerPath({
 registry.registerPath({
     method: "get",
     path: "/api/auth/gamma/callback",
-    tags: ["🔐 Auth"],
+    tags: [tagNames.auth],
     summary: "Handle Gamma OAuth Callback",
     description: "Handles the OAuth callback from Gamma, exchanges authorization code for JWT token and redirects user to frontend with token in query string",
     request: {
