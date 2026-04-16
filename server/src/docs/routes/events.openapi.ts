@@ -56,11 +56,10 @@ registry.registerPath({
 registry.registerPath({
     method: "post",
     path: "/api/events",
-
     tags: ["📅 Events"],
-
     security: [{ bearerAuth: [] }],
-
+    summary: "Create new event",
+    description: "Allows creating new events with name, date and associated groups. Only accessible by authenticated users.",
     request: {
         body: {
             content: {
@@ -99,11 +98,10 @@ registry.registerPath({
 registry.registerPath({
     method: "patch",
     path: "/api/events/{id}",
-
     tags: ["📅 Events"],
-
     security: [{ bearerAuth: [] }],
-
+    summary: "Update event information",
+    description: "Allows updating event information such as name, date and associated groups. Only accessible by admins, the user that created the event or the groups assosiated with the event.",
     request: {
         params: IdParamSchema,
         body: {
