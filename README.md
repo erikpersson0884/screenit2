@@ -125,9 +125,9 @@ npm start            # Run production server
 
 ## API Documentation
 
-The backend provides a fully documented REST API using OpenAPI (Swagger).
+The backend provides a fully documented REST API using OpenAPI (Swagger). It can be found at <a href="https://screenit.chalmers.it/api/docs">screenit.chalmers.it/api/docs</a>.
 
-Once the server is running, you can access the interactive API documentation at: <a href="localhost:3001/api/docs">localhost:3001/api/docs</a> (or <a href="localhost:3000/api/docs">localhost:3000/api/docs</a> proxxied through the frontend).
+When developing locally, once the server is running, you can access the interactive API documentation at: <a href="localhost:3001/api/docs">localhost:3001/api/docs</a> (or <a href="localhost:3000/api/docs">localhost:3000/api/docs</a> proxxied through the frontend).
 
 
 ### Features
