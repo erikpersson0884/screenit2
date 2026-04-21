@@ -1,64 +1,153 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>404 - Not Found</title>
+
     <style>
+        :root {
+            --bg: #0f172a;
+            --card: rgba(255, 255, 255, 0.06);
+            --text: #e5e7eb;
+            --muted: rgba(229, 231, 235, 0.7);
+            --accent: #3b82f6;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            background: #0f172a;
-            color: white;
-            font-family: sans-serif;
-            display: flex;
-            height: 100vh;
             margin: 0;
+            min-height: 100vh;
+            display: flex;
             align-items: center;
             justify-content: center;
-            flex-direction: column;
+            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+            color: var(--text);
+            background: radial-gradient(circle at top, #1e293b, var(--bg));
         }
 
         .screenit-logo {
             position: absolute;
-            top: 2rem;
-            left: 2rem;
-            width: 100px;
+            top: 24px;
+            left: 24px;
+            width: 110px;
+            opacity: 0.9;
+        }
+
+        .container {
+            text-align: center;
+            padding: 48px 32px;
+            background: var(--card);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            max-width: 520px;
+            width: 90%;
         }
 
         h1 {
-            font-size: 4rem;
+            font-size: 5rem;
+            margin: 0;
+            letter-spacing: -2px;
         }
 
-        .p2, .p3, .p4 {
+        .subtitle {
+            margin-top: 8px;
+            font-size: 1.2rem;
+            color: var(--muted);
+        }
+
+        p {
+            margin: 12px 0;
+            color: var(--muted);
             opacity: 0;
-            transform: translateY(20px);
-            animation: glideIn 0.6s ease-in-out forwards;
+            transform: translateY(10px);
+            animation: fadeUp 0.6s ease forwards;
         }
 
-        /* stagger delays */
-        .p2 { animation-delay: 0s; }
-        .p3 { animation-delay: .7s; }
-        .p4 { animation-delay: 1.4s; }
+        p:nth-child(3) { animation-delay: 0.1s; }
+        p:nth-child(4) { animation-delay: 0.25s; }
+        p:nth-child(5) { animation-delay: 0.4s; }
+        p:nth-child(6) { animation-delay: 0.55s; }
 
-        @keyframes glideIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
+        @keyframes fadeUp {
             to {
-                opacity: 0.7;
+                opacity: 1;
                 transform: translateY(0);
             }
         }
 
+        .actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
         a {
-            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            transition: 0.2s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            background: #2563eb;
+        }
+
+        .btn-secondary {
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.08);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 3.5rem;
+            }
         }
     </style>
 </head>
+
 <body>
-    <h1>404</h1>
-    <img class="screenit-logo" src="/api/screenit-logo.png" alt="ScreenIT Logo" width="200" />
-    <p class="p1">This route does not exist in ScreenIT 😭</p>
-    <p class="p2">Go back <a href="/">home</a>?</p>
-    <p class="p3">Or check out <a href="/api/docs">the API documentation</a></p>
-    <p class="p4">(also available as <a href="/api/docs-json">json</a>)</p>
+
+    <a href="/">
+        <img class="screenit-logo" src="/api/screenit-logo.png" alt="ScreenIT Logo" />
+    </a>
+
+    <div class="container">
+        <h1>404</h1>
+        <div class="subtitle">Page not found</div>
+
+        <p>This route does not exist in ScreenIT 😭</p>
+        <p>It might have been moved or never existed.</p>
+
+        <div class="actions">
+            <a class="btn btn-primary" href="/">Go home</a>
+            <a class="btn btn-secondary" href="/api/docs">API docs</a>
+            <a class="btn btn-secondary" href="/api/docs-json">JSON docs</a>
+        </div>
+    </div>
+
 </body>
 </html>
