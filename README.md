@@ -1,3 +1,5 @@
+<img src="images/screenit-logo.png" alt="screenIT logo" width="40%" style="display: block; margin: 20px auto;"/>
+
 # screenIT2
 [![Last Commit][last-commit-shield]][last-commit-url]
 [![Repo Size][repo-size-shield]][repo-size-url]
