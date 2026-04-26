@@ -2,16 +2,17 @@ import { PrismaClient, User, Role } from "../../prisma/generated/prisma/client.j
 import prismaClient from "../lib/prisma.js";
 import { IUserService } from '../models/services/IUserService.js';
 import { UserAlreadyExistsError, UserNotFoundError } from '../errors/CustomErrors.js';
-import { ClientApi, UserInfo, GroupWithPost, GroupId as GammaGroupId, UserId as GammaUserId } from "gammait";
+import { ClientApi, User as GammaUser, GroupWithPost, GroupId as GammaGroupId, UserId as GammaUserId } from "gammait";
 import { env } from "../config/env.js";
+import { isDbReady } from "../lib/dbState.js";
+import logger from "../lib/logger.js";
 
-const clientapi = new ClientApi({
-        // The authorization header that identifies our client with Gamma.
-        authorization: env.GAMMA_PRE_SHARED_AUTH,
-})
 
 export class UserService implements IUserService {
     private prisma: PrismaClient;
+    private gammaApi = new ClientApi({
+        authorization: env.GAMMA_PRE_SHARED_AUTH,
+})
 
     constructor(prismaClient: PrismaClient) {
         this.prisma = prismaClient;
@@ -67,22 +68,24 @@ export class UserService implements IUserService {
         return user !== null;
     }
 
-    async createUser(gammaId: string, username: string): Promise<User> {
-        if (await this.checkIfUserExists(gammaId)) {
-            throw new UserAlreadyExistsError(`User with gamma id ${gammaId} and/or ${username} already exists`);
-        }
-
-        let role: Role = 'user'; // Default role, can be adjusted as needed
-
-        const userAuthorities: string[] = await clientapi.getAuthoritiesFor(gammaId as GammaUserId);
+    private async getUserRoleFromGamma(gammaId: GammaUserId): Promise<Role> {
+        const userAuthorities: string[] = await this.gammaApi.getAuthoritiesFor(gammaId);
+        let role: Role = 'user'; // Default role
         userAuthorities.forEach((authority) => {
             if (authority === 'admin') {
                 role = 'admin';
             }
         });
+        return role;
+    }
 
-        console.log(`Assigning role ${role} to user with gammaId ${gammaId} and username ${username}`);
+    async createUser(gammaId: GammaUserId, username: string): Promise<User> {
+        if (await this.checkIfUserExists(gammaId)) {
+            throw new UserAlreadyExistsError(`User with gamma id ${gammaId} and/or ${username} already exists`);
+        }
 
+        let role: Role = await this.getUserRoleFromGamma(gammaId);
+        logger.info(`Assigning role ${role} to user with gammaId ${gammaId} and username ${username}`);
 
         const createdUser = await this.prisma.user.create({
             data: {
@@ -109,6 +112,51 @@ export class UserService implements IUserService {
             throw new UserNotFoundError(`Failed to update user with id ${id}`);
         }   
         return updatedUser;
+    }
+
+    async upsertUser(gammaUser: GammaUser): Promise<void> {
+        const role: Role = await this.getUserRoleFromGamma(gammaUser.id);
+
+        await this.prisma.user.upsert({
+            where: { gammaId: gammaUser.id },
+            update: {
+                username: gammaUser.nick,
+            },
+            create: {
+                gammaId: gammaUser.id,
+                username: gammaUser.nick,
+                role,
+            },
+        });
+    }
+
+    async syncUserWithGamma(gammaId: GammaUserId): Promise<void> {
+        if (!isDbReady()) {
+            logger.warn("DB not ready → skipping user sync");
+            return;
+        }
+
+        const externalUser: GammaUser = await this.gammaApi.getUser(gammaId);
+
+        // 1. Upsert user itself
+        await this.upsertUser(externalUser);
+
+        // 2. Optionally sync relations (like groups)
+        const groups = await this.gammaApi.getGroupsFor(externalUser.id);
+
+        const groupsToSync = groups.filter(
+            g => g.superGroup.type === "committee"
+        );
+
+        // 3. Sync user-group relation
+        await this.prisma.user.update({
+            where: { gammaId: externalUser.id },
+            data: {
+                groups: {
+                    set: groupsToSync.map(group => ({ id: group.id })),
+                },
+            },
+        });
     }
 }
 

@@ -11,6 +11,8 @@ export interface IUserService {
 
     createUser(gammaId: string, username: string): Promise<User>;
     updateUser(id: string, data: Partial<{ username: string, blocked: boolean }>): Promise<User>;
+
+    syncUserWithGamma(gammaId: GammaUserId): Promise<void>;
 }
 
 export default IUserService;

@@ -29,22 +29,12 @@ class authService implements IAuthService {
         const gammaId: GammaUserId = profile.sub;
         const username: string = profile.nickname;
 
-        // 1. Get or create user
         let user: User | null = await this.userService.getUserByGammaId(gammaId);
+        if (!user) user = await this.userService.createUser(gammaId, username);
 
-        if (!user) {
-            user = await this.userService.createUser(gammaId, username);
-        } else {
-            // keep username updated
-            user = await this.userService.updateUser(user.id, {
-                username,
-            });
-        }
-
-        // 2. Sync groups to DB
         await this.groupservice.syncUserGroups(user);
+        await this.userService.syncUserWithGamma(gammaId);
 
-        // 3. Generate JWT
         return jwt.sign(
             { userId: user.id },
             env.JWT_SECRET,
@@ -56,4 +46,5 @@ class authService implements IAuthService {
 export function createAuthService(prisma: PrismaClient = prismaClient): IAuthService {
     return new authService(prisma);
 }
+
 export default createAuthService;
