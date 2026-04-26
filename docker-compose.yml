@@ -11,6 +11,7 @@ services:
       - GAMMA_REDIRECT_URI=${DATABASE_URL}
       - GAMMA_CLIENT_SECRET=${DATABASE_URL}
       - frontend_url=${DATABASE_URL}
+      - LOG_LEVEL=${LOG_LEVEL}
     depends_on:
       db:
         condition: service_healthy

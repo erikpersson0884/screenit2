@@ -6,6 +6,9 @@ const envSchema = z.object({
     // Core
     DATABASE_URL: z.string().url(),
     PORT: z.number().int().positive().default(3001),
+    LOG_LEVEL: z
+        .enum(["silent", "error", "warn", "info", "debug"])
+        .default("info"),
 
     // Auth
     JWT_SECRET: z.string().min(1),
