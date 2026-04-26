@@ -121,6 +121,7 @@ export class UserService implements IUserService {
             where: { gammaId: gammaUser.id },
             update: {
                 username: gammaUser.nick,
+                role
             },
             create: {
                 gammaId: gammaUser.id,
@@ -136,13 +137,13 @@ export class UserService implements IUserService {
             return;
         }
 
-        const externalUser: GammaUser = await this.gammaApi.getUser(gammaId);
+        const gammaUser: GammaUser = await this.gammaApi.getUser(gammaId);
 
         // 1. Upsert user itself
-        await this.upsertUser(externalUser);
+        await this.upsertUser(gammaUser);
 
         // 2. Optionally sync relations (like groups)
-        const groups = await this.gammaApi.getGroupsFor(externalUser.id);
+        const groups = await this.gammaApi.getGroupsFor(gammaUser.id);
 
         const groupsToSync = groups.filter(
             g => g.superGroup.type === "committee"
@@ -150,7 +151,7 @@ export class UserService implements IUserService {
 
         // 3. Sync user-group relation
         await this.prisma.user.update({
-            where: { gammaId: externalUser.id },
+            where: { gammaId: gammaUser.id },
             data: {
                 groups: {
                     set: groupsToSync.map(group => ({ id: group.id })),
