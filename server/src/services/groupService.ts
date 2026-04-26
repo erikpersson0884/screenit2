@@ -1,16 +1,22 @@
-import { PrismaClient, Group } from "../../prisma/generated/prisma/client.js";
+import { PrismaClient, Group, User } from "../../prisma/generated/prisma/client.js";
 import prismaClient from "../lib/prisma.js";
-import { GroupWithPost, UserWithGroups } from "gammait";
 import { IGroupService } from "../models/services/IGroupService.js";
 import logger from "../lib/logger.js";
 import { isDbReady } from "../lib/dbState.js";
+import { env } from "../config/env.js";
+import { ClientApi, GroupWithPost, GroupId as GammaGroupId, UserId as GammaUserId } from "gammait";
+
 
 export class GroupService implements IGroupService {
     private prisma: PrismaClient;
+    private readonly gammaApi = new ClientApi({
+        authorization: env.GAMMA_PRE_SHARED_AUTH
+    });
 
     constructor(prisma: PrismaClient) {
         this.prisma = prisma;
     }
+
 
     async getAllGroups(): Promise<Group[]> {
         const groups: Group[] | null = await this.prisma.group.findMany();
@@ -53,23 +59,24 @@ export class GroupService implements IGroupService {
         )
     }
 
-    async syncUserGroups(userId: string, groups: GroupWithPost[]) {
+    async syncUserGroups(user: User): Promise<void> {
         if (!isDbReady()) {
             logger.warn("DB not ready → skipping group sync");
             return;
         }
 
-        const groupsToSync = groups.filter(
+        const gammaGroups: GroupWithPost[] = await this.gammaApi.getGroupsFor(user.gammaId as GammaUserId);
+        const groupsToSync = gammaGroups.filter(
             g => g.superGroup.type === "committee"
         );
 
         await this.upsertGroups(groupsToSync);
 
         await this.prisma.user.update({
-            where: { id: userId },
+            where: { id: user.id },
             data: {
                 groups: {
-                    set: groupsToSync.map(g => ({ id: g.id })),
+                    set: groupsToSync.map(group => ({ id: group.id })),
                 },
             },
         });

@@ -2,7 +2,7 @@ import jwt, { SignOptions } from "jsonwebtoken";
 import { IAuthService } from "../models/services/IAuthService.js";
 import { createUserService } from "./userService.js";
 import { createGroupService } from "./groupService.js";
-import { ClientApi, UserInfo, GroupWithPost, UserId as GammaUserId, GroupId as GammaGroupId } from "gammait";
+import { UserInfo, UserId as GammaUserId } from "gammait";
 import { PrismaClient, User } from '../../prisma/generated/prisma/client.js';
 
 import prismaClient from "../lib/prisma.js";
@@ -18,17 +18,12 @@ class authService implements IAuthService {
     private userService: IUserService;
     private groupservice: IGroupService;
 
-    private readonly clientapi = new ClientApi({
-        authorization: env.GAMMA_PRE_SHARED_AUTH
-    });
-
     constructor(prismaClient: PrismaClient) {
         this.prisma = prismaClient;
         this.userService = createUserService(prismaClient);
         this.groupservice = createGroupService(prismaClient);
     }
 
-    
 
     async loginWithGamma(profile: UserInfo): Promise<string> {
         const gammaId: GammaUserId = profile.sub;
@@ -46,14 +41,10 @@ class authService implements IAuthService {
             });
         }
 
-        // 2. Fetch Gamma groups
-        const gammaGroups: GroupWithPost[] =
-            await this.clientapi.getGroupsFor(gammaId);
+        // 2. Sync groups to DB
+        await this.groupservice.syncUserGroups(user);
 
-        // 3. Sync groups to DB
-        await this.groupservice.syncUserGroups(user.id, gammaGroups);
-
-        // 4. Generate JWT
+        // 3. Generate JWT
         return jwt.sign(
             { userId: user.id },
             env.JWT_SECRET,
