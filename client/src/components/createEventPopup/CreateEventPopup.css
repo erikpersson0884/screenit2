@@ -3,7 +3,7 @@
     margin: 0;
 }
 
-.create-event-popup input {
+.create-event-popup input[type="text"], .create-event-popup input[type="date"]{
     width: 9rem;
 }
 
