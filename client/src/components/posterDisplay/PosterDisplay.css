@@ -5,6 +5,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 .poster-display img {
@@ -12,3 +13,7 @@
     max-height: 90vh;
     border-radius: .4rem;
 }
+
+/* .poster-display h3 {
+    margin: 1rem;
+} */

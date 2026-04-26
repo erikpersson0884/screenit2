@@ -33,7 +33,10 @@ const GallerySettings: React.FC<GallerySettingsProps> = () => {
         setShowSidebar,
 
         autoHideToolbar,
-        setAutoHideToolbar
+        setAutoHideToolbar,
+
+        showEventTitle,
+        setShowEventTitle
     } = useGalleryContext();
 
     const toggleFullscreen = () => {
@@ -89,6 +92,20 @@ const GallerySettings: React.FC<GallerySettingsProps> = () => {
         </div>
     );
 
+    // Event title settings components
+    const ShowEventTitleSetting: React.FC = () => (
+        <div className='input-group'>
+            <label htmlFor="showEventTitleButton">Show Event Title:</label>
+            <input
+                type='checkbox'
+                id='showEventTitleButton'
+                name='showEventTitle'
+                checked={showEventTitle}
+                onChange={(e) => setShowEventTitle(!showEventTitle)}
+            />
+        </div>
+    );
+
     // Hubbenråttan settings components
     const ShowHubbenRattanSetting: React.FC = () => (
         <div className='input-group'>
@@ -127,17 +144,12 @@ const GallerySettings: React.FC<GallerySettingsProps> = () => {
 
             <hr /> 
             <EventDisplayTimeSetting />
-
             <EventFetchIntervalSetting />
-
             <hr />
-
-            <ShowSidebarSetting />
-
             <AutoHideToolbarSetting />
-
+            <ShowSidebarSetting />
+            <ShowEventTitleSetting />
             <hr />
-
             <ShowHubbenRattanSetting />
 
             {showHubbenRattan && <HubbenRattanDisplayTimeSetting />}

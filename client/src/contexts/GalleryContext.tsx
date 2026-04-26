@@ -47,6 +47,9 @@ type GalleryContextType = {
 
     autoHideToolbarTimeout: number;
     setAutoHideToolbarTimeout: React.Dispatch<React.SetStateAction<number>>;
+
+    showEventTitle: boolean;
+    setShowEventTitle: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const GalleryContext = React.createContext<GalleryContextType | undefined>(undefined);
@@ -86,6 +89,10 @@ const GalleryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
         () => Number(localStorage.getItem("fetchInterval")) || defaultFetchInterval
     ); 
 
+    const [showEventTitle, setShowEventTitle] = React.useState<boolean>(
+        () => JSON.parse(localStorage.getItem("showEventTitle") || "false")
+    );
+
     const [showAccount, setShowAccount] = React.useState<boolean>(false);
     const [showUpload, setShowUpload] = React.useState<boolean>(false);
     const [showSettings, setShowSettings] = React.useState<boolean>(false);
@@ -124,6 +131,10 @@ const GalleryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
     React.useEffect(() => {
         localStorage.setItem("autoHideToolbarTimeout", autoHideToolbarTimeout.toString());
     }, [autoHideToolbarTimeout]);
+
+    React.useEffect(() => {
+        localStorage.setItem("showEventTitle", JSON.stringify(showEventTitle));
+    }, [showEventTitle]);
 
 
     return (
@@ -168,6 +179,9 @@ const GalleryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
 
             autoHideToolbarTimeout,
             setAutoHideToolbarTimeout,
+
+            showEventTitle,
+            setShowEventTitle,
         }}>
             {children}
         </GalleryContext.Provider>

@@ -3,8 +3,9 @@ import "./PosterDisplay.css";
 import { useGalleryContext } from "@/contexts/GalleryContext";
 import { useEventContext } from "@/contexts/EventContext";
 
+
 const PosterDisplay: React.FC = () => {
-    const { postDisplayTime } = useGalleryContext();
+    const { postDisplayTime, showEventTitle } = useGalleryContext();
     const { visibleEvents: events } = useEventContext();
 
     const [currentIndex, setCurrentIndex] = React.useState(0);
@@ -34,17 +35,27 @@ const PosterDisplay: React.FC = () => {
             ? `/api/uploads/${currentEvent.imagePath}`
             : currentEvent.imagePath;
 
-    const imageAlt = `Event poster - ${currentEvent.name}`;
+    const eventName = currentEvent.name;
+    const eventDate = new Date(currentEvent.date).toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "long",
+    });
 
     return (
-        <div className="poster-display">
-            <img
-                src={imagePath}
-                alt={imageAlt}
-                className="postImage"
-                width={300}
-            />
-        </div>
+        <>
+            {showEventTitle && 
+                <h3>{eventName} - {eventDate}</h3>
+            }
+
+            <div className="poster-display">
+                <img
+                    src={imagePath}
+                    alt={`Event poster - ${eventName}`}
+                    className="postImage"
+                    width={300}
+                />
+            </div>
+        </>
     );
 };
 
