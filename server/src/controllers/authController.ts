@@ -4,19 +4,15 @@ import IAuthController from "../models/controllers/IAuthController.js";
 import { IAuthService } from "../models/services/IAuthService.js";
 import { AuthorizationCode, UserInfo } from "gammait";
 import { CustomError } from "../errors/CustomErrors.js";
-
+import { env } from "../config/env.js";
 
 const defualtAuthService: IAuthService = createAuthService();
 
 export const createAuthController = (authService: IAuthService = defualtAuthService): IAuthController => {
-    if (!process.env.GAMMA_CLIENT_ID || !process.env.GAMMA_CLIENT_SECRET || !process.env.GAMMA_REDIRECT_URI) {
-        throw new Error("Gamma OAuth configuration is missing. Please set GAMMA_CLIENT_ID, GAMMA_CLIENT_SECRET, and GAMMA_REDIRECT_URI in your environment variables.");
-    }
-    
     const authorizedClient = new AuthorizationCode({
-        clientId: process.env.GAMMA_CLIENT_ID,
-        clientSecret: process.env.GAMMA_CLIENT_SECRET,
-        redirectUri: process.env.GAMMA_REDIRECT_URI,
+        clientId: env.GAMMA_CLIENT_ID,
+        clientSecret: env.GAMMA_CLIENT_SECRET,
+        redirectUri: env.GAMMA_REDIRECT_URI,
         scope: ["openid", "profile"],
     });
 
@@ -38,7 +34,7 @@ export const createAuthController = (authService: IAuthService = defualtAuthServ
         // pass to service layer
         const token: string = await authService.loginWithGamma(profile);
 
-        const frontendUrl = process.env.FRONTEND_URL + `/oauth/callback?token=${token}`;
+        const frontendUrl = env.FRONTEND_URL + `/oauth/callback?token=${token}`;
         return res.redirect(frontendUrl); 
     };
 

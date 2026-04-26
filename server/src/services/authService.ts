@@ -8,34 +8,18 @@ import { PrismaClient, User } from '../../prisma/generated/prisma/client.js';
 import prismaClient from "../lib/prisma.js";
 import IUserService from "../models/services/IUserService.js";
 import { IGroupService } from "../models/services/IGroupService.js";
-
-function getJwtSecret(): string {
-    const secret = process.env.JWT_SECRET;
-    if (!secret) throw new Error("JWT_SECRET is not set in environment variables.");
-    return secret;
-}
-
-const JWT_SECRET: string = getJwtSecret();
-
-function getPreSharedAuth(): string {
-    const auth = process.env.GAMMA_PRE_SHARED_AUTH;
-    if (!auth) throw new Error(`.env variable "GAMMA_PRE_SHARED_AUTH" is missing`);
-    return auth;
-}
-
-const PRE_SHARED_AUTH: string = getPreSharedAuth();
+import { env } from "../config/env.js";
 
 
 class authService implements IAuthService {
-    private readonly JWT_SECRET: string = JWT_SECRET;
     private readonly JWT_EXPIRATION_TIME: SignOptions["expiresIn"] =
-    (process.env.JWT_EXPIRATION_TIME as SignOptions["expiresIn"]) || "1h";
+    (env.JWT_EXPIRATION_TIME as SignOptions["expiresIn"]) || "1h";
     private prisma: PrismaClient;
     private userService: IUserService;
     private groupservice: IGroupService;
 
     private readonly clientapi = new ClientApi({
-        authorization: PRE_SHARED_AUTH
+        authorization: env.GAMMA_PRE_SHARED_AUTH
     });
 
     constructor(prismaClient: PrismaClient) {
@@ -72,7 +56,7 @@ class authService implements IAuthService {
         // 4. Generate JWT
         return jwt.sign(
             { userId: user.id },
-            this.JWT_SECRET,
+            env.JWT_SECRET,
             { expiresIn: this.JWT_EXPIRATION_TIME }
         );
     }

@@ -2,9 +2,9 @@ import { Request, Response, NextFunction } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { createUserService } from '../services/userService.js';
 import { AuthenticatedRequest } from '../types/AuthenticatedRequest.js';
+import { env } from "../config/env.js";
 
-const JWT_SECRET = process.env.JWT_SECRET;
-if (!JWT_SECRET) throw new Error('JWT_SECRET is not defined in environment variables');
+const JWT_SECRET = env.JWT_SECRET;
 
 const userService = createUserService();
 

@@ -39,3 +39,7 @@ jspm_packages/
 
 
 docker-compose.override.yml
+client/dist
+client/node_modules
+server/dist
+server/node_modules

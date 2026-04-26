@@ -1,19 +1,20 @@
 import app from "./app.js";
-import dotenv from "dotenv";
-import { startDeleteOldEventsJob } from "./jobs/deleteOldEvents.js";
-import { startSyncChalmersEventsJob } from "./jobs/syncChalmersITEvents.js";
-import startDeleteOldImagesJob from "./jobs/deleteOldImages.js";
-import { startDbHealthCheck } from "./jobs/checkDbConnection.js";
 import logger from "./lib/logger.js";
+import { env } from "./config/env.js"; // Ensure environment variables are loaded and validated
 
-dotenv.config();
+import { startSyncChalmersEventsJob } from "./jobs/syncChalmersITEvents.js";
+import { startDeleteOldEventsJob } from "./jobs/deleteOldEvents.js";
+import { startDeleteOldImagesJob } from "./jobs/deleteOldImages.js";
+import { startDbHealthCheck } from "./jobs/checkDbConnection.js";
 
-const PORT = process.env.PORT || 3001;
+
 
 await startDbHealthCheck();
 startSyncChalmersEventsJob();
 startDeleteOldEventsJob();
 startDeleteOldImagesJob();
+
+const PORT = env.PORT;
 
 app.listen(PORT, () => {
     logger.info(`Server is running on port ${PORT}`);

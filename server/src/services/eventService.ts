@@ -7,21 +7,14 @@ import { ClientApi } from "gammait";
 import { getChalmersITEvents } from "../repositories/chalmersITRepository.js";
 import logger from "../lib/logger.js";
 import { isDbReady } from "../lib/dbState.js";
+import { env } from "../config/env.js";
 
-
-function getPreSharedAuth(): string {
-    const auth = process.env.GAMMA_PRE_SHARED_AUTH;
-    if (!auth) throw new Error("Gamma API configuration is missing. Please set PRE_SHARED_AUTH in your environment variables.");
-    return auth;
-}
-
-const PRE_SHARED_AUTH: string = getPreSharedAuth();
 
 class EventService implements IEventService {
     private prisma: PrismaClient;
 
     private readonly gammaApi = new ClientApi({
-        authorization: PRE_SHARED_AUTH
+        authorization: env.GAMMA_PRE_SHARED_AUTH
     });
 
     constructor(prismaClient: PrismaClient) {

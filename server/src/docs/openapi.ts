@@ -47,7 +47,7 @@ About the creator:
             description: "Local development server",
         },
         {
-            url: "https://screenit.chalmers.it/api",
+            url: "https://screenit.chalmers.it",
             description: "Production server",
         },
     ],

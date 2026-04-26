@@ -3,11 +3,11 @@ import prismaClient from "../lib/prisma.js";
 import { IUserService } from '../models/services/IUserService.js';
 import { UserAlreadyExistsError, UserNotFoundError } from '../errors/CustomErrors.js';
 import { ClientApi, UserInfo, GroupWithPost, GroupId as GammaGroupId, UserId as GammaUserId } from "gammait";
+import { env } from "../config/env.js";
 
-if (!process.env.GAMMA_PRE_SHARED_AUTH) throw new Error(`.env variable "GAMMA_PRE_SHARED_AUTH" is missing`);
 const clientapi = new ClientApi({
         // The authorization header that identifies our client with Gamma.
-        authorization: process.env.GAMMA_PRE_SHARED_AUTH,
+        authorization: env.GAMMA_PRE_SHARED_AUTH,
 })
 
 export class UserService implements IUserService {
