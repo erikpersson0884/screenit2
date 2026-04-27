@@ -9,4 +9,10 @@
 
     position: relative;
     width: 100%;
+    height: 10rem;
+}
+
+.gallery h3 {
+    margin: 1rem;
+    padding: 0rem;
 }

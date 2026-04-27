@@ -1,19 +1,18 @@
 
 .poster-display {
     width: 100%;
-    flex: 1;
+    height: 5rem;
+
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+
+    flex: 1;
 }
 
 .poster-display img {
-    width: 65%;
-    max-height: 90vh;
+    max-width: 65%;
+    max-height: 100%;
     border-radius: .4rem;
 }
-
-/* .poster-display h3 {
-    margin: 1rem;
-} */
