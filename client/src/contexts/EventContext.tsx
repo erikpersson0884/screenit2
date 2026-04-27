@@ -8,7 +8,7 @@ type EventsContextType = {
     fetchEvents: () => void;
     createEvent: (date: Date, name: string, imageFile: File, groupId: string[]) => Promise<boolean>;
     updateEvent: (eventId: string, newDate: Date, newName: string, visible: boolean) => Promise<boolean>;
-    deleteEvent: (eventId: string) => void;
+    deleteEvent: (eventId: string) => Promise<boolean>;
 };
 
 const EventContext = React.createContext<EventsContextType | undefined>(undefined);
@@ -82,15 +82,15 @@ const EventProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         return false;
     };
 
-    const deleteEvent = async (eventId: string) => {
-        if (!window.confirm("Are you sure you want to delete this event?")) return;
-        
+    const deleteEvent = async (eventId: string): Promise<boolean> => {        
         try {
             await eventApi.deleteEvent(eventId);
             fetchEvents();
+            return true;
         }
         catch (error) {
             console.error("Failed to delete event:", error);
+            return false;
         }
     };
 

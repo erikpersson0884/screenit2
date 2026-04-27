@@ -126,6 +126,35 @@
 }
 
 
+/* --- Notification styles --- */
+.notification-container {
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 9999;
+}
+
+.notification-popup {
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    color: white;
+    animation: slideDown 0.3s ease;
+}
+
+.notification-popup.info { background: #3b82f6; }
+.notification-popup.success { background: #0e8b3c; }
+.notification-popup.error { background: #ab2222; }
+
+@keyframes slideDown {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+
 /* --- Responsive design --- */
 @media screen and (max-width: 450px) {
     .popup {
@@ -136,3 +165,4 @@
         transform: translateX(-50%);
     }
 }
+

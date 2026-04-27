@@ -18,15 +18,14 @@ const AccountPopup: React.FC = () => {
     React.useEffect(() => {
         if (!currentUser) return;
 
-        const filterEventsUserMayModify = async () => {
-            const filtered: IEvent[] = await events.filter(event =>
-                event.createdById === currentUser.gammaId ||
-                event.byGroups?.some(group => currentUser.groups.some(userGroup => userGroup.id === group.id))
-            );
-            setFilterEventsUserMayModify(filtered);
-        };
+        const filtered = events.filter(event =>
+            event.createdById === currentUser.gammaId ||
+            event.byGroups?.some(group =>
+                currentUser.groups.some(userGroup => userGroup.id === group.id)
+            )
+        );
 
-        filterEventsUserMayModify();
+        setFilterEventsUserMayModify(filtered);
     }, [events, currentUser]);
 
 

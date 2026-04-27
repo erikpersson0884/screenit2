@@ -3,6 +3,7 @@ import './EventManager.css';
 import { useEventContext } from "@/contexts/EventContext";
 import { useUsersContext } from "@/contexts/UsersContext";
 import { useAuthContext } from "@/contexts/AuthContext";
+import { useNotificationContext } from "@/contexts/NotificationContext";
 
 import deleteIcon from '@/assets/delete.svg'
 import visibleIcon from '@/assets/visible.svg'
@@ -27,6 +28,7 @@ interface EventManagerProps {
 const EventManager: React.FC<EventManagerProps> = ({events}) => {
     const { deleteEvent, updateEvent } = useEventContext()
     const { currentUser } = useAuthContext()
+    const { notify } = useNotificationContext();
 
     const changeEventVisibility = async (eventId: string) => {
         const eventToUpdate: IEvent | undefined = events.find(event => event.id === eventId);
@@ -38,7 +40,8 @@ const EventManager: React.FC<EventManagerProps> = ({events}) => {
         const newVisibility = !eventToUpdate.visible;
 
         const success = await updateEvent(eventId, eventToUpdate.date, eventToUpdate.name, newVisibility);
-        if (!success) alert('Failed to update event visibility');
+        if (!success) notify("Failed to update event visibility. Please try again.", "error");
+        else notify(`Event visibility updated to ${newVisibility ? "visible" : "hidden"}.`, "success");
     };
 
     const getImagePath = (event: IEvent): string => {
@@ -46,6 +49,18 @@ const EventManager: React.FC<EventManagerProps> = ({events}) => {
             `/api/uploads/${event.imagePath}`
             : event.imagePath;
     }
+
+    const handleDelete = async (eventId: string) => {
+        if (!window.confirm("Are you sure you want to delete this event?")) return;
+        
+        const success = await deleteEvent(eventId);
+        if (success) {
+            notify("Event deleted successfully!", "success");
+        } else {
+            alert("Failed to delete event. Please try again.");
+        }
+    };
+
 
     return (
         <ul className="event-manager manager no-list-styling">
@@ -65,7 +80,7 @@ const EventManager: React.FC<EventManagerProps> = ({events}) => {
                         </button>
 
                         {event.type === "userCreated" ?
-                            <button title="Delete event?" onClick={() => deleteEvent(event.id)}>
+                            <button title="Delete event?" onClick={() => handleDelete(event.id)}>
                                 <img src={deleteIcon} alt="Delete" width={20}/>
                             </button> : null
                         }

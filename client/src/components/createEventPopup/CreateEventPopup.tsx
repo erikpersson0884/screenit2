@@ -4,6 +4,7 @@ import React from 'react';
 import { useAuthContext } from "@/contexts/AuthContext";
 import { useEventContext } from '@/contexts/EventContext';
 import { useModalContext } from '@/contexts/ModalContext';
+import { useNotificationContext } from '@/contexts/NotificationContext';
 
 import groupIcon from "@/assets/group.svg";
 
@@ -11,6 +12,7 @@ const CreateEventPopup = () => {
     const { isAuthenticated, currentUser } = useAuthContext();
     const { createEvent } = useEventContext();
     const { closeModal } = useModalContext();
+    const { notify } = useNotificationContext();
 
     const [ image, setImage ] = React.useState<File | null>(null);
     const [ previewUrl, setPreviewUrl ] = React.useState<string | null>(null);
@@ -60,6 +62,7 @@ const CreateEventPopup = () => {
         const success = await createEvent(new Date(date), eventName, image, uploadAs === "user" ? [] : [uploadAs]);
         if (success) {
             closeModal();
+            notify("Event created successfully!", "success");
         } else setErrorText("Failed to create event. Please try again.");
     };
 
