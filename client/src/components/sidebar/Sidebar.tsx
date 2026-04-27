@@ -9,10 +9,9 @@ const Sidebar: React.FC = () => {
 
     if (!showSidebar) return null;
 
-    return (
-        <aside className="sidebar popup">
-            <h2>Upcoming events</h2>
-            <hr />
+    const Content = () => {
+        if (events.length === 0) return <p>No upcoming events.</p>;
+        else return (
             <ul>
                 {events.filter(event => event.name !== "").map((event: IEvent) => (
                     <li key={event.id}>
@@ -21,6 +20,14 @@ const Sidebar: React.FC = () => {
                     </li>
                 ))}
             </ul>
+        )
+    }
+
+    return (
+        <aside className="sidebar popup">
+            <h2>Upcoming events</h2>
+            <hr />
+            <Content />
         </aside>
     );
 };

@@ -18,3 +18,8 @@
     border-radius: .4rem;
     flex: 1;
 }
+
+.event-title {
+    margin: 1rem;
+    margin-top: 3rem;
+}

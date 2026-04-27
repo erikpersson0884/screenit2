@@ -61,7 +61,7 @@ const PosterDisplay: React.FC = () => {
     return (
         <>
             {showEventTitle && 
-                <h3>{eventName} - {eventDate}</h3>
+                <h1 className="event-title">{eventName} - {eventDate}</h1>
             }
 
             <div className="poster-display">
