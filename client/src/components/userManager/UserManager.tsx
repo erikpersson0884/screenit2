@@ -1,9 +1,9 @@
 import React from "react";
 import './UserManager.css';
 import { useUsersContext } from "@/contexts/UsersContext";
+import { useNotificationContext } from "@/contexts/NotificationContext";
 
 import accountIcon from '@/assets/account.svg'
-import blockIcon from '@/assets/block.svg'
 import lockPersonIcon from '@/assets/lock-person.svg'
 import unlockIcon from '@/assets/unlock.svg'
 
@@ -14,10 +14,12 @@ interface UserManagerProps {
 
 const UserManager: React.FC<UserManagerProps> = ({users}) => {
     const { updateUser } = useUsersContext()
+    const { notify } = useNotificationContext()
 
     const blockUser = async (user: User) => {
         const succes = await updateUser(user.id, !user.blocked)
-        if (!succes) alert("Failed to block user")
+        if (!succes) notify("Failed to update user", "error")
+        else notify(`User "${user.username}" was ${user.blocked ? "unblocked" : "blocked"} successfully`, "success")
     }
     
     return (

@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useContext, useState, ReactNode } from 'react';
 import userApi from '@/api/userApi';
 import { setAuthToken } from '@/api/axiosInstance';
+import { useNotificationContext } from './NotificationContext';
 
 interface AuthContextType {
     currentUser: User | null;
@@ -15,6 +16,8 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+    const { notify } = useNotificationContext();
+
     const [ currentUser, setCurrentUser ] = useState<User | null>(null);
     const [ isAuthenticated, setIsAuthenticated ] = useState<boolean>(!!currentUser);
 
@@ -58,13 +61,22 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 return;
             }
 
+            // Set a timer to warn the user shortly before token expires
+            const warningTime = 2 * 60 * 1000; // 2 minutes before expiry
+            const warningTimer = setTimeout(() => {
+                notify(`Session will expire in ${warningTime} min`, "info");
+            }, timeUntilExpiry - warningTime);
+
             // Set a timer to logout automatically when token expires
-            const timer = setTimeout(() => {
-                console.log('JWT expired, logging out.');
+            const wasLoggedOutTimer = setTimeout(() => {
+                notify("Session expired. Please log in again.", "info");
                 logout();
             }, timeUntilExpiry);
 
-            return () => clearTimeout(timer);
+            return () => {
+                clearTimeout(warningTimer);
+                clearTimeout(wasLoggedOutTimer);
+            };
 
         } catch (err) {
             console.error('Error parsing token for auto-logout', err);

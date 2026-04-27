@@ -9,19 +9,19 @@ import { NotificationProvider } from "./contexts/NotificationContext.tsx";
 
 const Providers: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return (
-        <UsersProvider>
-            <AuthProvider>
-                <GalleryProvider>
-                    <EventProvider>
-                        <NotificationProvider>
+        <NotificationProvider>
+            <UsersProvider>
+                <AuthProvider>
+                    <GalleryProvider>
+                        <EventProvider>
                             <ModalProvider>
                                 {children}
                             </ModalProvider>
-                        </NotificationProvider>
-                    </EventProvider>
-                </GalleryProvider>
-            </AuthProvider>
-        </UsersProvider>
+                        </EventProvider>
+                    </GalleryProvider>
+                </AuthProvider>
+            </UsersProvider>
+        </NotificationProvider>
     )
 }
 
