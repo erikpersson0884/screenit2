@@ -9,26 +9,43 @@ const PosterDisplay: React.FC = () => {
     const { visibleEvents: events } = useEventContext();
 
     const [currentIndex, setCurrentIndex] = React.useState(0);
+    const intervalRef = React.useRef<NodeJS.Timeout | null>(null);
 
     React.useEffect(() => {
         if (events.length === 0) return;
 
-        const interval = setInterval(() => {
+        // clear old interval
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+        }
+
+        // start new interval
+        intervalRef.current = setInterval(() => {
             setCurrentIndex((prev) => (prev + 1) % events.length);
         }, postDisplayTime * 1000);
 
-        return () => clearInterval(interval);
+        return () => {
+            if (intervalRef.current) {
+                clearInterval(intervalRef.current);
+            }
+        };
     }, [events, postDisplayTime]);
 
-    if (events.length === 0) {
+    React.useEffect(() => {
+        if (events.length === 0) return;
+
+        setCurrentIndex((prev) => (prev + 1) % events.length);
+    }, [postDisplayTime]);
+
+    const currentEvent = events[currentIndex];
+
+    if (events.length === 0 || !currentEvent) {
         return (
             <div className="postsDisplay">
                 <p>No events to display</p>
             </div>
         );
     }
-
-    const currentEvent = events[currentIndex];
 
     const imagePath =
         currentEvent.type === "userCreated"
