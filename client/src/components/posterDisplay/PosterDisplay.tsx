@@ -69,7 +69,7 @@ const PosterDisplay: React.FC = () => {
                     src={imagePath}
                     alt={`Event poster - ${eventName}`}
                     className="postImage"
-                    width={300}
+
                 />
             </div>
         </>
