@@ -1,0 +1,34 @@
+[
+    {
+        "maxLevel": 100,
+        "message": "Jag är en liten råtta, men jag har stora drömmar."
+    },
+    {
+        "maxLevel": 200,
+        "message": "Nu börjar jag få stil, styrka och attityd."
+    },
+    {
+        "maxLevel": 400,
+        "message": "Nu rullar jag in som en riktig legend."
+    },
+    {
+        "maxLevel": 1000,
+        "message": "Jag är en maxad råttikon nu!"
+    },
+    {
+        "maxLevel": 1400,
+        "message": "Jag är en gudomlig råtta nu, ingen kan stoppa mig!"
+    },
+    {
+        "maxLevel": 2000,
+        "message": "Jag är en kosmisk råtta, jag har transcenderat allt!"
+    },
+    {
+        "maxLevel": 5000,
+        "message": "Jag är en multiversell råtta, jag existerar i alla dimensioner!"
+    },
+    {
+        "maxLevel": 8500,
+        "message": "Jag är en oändlig råtta, jag har ingen början och inget slut!"  
+    }
+]
