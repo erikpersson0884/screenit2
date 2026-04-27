@@ -1,0 +1,14 @@
+
+.elevator-music {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+}
+
+
+@media screen and (max-width: 600px) {
+    .elevator-music {
+        top: 8rem;
+        left: unset;
+    }
+}
