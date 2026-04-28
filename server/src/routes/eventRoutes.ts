@@ -12,41 +12,42 @@ const router = express.Router();
 
 const eventController = createEventController;
 
-router.get('/', (req: Request, res: Response) => {
-    eventController.getAllEvents(req, res);
-});
+router.get('/',
+    asyncHandler((req: Request, res: Response) =>
+        eventController.getAllEvents(req, res)
+    )
+);
 
-router.get('/:id', (req: Request, res: Response) => {
-    eventController.getEventById(req, res);
-});
+router.get('/:id', 
+    asyncHandler((req: Request, res: Response) => 
+        eventController.getEventById(req, res)
+    )
+);
 
 router.post(
     '/',
     strictAuth,
-    upload.single('image'), // <-- multer middleware here
+    upload.single('image'),
     validateRequest(CreateEventSchema),
-    asyncHandler((req: Request, res: Response) => {
-        const authenticatedReq = req as AuthenticatedRequest;
-        eventController.createEvent(authenticatedReq, res);
-    })
+    asyncHandler((req: AuthenticatedRequest, res: Response) =>
+        eventController.createEvent(req, res)
+    )
 );
 
 router.patch(
     '/:id',
     strictAuth,
     validateRequest(UpdateEventSchema),
-    asyncHandler((req: Request, res: Response) => {
-        const authenticatedReq = req as AuthenticatedRequest;
-        eventController.updateEvent(authenticatedReq, res);
-    })
+    asyncHandler((req: AuthenticatedRequest, res: Response) =>
+        eventController.updateEvent(req, res)
+    )
 );
 
 router.delete('/:id', 
     strictAuth,
-    asyncHandler((req: Request, res: Response) => {
-        const authenticatedReq = req as AuthenticatedRequest;
-        return eventController.deleteEvent(authenticatedReq, res);
-    })
+    asyncHandler((req: AuthenticatedRequest, res: Response) =>
+        eventController.deleteEvent(req, res)
+    )
 );
 
 export default router;
