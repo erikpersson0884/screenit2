@@ -2,3 +2,12 @@
 .event-manager .event-image {
     height: 2rem;
 }
+
+.event-poster-popup {
+    object-fit: contain;
+    max-width: 90%;
+    max-height: 80%;
+    border-radius: 1rem !important;
+
+    flex: 1;
+}

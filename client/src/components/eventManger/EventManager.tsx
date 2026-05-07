@@ -3,6 +3,7 @@ import './EventManager.css';
 import { useEventContext } from "@/contexts/EventContext";
 import { useUsersContext } from "@/contexts/UsersContext";
 import { useAuthContext } from "@/contexts/AuthContext";
+import { useModalContext } from "@/contexts/ModalContext";
 import { useNotificationContext } from "@/contexts/NotificationContext";
 
 import deleteIcon from '@/assets/delete.svg'
@@ -29,6 +30,7 @@ const EventManager: React.FC<EventManagerProps> = ({events}) => {
     const { deleteEvent, updateEvent } = useEventContext()
     const { currentUser } = useAuthContext()
     const { notify } = useNotificationContext();
+    const { openModal } = useModalContext();
 
     const changeEventVisibility = async (eventId: string) => {
         const eventToUpdate: IEvent | undefined = events.find(event => event.id === eventId);
@@ -61,12 +63,24 @@ const EventManager: React.FC<EventManagerProps> = ({events}) => {
         }
     };
 
+    const openPosterModal = (event: IEvent) => {
+        openModal(
+            <img className="event-poster-popup" src={getImagePath(event)} alt={event.name} />
+        );
+    }
+
 
     return (
         <ul className="event-manager manager no-list-styling">
             {events.map((event) => (
                 <li key={event.id}>
-                    <img src={getImagePath(event)} className='event-image' alt={event.name} width={30}/>
+                    <img 
+                        src={getImagePath(event)} 
+                        className='event-image' 
+                        alt={event.name} 
+                        width={30}
+                        onClick={() => openPosterModal(event)}
+                    />
                     <div>
                         <p>{event.name}</p>
                         <p>{event.date.toLocaleDateString('en-CA')}</p>
