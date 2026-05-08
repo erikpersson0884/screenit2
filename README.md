@@ -2,6 +2,7 @@
 
 # screenIT2
 [![Last Commit][last-commit-shield]][last-commit-url]
+[![Build Status][build-shield]][build-url]
 [![Repo Size][repo-size-shield]][repo-size-url]
 [![Author][author-shield]][author-url]
 
@@ -186,15 +187,15 @@ Don't forget to give the project a star! Thanks again!
 [last-commit-shield]: https://img.shields.io/github/last-commit/erikpersson0884/screenit2/main?style=for-the-badge&cacheSeconds=30
 
 
-[last-commit-url]: https://github.com/erikpersson0884/screenit-v2/commits/main
+[last-commit-url]: https://github.com/erikpersson0884/screenit2/commits/main
 [repo-size-shield]: https://img.shields.io/github/repo-size/erikpersson0884/screenit2?style=for-the-badge&cacheSeconds=60
-[repo-size-url]: https://github.com/erikpersson0884/screenit-v2
+[repo-size-url]: https://github.com/erikpersson0884/screenit2
 [author-shield]: https://img.shields.io/badge/Author-Erik%20Persson-purple?style=for-the-badge
 [author-url]: https://github.com/erikpersson0884
-[stars-shield]: https://img.shields.io/github/stars/erikpersson0884/screenit-v2?style=for-the-badge
-[stars-url]: https://github.com/erikpersson0884/screenit-v2/stargazers
-[build-shield]: https://img.shields.io/github/actions/workflow/status/erikpersson0884/screenit2/.github/workflows/tests.yml?branch=main&style=for-the-badge
-[build-url]: https://github.com/erikpersson0884/screenit-v2/actions
+[stars-shield]: https://img.shields.io/github/stars/erikpersson0884/screenit2?style=for-the-badge
+[stars-url]: https://github.com/erikpersson0884/screenit2/stargazers
+[build-shield]: https://img.shields.io/github/actions/workflow/status/erikpersson0884/screenit2/.github/workflows/build-and-push.yml?branch=main&style=for-the-badge
+[build-url]: https://github.com/erikpersson0884/screenit2/actions
 
 
 <!-- Frameworks & Languages Shields -->
