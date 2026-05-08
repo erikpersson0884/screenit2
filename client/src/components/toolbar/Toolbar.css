@@ -33,13 +33,41 @@
 
 @media screen and (max-width: 450px) {
     .toolbar {
+        background-color: #1b1b1b;
+
         flex-direction: column;
-        width: 90%;
+        flex-wrap: nowrap;
+
+        box-sizing: border-box;
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+
         right: 0;
-        z-index: 100;
+        top: 0;
+
+        transition: all .5s ease-in-out;
     }
 
     .toolbar button {
         z-index: 100;
     }
+
+    .open-admin-button {
+        width: 100%;
+    }
+
+    .toolbar.open {
+        display: flex; /* shown when toggled */
+        max-height: 100%;
+        padding: 1rem;
+    }
+
+    .mobile-toggle {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        z-index: 200;
+    }
+
 }

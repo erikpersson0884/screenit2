@@ -9,7 +9,10 @@ import CreateEventPopup from '@/components/createEventPopup/CreateEventPopup';
 import GallerySettings from '@/components/gallerySettings/GallerySettings';
 import AccountPopup from '@/components/accountPopup/AccountPopup';
 
+import closePopupIcon from '@/assets/close-popup.svg';
+
 const TOOLBAR_VISIBILITY_TIMEOUT = 2_000; // 5 seconds
+
 
 interface ToolBarButtonProps {
     buttonText: string;
@@ -46,7 +49,9 @@ const Navigation: React.FC = () => {
     const { autoHideToolbar, setAutoHideToolbar } = useGalleryContext();
 
     const [ toolBarIsHidden, setToolBarIsHidden ] = React.useState<boolean>(false);
-
+    const [ isMobileOpen, setIsMobileOpen ] = React.useState(false);
+    const [ isMobile, _ ] = React.useState(window.innerWidth <= 450);
+    
     const location = useLocation();
     const isAdminPage = location.pathname === '/admin';
 
@@ -78,6 +83,17 @@ const Navigation: React.FC = () => {
         };
     }, [modalIsOpen, autoHideToolbar]);
 
+    const MobileButton: React.FC = () => {
+        return (
+            <button
+                className="mobile-toggle"
+                onClick={() => setIsMobileOpen(prev => !prev)}
+            >
+                ☰
+            </button>    
+        );
+    }
+
     if (isAdminPage) return (
         <Link to="/">
             <div className='toolbar'>
@@ -87,26 +103,41 @@ const Navigation: React.FC = () => {
     );
 
     return (
-        <div className={"toolbar" + (toolBarIsHidden ? " hidden" : "")}>
-            {isAuthenticated && (
-                <ToolBarButton buttonText="Create Event" popupToOpen={<CreateEventPopup />} />
-            )}
+        <>
+            { isMobile && !isMobileOpen && <MobileButton /> }
+            <div
+                className={
+                    "toolbar" +
+                    (toolBarIsHidden ? " hidden" : "") +
+                    (isMobileOpen ? " open" : "")
+                }
+            >
+                {isAuthenticated && (
+                    <ToolBarButton buttonText="Create Event" popupToOpen={<CreateEventPopup />} />
+                )}
 
-            <ToolBarButton buttonText='Settings' popupToOpen={<GallerySettings />} />
+                <ToolBarButton buttonText='Settings' popupToOpen={<GallerySettings />} />
 
-            { currentUser && currentUser.role == "admin" && 
-                <Link to="/admin">
-                    <button>
-                        Admin
-                    </button>
-                </Link>
-            }
+                { currentUser && currentUser.role == "admin" && 
+                    <Link to="/admin">
+                        <button className='open-admin-button'>
+                            Admin
+                        </button>
+                    </Link>
+                }
 
-            { isAuthenticated ?
-                <ToolBarButton buttonText="Account" popupToOpen={<AccountPopup />} /> :
-                <button onClick={authenticate}>Login</button>
-            }
-        </div>
+                { isAuthenticated ?
+                    <ToolBarButton buttonText="Account" popupToOpen={<AccountPopup />} /> :
+                    <button onClick={authenticate}>Login</button>
+                }
+
+                { isMobile && 
+                    <button className="close-mobile" onClick={() => setIsMobileOpen(false)}>
+                        <img src={closePopupIcon} alt="Close" />
+                    </button> 
+                }
+            </div>
+        </>
     );
 }
 
