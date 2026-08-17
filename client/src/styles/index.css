@@ -1,12 +1,20 @@
 :root {
     --background-color: #2a2a2a;
+    --popup-background-color: #313132;
+    --popup-hover-background-color: #202027f2;
+    --border-color: #fff;
+    --text-color: #fff;
+    --light-text-color: #c6c3c3;
+    --button-color: #09cdda;
+    --card-background-color: #3d3d3e;
 
     background-color: var(--background-color);
+
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
 body {
-    color: #fff;
+    color: var(--text-color);
 
     font-size: 16px;
     
@@ -25,15 +33,15 @@ h1 {
 }
 
 button {
-    background-color: #000000ce;
-    color: #fff;
+    background-color: var(--button-color);
+    color: var(--text-color);
 
     font-size: 1rem;
     font-family: "Roboto";
         
-    padding: .5rem 1rem;
+    padding: 9px 16px;
     border-radius: .5rem;
-    border: #fff .1rem solid;
+    border: var(--border-color) .1rem solid;
     outline: none;
 }
 
@@ -59,7 +67,7 @@ ul>li {
 }
 
 hr {
-    background-color: #fff;
+    background-color: var(--border-color);
 
     width: 100%;
     height: 1px;
@@ -68,14 +76,14 @@ hr {
 
 input {
     background-color: inherit;
-    color: #fff;
+    color: var(--text-color);
 
     font-size: 1rem;
     
     box-sizing: border-box;
     padding: .5rem 1rem;
     border-radius: .5rem;
-    border: #fff .1rem solid;
+    border: var(--border-color) .1rem solid;
     outline: none;
 }
 

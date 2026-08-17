@@ -26,7 +26,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  background: #1a1a21;
+  background: var(--card-background-color);
   border: 1px solid rgba(255,255,255,0.07);
   border-radius: 12px;
   padding: 11px 13px;
@@ -48,7 +48,7 @@
   flex-shrink: 0;
   cursor: pointer;
   transition: opacity .15s ease;
-  background: #202027;
+  background: var(--background-color);
 }
 
 .event-manager .event-image:hover {
@@ -75,7 +75,7 @@
 .event-manager li > div:not(.action-buttons) p:nth-child(1) {
   font-size: 17px;
   font-weight: 500;
-  color: #f2f1ee;
+  color: var(--text-color);
 }
 
 /* date */

@@ -25,25 +25,41 @@
 
 /* ---- Popup styles --- */
 .popup {
-    background-color: #000000f1;
+    background-color: var(--popup-background-color);
+    color: #f2f1ee;
 
+    font-family: 'Inter', sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 18px;
 
     height: fit-content;
     max-height: calc(90% - 6rem);
-    min-width: 20rem;
-    padding: 2rem;
-    border-radius: .5rem;
-    border: #fff solid .1rem;
+    min-width: 350px;
+    padding: 28px 26px;
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.6);
+    border-radius: 20px;
+
 
     overflow: scroll;
 
     position: absolute;
     top: 5rem;
     right: 2rem;
+}
+
+.popup > * {
+    width: 100%;
+}
+
+.popup h2 {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
 }
 
 .input-group {

@@ -1,21 +1,20 @@
 
+.create-event-popup >*, .create-event-popup input {
+    width: 100%;
+}
+
 .create-event-popup h2{
     margin: 0;
 }
 
-.create-event-popup input[type="text"], .create-event-popup input[type="date"]{
-    width: 100%;
-}
-
 .create-event-popup header {
-    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 1px
 }
 
 .create-event-popup label {
-    color: #c6c3c3
+    color: var(--light-text-color);
 }
 
 .dropzone {
@@ -25,7 +24,7 @@
   text-align: center;
   cursor: pointer;
   transition: border-color .15s ease, background .15s ease, transform .1s ease;
-  background: rgba(255,255,255,0.03);
+  background: var(--card-background-color);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,14 +34,13 @@
 }
 
 .dropzone:hover {
-  border-color: rgba(255,255,255,0.4);
-  background: rgba(255,255,255,0.06);
+  border-color: var(--button-color);
+  background: var(--background-color);
 }
 
 .dropzone.drag-over {
-  border-color: #09CDDA;
-  background: rgba(255,182,72,0.08);
-  transform: scale(1.01);
+  border-color: var(--button-color);
+  background: var(--card-background-color);
 }
 
 /* upload arrow icon — pure CSS, no image needed */
@@ -52,7 +50,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.07);
+  background: var(--background-color);
   background-image: url("/src/assets/upload-image.svg");
   background-repeat: no-repeat;
   background-position: center;
@@ -77,24 +75,19 @@
 }
 
 .dropzone-preview {
-  display: none;
-  max-height: 110px;
-  border-radius: 8px;
-  margin-top: 8px;
-  object-fit: cover;
+    display: none;
+    max-height: 110px;
+    border-radius: 8px;
+    margin-top: 8px;
+    object-fit: cover;
 }
 
 .dropzone.has-file .dropzone-preview {
-  display: block;
-}
-
-.dropzone.has-file .dropzone-text {
-  font-size: 12px;
-  color: #9c9ba6;
+    display: block;
 }
 
 #poster-image-upload {
-  display: none;
+    display: none; /* hide the default file input */
 }
 
 .create-event-popup .input-group {
@@ -109,7 +102,6 @@
     gap: 0rem;
     align-items: flex-start;
     flex-direction: column;
-    
 }
 
 .create-event-popup .upload-as p {
@@ -118,7 +110,7 @@
 
 .create-event-popup input[type="radio"] {
     aspect-ratio: 1/1;
-    min-width: 1rem;
+    width: 1rem;
     border-radius: 0;
     accent-color: green;
     
@@ -129,28 +121,18 @@
 }
 
 .create-event-popup .radio-group {
-    width: 100%;
     gap: .5rem;
-}
-
-.create-event-popup h3 {
-    margin: 0;
 }
 
 .create-event-popup .open-upload-as-option {
+  color: var(--light-text-color);
     display: flex;
     gap: .5rem;
-    align-items: center;
+    justify-content: center;
+
     cursor: pointer;
-
-    opacity: .8;
-
-    transition: opacity .2s ease-in-out;
 }
 
-.create-event-popup .open-upload-as-option:hover {
-    opacity: 1;
-}
 
 .create-event-popup .open-upload-as-option p {
     font-style: italic;

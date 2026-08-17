@@ -29,18 +29,15 @@ const AccountPopup: React.FC = () => {
     }, [events, currentUser]);
 
 
-    const UploadedEvents: React.FC = () => (
-        <>
-            <h2>Your uploaded posters</h2>
-            <EventManager events={filterEventsUserMayModify} />
-        </>
-    )
-
     return (
         <div className="account-popup popup" onClick={(e) => e.stopPropagation()}>
             {filterEventsUserMayModify.length > 0 ? 
-                <UploadedEvents /> : 
-                <p>You currently have no<br/>uploaded posters :</p>
+                <>
+                    <h2>Your uploaded posters</h2>
+                    <EventManager events={filterEventsUserMayModify} />
+                </>
+            : 
+                <p>You currently have no<br/>uploaded posters</p>
             }
             <button onClick={() => {logout(); closeModal();}}>Log out</button>
         </div>
