@@ -1,0 +1,78 @@
+
+
+.user-manager li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #1a1a21;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: 11px 13px;
+  transition: background .15s ease, border-color .15s ease;
+}
+
+.user-manager li:hover {
+  background: #202027;
+  border-color: rgba(255,255,255,0.12);
+}
+
+.user-manager .user-image {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  filter: brightness(0) invert(1) opacity(0.4);
+}
+
+.user-manager li > div:not(.action-buttons) {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.user-manager li > div:not(.action-buttons) p { margin: 0; }
+
+.user-manager li > div:not(.action-buttons) p:nth-child(1) {
+  font-size: 15px;
+  font-weight: 500;
+  color: #f2f1ee;
+}
+
+.user-manager li > div:not(.action-buttons) p:nth-child(2) {
+  font-size: 13px;
+  color: #9c9ba6;
+}
+
+.user-manager .action-buttons button {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .12s ease;
+  padding: 0;
+}
+
+.user-manager .action-buttons button:hover { background: rgba(255,255,255,0.07); }
+
+.user-manager .action-buttons button img {
+  width: 18px;
+  height: 18px;
+  filter: brightness(0) invert(1) opacity(0.35);
+  transition: filter .12s ease;
+}
+
+.user-manager .action-buttons button:hover img {
+  filter: brightness(0) invert(1) opacity(0.9);
+}
+
+/* blocked state — red tint */
+.user-manager li.is-blocked .action-buttons button img {
+  filter: invert(35%) sepia(80%) saturate(700%) hue-rotate(330deg) brightness(100%);
+}

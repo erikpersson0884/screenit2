@@ -60,7 +60,7 @@ const PosterDisplay: React.FC = () => {
 
     return (
         <>
-            {showEventTitle && 
+            {showEventTitle && eventName.length > 0 && eventDate.length > 0 &&
                 <h1 className="event-title">{eventName} - {eventDate}</h1>
             }
 

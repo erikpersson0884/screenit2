@@ -25,7 +25,7 @@ const UserManager: React.FC<UserManagerProps> = ({users}) => {
     return (
         <ul className="user-manager manager no-list-styling">
             {users.map((user) => (
-                <li key={user.id}>
+                <li key={user.id} className={user.blocked ? 'is-blocked' : ''}>
                     <img src={accountIcon} className='user-image' alt={"Account icon"} width={30}/>
                     <div>
                         <p>{user.username}</p>
