@@ -40,7 +40,7 @@
 }
 
 .dropzone.drag-over {
-  border-color: #FFB648;
+  border-color: #09CDDA;
   background: rgba(255,182,72,0.08);
   transform: scale(1.01);
 }
