@@ -88,15 +88,18 @@ const EventManager: React.FC<EventManagerProps> = ({events}) => {
                     </div>
                     
                     <div className='action-buttons'>
-
-                        <button title="Hide event" onClick={() => changeEventVisibility(event.id)}>
-                            <img src={event.visible ? visibleIcon : NotVisibleIcon} alt="Toggle visibility" width={20}/>
+                        <button
+                        title="Hide event"
+                        className={event.visible ? 'is-visible' : ''}
+                        onClick={() => changeEventVisibility(event.id)}
+                        >
+                        <img src={event.visible ? visibleIcon : NotVisibleIcon} alt="Toggle visibility" width={20}/>
                         </button>
 
-                        {event.type === "userCreated" ?
-                            <button title="Delete event?" onClick={() => handleDelete(event.id)}>
-                                <img src={deleteIcon} alt="Delete" width={20}/>
-                            </button> : null
+                        {event.type === "userCreated" &&
+                        <button title="Delete event?" className="delete-btn" onClick={() => handleDelete(event.id)}>
+                            <img src={deleteIcon} alt="Delete" width={20}/>
+                        </button>
                         }
                     </div>
                 </li>

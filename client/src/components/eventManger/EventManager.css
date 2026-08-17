@@ -1,13 +1,153 @@
-
-.event-manager .event-image {
-    height: 2rem;
+/* ── Event list ──────────────────────────────────────────────── */
+.event-manager {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  max-height: 340px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.08) transparent;
+  width: 100%;
 }
 
-.event-poster-popup {
-    object-fit: contain;
-    max-width: 90%;
-    max-height: 80%;
-    border-radius: 1rem !important;
+.event-manager::-webkit-scrollbar {
+  width: 4px;
+}
+.event-manager::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.08);
+  border-radius: 99px;
+}
 
-    flex: 1;
+/* ── Event row ───────────────────────────────────────────────── */
+.event-manager li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #1a1a21;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: 11px 13px;
+  transition: background .15s ease, border-color .15s ease;
+
+}
+
+.event-manager li:hover {
+  background: #202027;
+  border-color: rgba(255,255,255,0.12);
+}
+
+/* ── Thumbnail ───────────────────────────────────────────────── */
+.event-manager .event-image {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: opacity .15s ease;
+  background: #202027;
+}
+
+.event-manager .event-image:hover {
+  opacity: 0.8;
+}
+
+/* ── Text block ──────────────────────────────────────────────── */
+.event-manager li > div:not(.action-buttons) {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.event-manager li > div:not(.action-buttons) p {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* event name */
+.event-manager li > div:not(.action-buttons) p:nth-child(1) {
+  font-size: 17px;
+  font-weight: 500;
+  color: #f2f1ee;
+}
+
+/* date */
+.event-manager li > div:not(.action-buttons) p:nth-child(2) {
+  font-size: 15px;
+  font-family: 'IBM Plex Mono', monospace;
+  color: #8d8c98;
+}
+
+/* by user / from group */
+.event-manager li > div:not(.action-buttons) p:nth-child(3) {
+  font-size: 13px;
+  color: #9c9ba6;
+}
+
+/* ── Action buttons ──────────────────────────────────────────── */
+.event-manager .action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.event-manager .action-buttons button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .12s ease;
+  padding: 0;
+}
+
+.event-manager .action-buttons button:hover {
+  background: rgba(255,255,255,0.07);
+}
+
+/* visibility toggle — amber when visible */
+.event-manager .action-buttons button:first-child img {
+  filter: brightness(0) invert(1) opacity(0.3);
+  transition: filter .12s ease;
+  width: 16px;
+  height: 16px;
+}
+
+.event-manager .action-buttons button:first-child:hover img {
+  filter: brightness(0) invert(1) opacity(0.8);
+}
+
+/* when visible (you can add a .is-visible class to the button via the event.visible prop) */
+.event-manager .action-buttons button.is-visible img {
+  filter: invert(75%) sepia(60%) saturate(500%) hue-rotate(1deg) brightness(105%);
+  opacity: 1;
+}
+
+/* delete button — red tint on hover */
+.event-manager .action-buttons button.delete-btn img {
+  filter: brightness(0) invert(1) opacity(0.3);
+  width: 16px;
+  height: 16px;
+  transition: filter .12s ease;
+}
+
+.event-manager .action-buttons button.delete-btn:hover {
+  background: rgba(226,75,74,0.1);
+}
+
+.event-manager .action-buttons button.delete-btn:hover img {
+  filter: invert(35%) sepia(80%) saturate(700%) hue-rotate(330deg) brightness(100%);
+  opacity: 1;
 }

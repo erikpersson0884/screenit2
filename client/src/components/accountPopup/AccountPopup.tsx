@@ -29,12 +29,10 @@ const AccountPopup: React.FC = () => {
     }, [events, currentUser]);
 
 
-
     const UploadedEvents: React.FC = () => (
         <>
             <h2>Your uploaded posters</h2>
             <EventManager events={filterEventsUserMayModify} />
-            <hr />
         </>
     )
 

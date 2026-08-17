@@ -1,3 +1,70 @@
-.account-popup .event-manager {
-    max-height: fit-content;
+/* ── Popup shell ─────────────────────────────────────────────── */
+.account-popup {
+  background: #131318;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 28px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 360px;
+  font-family: 'Inter', sans-serif;
+  color: #f2f1ee;
+}
+
+.account-popup h2 {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+/* no posters message */
+.account-popup > p {
+  font-size: 13px;
+  color: #5f5e68;
+  text-align: center;
+  line-height: 1.6;
+  padding: 12px 0;
+  margin: 0;
+}
+
+/* ── Divider ─────────────────────────────────────────────────── */
+.account-popup hr {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  margin: 0;
+}
+
+/* ── Log out button ──────────────────────────────────────────── */
+.account-popup > button {
+  width: 100%;
+  padding: 11px;
+  background: transparent;
+  color: #e24b4a;
+  border: 1px solid rgba(226,75,74,0.35);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease;
+}
+
+.account-popup > button:hover {
+  background: rgba(226,75,74,0.08);
+  border-color: rgba(226,75,74,0.6);
+}
+
+.account-popup > button:active {
+  transform: scale(0.99);
+}
+
+/* ── Poster popup image ──────────────────────────────────────── */
+.event-poster-popup {
+  object-fit: contain;
+  max-width: 90%;
+  max-height: 80%;
+  border-radius: 14px !important;
 }
