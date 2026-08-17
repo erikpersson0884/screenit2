@@ -6,7 +6,7 @@ interface UsersContextType {
     loadingUsers: boolean;
     users: User[];
     getUserById: (id: string) => User;
-    getUserByGammaId: (id: string) => User;
+    getUserByGammaId: (id: string) => User | undefined;
     updateUser: (userId: string, blocked: boolean) => Promise<boolean>;
 }
 
@@ -41,10 +41,9 @@ export const UsersProvider = ({ children }: { children: ReactNode }) => {
         else return user;
     }
 
-    const getUserByGammaId = (id: string): User => {
+    const getUserByGammaId = (id: string): User | undefined => {
         const user: User | undefined = users.find(user => user.gammaId === id);
-        if (!user) throw new Error(`User with id ${id} not found`);
-        else return user;
+        return user;
     }
 
     const updateUser = async (userId: string, blocked: boolean): Promise<boolean> => {

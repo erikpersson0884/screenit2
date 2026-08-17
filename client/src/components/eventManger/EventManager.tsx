@@ -17,8 +17,8 @@ interface ByUserProps {
 }
 const ByUser: React.FC<ByUserProps> = ({createdById, event}) => {
     const { getUserByGammaId } = useUsersContext()
-
-    if (event.type === "userCreated") return <p>Av {getUserByGammaId(createdById).username}</p>
+    const username: string | undefined = getUserByGammaId(createdById)?.username || "Unknown user";
+    if (event.type === "userCreated") return <p>By {username}</p>
     else return <p>Från Chalmers.it</p>
 }
 

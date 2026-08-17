@@ -27,7 +27,7 @@ const envSchema = z.object({
     FRONTEND_URL: z.string().url(),
 
     // Seed data
-    SEED_USER_ID: z.string().uuid().optional(),
+    SEED_GAMMA_USER_ID: z.string().uuid().optional(),
     SEED_USER_USERNAME: z.string().min(1).optional(),
     SEED_USER_ROLE: z.enum(["user", "admin"]).optional(),
 });

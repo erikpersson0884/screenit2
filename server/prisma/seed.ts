@@ -1,4 +1,4 @@
-import { PrismaClient, Role } from './generated/prisma/client.js';
+import { PrismaClient, Role, Prisma } from './generated/prisma/client.js';
 import prismaClient from "../src/lib/prisma.js";
 import fs from 'fs/promises';
 import path from 'path';
@@ -19,15 +19,16 @@ async function main() {
     console.log("🌱 Seeding database...");
 
     // 1. Create user
-    const username = process.env.SEED_USER_USERNAME ?? "Göken 🐦"
-    const userId = process.env.SEED_USER_ID ?? "b69e01cd-01d1-465e-adc5-99d017b7fd74"
-    const userRole = process.env.SEED_USER_ROLE ?? Role.user
+    const username: string = process.env.SEED_USER_USERNAME ?? "Göken 🐦"
+    const gammaUserId: string = process.env.SEED_GAMMA_USER_ID ?? "b69e01cd-01d1-465e-adc5-99d017b7fd74"
+    const userRole: Role = (process.env.SEED_USER_ROLE as Role) ?? Role.user
     
     const user = await prisma.user.upsert({
         where: { username: username },
         update: {},
         create: {
-            id: userId,
+            id: gammaUserId,
+            gammaId: gammaUserId,
             username: username,
             role: userRole,
         },
@@ -36,42 +37,48 @@ async function main() {
     console.log("👤 User ready:", user.username);
 
     // 2. Create events
-    const eventsData = [
+    const eventsData: Prisma.EventCreateManyInput[] = [
         {
             name: "Ghibli-pub",
             date: new Date("2026-05-10T18:00:00Z"),
             imagePath: "pub.jpg",
             createdById: user.id,
+            type: "userCreated",
         },
         {
             name: "Pluggfrukost",
             date: new Date("2026-06-20T15:00:00Z"),
             imagePath: "breakfast.png",
             createdById: user.id,
+            type: "userCreated",
         },
         {
             name: "Vinvolly",
             date: new Date("2026-05-25T17:30:00Z"),
             imagePath: "vinvolley.png",
             createdById: user.id,
+            type: "userCreated",
         },
         {
             name: "Kandidatmiddag",
             date: new Date("2026-05-18T12:00:00Z"),
             imagePath: "kandidatmiddag.png",
             createdById: user.id,
+            type: "userCreated",
         },
         {
             name: "Spelkväll",
             date: new Date("2026-04-11T05:00:00Z"),
             imagePath: "gamenight.png",
             createdById: user.id,
+            type: "userCreated",
         },
         {
             name: "Vinprovning",
             date: new Date("2026-06-05T19:00:00Z"),
             imagePath: "wine-tasting.png",
             createdById: user.id,
+            type: "userCreated",
         },
     ]
 

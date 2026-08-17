@@ -89,7 +89,7 @@ ScreenIT2 is a digital event screen built for Chalmers IT division. It displays 
 
     # The following are optional, but can be used to customize the seeded user created when running `npx prisma db seed`. Role is always optional and defaults to "user" if not set.
 
-    SEED_USER_ID=b69a0ccd-01d1-475e-adc5-99ff017b7fd74
+    SEED_GAMMA_USER_ID=b69a0ccd-01d1-475e-adc5-99ff017b7fd74
     SEED_USER_USERNAME=Göken
     SEED_USER_ROLE=user
     ```
