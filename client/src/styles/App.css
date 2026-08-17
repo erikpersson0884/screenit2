@@ -34,6 +34,7 @@
 
     height: fit-content;
     max-height: calc(90% - 6rem);
+    min-width: 20rem;
     padding: 2rem;
     border-radius: .5rem;
     border: #fff solid .1rem;

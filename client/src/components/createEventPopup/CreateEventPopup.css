@@ -4,30 +4,106 @@
 }
 
 .create-event-popup input[type="text"], .create-event-popup input[type="date"]{
-    width: 9rem;
+    width: 100%;
 }
 
-.create-event-popup .postImagePreview {
-    background-color: var(--background-color);
-    background-image: url('/src/assets/upload-image.svg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-
-    cursor: pointer;
-
-    aspect-ratio: 1/1;
-    width: 50%;
-    border-radius: .5rem;
+.create-event-popup header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1px
 }
 
-.create-event-popup #uploadNewEventImageInput {
-    width: min-content;
-    max-width: 13rem;
-    padding: 0;
-    border: 0;
+.create-event-popup label {
+    color: #c6c3c3
 }
 
+.dropzone {
+  border: 1.5px dashed rgba(255,255,255,0.2);
+  border-radius: 14px;
+  padding: 28px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color .15s ease, background .15s ease, transform .1s ease;
+  background: rgba(255,255,255,0.03);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.dropzone:hover {
+  border-color: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.06);
+}
+
+.dropzone.drag-over {
+  border-color: #FFB648;
+  background: rgba(255,182,72,0.08);
+  transform: scale(1.01);
+}
+
+/* upload arrow icon — pure CSS, no image needed */
+.dropzone::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.07);
+  background-image: url("/src/assets/upload-image.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-bottom: 4px;
+}
+
+.dropzone-text {
+  font-size: 13px;
+  font-weight: 500;
+  color: #f2f1ee;
+}
+
+/* "JPG or PNG, up to 20MB" line — add this span in your JSX if you want it */
+.dropzone-sub {
+  font-size: 11px;
+  color: #5f5e68;
+}
+
+/* preview thumbnail once a file is selected */
+.dropzone.has-file::before {
+  display: none;
+}
+
+.dropzone-preview {
+  display: none;
+  max-height: 110px;
+  border-radius: 8px;
+  margin-top: 8px;
+  object-fit: cover;
+}
+
+.dropzone.has-file .dropzone-preview {
+  display: block;
+}
+
+.dropzone.has-file .dropzone-text {
+  font-size: 12px;
+  color: #9c9ba6;
+}
+
+#poster-image-upload {
+  display: none;
+}
+
+.create-event-popup .input-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .5rem;
+}
+
+/* Upload as section */
 .create-event-popup .upload-as {
     display: flex;
     gap: 0rem;
@@ -82,4 +158,10 @@
     margin: 0;
 }
 
+.create-event-popup .upload-button {
+    width: 100%;
+    border: none;
+    background-color: #09cdda;
+    color:#0b0b0b
+}
 

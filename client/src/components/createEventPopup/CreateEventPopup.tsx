@@ -69,25 +69,47 @@ const CreateEventPopup = () => {
     if (!isAuthenticated || !currentUser) return <p className="uploadEventDiv popupbox">You must be logged in to upload new posts</p>;
 
 
-    // Components 
-    const ImageInput: React.FC = () => (
-        <>
+    const ImageInput: React.FC = () => {
+        const handleClick = () => fileInputRef.current?.click();
+        const handleDragOver = (e: React.DragEvent) => {
+            e.preventDefault();
+            e.currentTarget.classList.add('drag-over');
+        };
+        const handleDragLeave = (e: React.DragEvent) => {
+            e.currentTarget.classList.remove('drag-over');
+        };
+        const handleDrop = (e: React.DragEvent) => {
+            e.preventDefault();
+            e.currentTarget.classList.remove('drag-over');
+            const file = e.dataTransfer.files[0];
+            if (file) setImage(file);
+        };
+
+        return (
             <div
-                style={{
-                    backgroundImage: previewUrl ? `url(${previewUrl})` : undefined
-                }}
-                className='postImagePreview'
-                onClick={() => fileInputRef.current?.click()}
-            ></div>
-            <input 
-                id="uploadNewEventImageInput" 
-                ref={fileInputRef} 
-                type="file" 
-                accept='image/*'
-                onChange={e => imageChangeHandler(e)} 
-            />
-        </>
-    );
+                className={`dropzone${image ? ' has-file' : ''}`}
+                onClick={handleClick}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+                >
+                <div className="dropzone-text">
+                    {image ? image.name : 'Drop photo here, or browse'}
+                </div>
+                <div className="dropzone-sub">
+                    {image ? `${(image.size / 1024 / 1024).toFixed(1)} MB` : 'JPG or PNG, up to 20MB'}
+                </div>
+                {previewUrl && <img className="dropzone-preview" src={previewUrl} alt="" />}
+                <input
+                    ref={fileInputRef}
+                    type="file"
+                    id="poster-image-upload"
+                    accept="image/*"
+                    onChange={imageChangeHandler}
+                />
+            </div>
+        );
+    };
 
     const DateInput: React.FC = () => (
         <div className='input-group'>
@@ -163,10 +185,12 @@ const CreateEventPopup = () => {
 
     return (
         <form className="create-event-popup popup" onSubmit={uploadEventHandler} onClick={(e) => e.stopPropagation()}>
-            <h2>Upload Event</h2>
-            <hr />
+            <header>
+                <h2>Upload Poster</h2>
+                <label htmlFor="poster-image-upload">Add photos to the poster</label>
+            </header>
             <ImageInput />
-            <hr />
+          
             <DateInput />
 
             {
@@ -190,12 +214,8 @@ const CreateEventPopup = () => {
                     <p>Upload as group</p>
                 </div>
             }
-                
-            {/* <hr />
-            <h3>Upload as:</h3>
-            <UploadAsOptions /> */}
 
-            <button type="submit">Upload</button>
+            <button type="submit" className='upload-button'>Upload</button>
             { errorText && <p className='error'>{errorText}</p> }
         </form>
     )
