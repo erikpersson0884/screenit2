@@ -11,7 +11,7 @@ import AccountPopup from '@/components/accountPopup/AccountPopup';
 
 import closePopupIcon from '@/assets/close-popup.svg';
 
-const TOOLBAR_VISIBILITY_TIMEOUT = 2_000; // 5 seconds
+const TOOLBAR_VISIBILITY_TIMEOUT = 5_000; // milliseconds
 
 
 interface ToolBarButtonProps {
@@ -113,7 +113,7 @@ const Navigation: React.FC = () => {
                 }
             >
                 {isAuthenticated && (
-                    <ToolBarButton buttonText="Create Event" popupToOpen={<CreateEventPopup />} />
+                    <ToolBarButton buttonText="Upload Poster" popupToOpen={<CreateEventPopup />} />
                 )}
 
                 <ToolBarButton buttonText='Settings' popupToOpen={<GallerySettings />} />
