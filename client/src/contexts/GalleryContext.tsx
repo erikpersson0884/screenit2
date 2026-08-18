@@ -1,8 +1,8 @@
 import React from "react";
 
 const defaultDisplayTime = 10; // seconds
-const defaultHubbenRattanDisplayTime = 5; // seconds
-const defaultHubbenRattanDisplayInterval = 10; // seconds between the times Hubbenråttan is displayed, if enabled
+const defaultHubbenRattanDisplayTime = 10; // seconds
+const defaultHubbenRattanDisplayInterval = 230; // seconds between the times Hubbenråttan is displayed, if enabled
 const defaultFetchInterval = 10; // seconds. How often to fetch new events and images from the server
 const defaultShowSidebar = false; // Whether to show the sidebar by default
 const defaultShowHubbenRattan = false; // Whether to show Hubbenråttan by default
