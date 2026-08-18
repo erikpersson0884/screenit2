@@ -24,8 +24,9 @@ const getAllImages = async (): Promise<string[]> => {
 
 const shouldImageBeDeleted = async (imagePath: string): Promise<boolean> => {
     const events: EventWithRelations[] = await eventService.getAllEvents();
-    console.log("Checking image:", imagePath, "against events:", events.map(e => e.imagePath));
+    logger.info("Checking image:", imagePath, "against events:", events.map(e => e.imagePath));
     const imageUsedInEvent: boolean = events.some(event => event.imagePath === imagePath);
+    if (!imageUsedInEvent) logger.info(`Image ${imagePath} is not used in any event and will be deleted.`);
     return !imageUsedInEvent;
 }
 
