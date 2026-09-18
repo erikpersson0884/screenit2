@@ -10,6 +10,7 @@ const DELETE_OLD_EVENTS_INTERVAL = 24 * 60 * 60 * 1000;
 
 const shouldEventBeDeleted = (event: EventWithRelations): boolean => {
     const now = new Date();
+    now.setDate(now.getDate()-1);
     if (event.date < now) return true;
     else return false;
 }
