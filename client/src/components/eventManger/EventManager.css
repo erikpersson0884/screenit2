@@ -37,6 +37,8 @@
   font-size: 17px;
   font-weight: 500;
   color: var(--text-color);
+  max-width: 25ch;
+  text-overflow: ellipsis;
 }
 
 /* date */

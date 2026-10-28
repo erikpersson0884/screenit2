@@ -82,7 +82,7 @@ const EventManager: React.FC<EventManagerProps> = ({events}) => {
                         onClick={() => openPosterModal(event)}
                     />
                     <div>
-                        <p>{event.name}</p>
+                        <p className="event-title">{event.name}</p>
                         <p>{event.date.toLocaleDateString('en-CA')}</p>
                         { currentUser && currentUser.role == "admin" && <ByUser createdById={event.createdById} event={event}/> }
                     </div>
