@@ -1,7 +1,10 @@
 
 .admin-page {
+    box-sizing: border-box;
     margin-top: 2rem;
     flex: 1;
+    padding: 2rem;
+    max-width: 100%;
 }
 
 .admin-page>h1, .admin-page>h2 {
@@ -13,6 +16,10 @@
     flex-direction: row;
     flex-wrap: wrap;
     gap: 3rem;
+}
+
+.admin-page .admin-panel > div {
+    max-width: 100%;
 }
 
 .admin-page .searchbar {
