@@ -19,7 +19,7 @@
 }
 
 .admin-page .admin-panel > div {
-    max-width: 100%;
+    max-width: 50%;
 }
 
 .admin-page .searchbar {
@@ -42,5 +42,9 @@
     .admin-page .admin-panel {
         flex-direction: column;
         gap: 1rem;
+    }
+
+    .admin-page .admin-panel > div {
+        max-width: 100%;
     }
 }
