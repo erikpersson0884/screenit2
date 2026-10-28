@@ -95,11 +95,11 @@ const Navigation: React.FC = () => {
     }
 
     if (isAdminPage) return (
-        <Link to="/">
-            <div className='toolbar'>
-                    <button>Back to Gallery</button>
-            </div>
-         </Link>
+        <div className='toolbar'>
+            <Link to="/">
+                <button>Back to Gallery</button>
+            </Link>
+        </div>
     );
 
     return (

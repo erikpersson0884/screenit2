@@ -3,6 +3,8 @@ import './AdminPage.css';
 import { useAuthContext } from "@/contexts/AuthContext";
 import { useEventContext } from "@/contexts/EventContext";
 import { useUsersContext } from "@/contexts/UsersContext";
+import { Link } from "react-router-dom";
+
 import EventManager from "@/components/eventManger/EventManager";
 import UserManager from "@/components/userManager/UserManager";
 
@@ -19,6 +21,10 @@ const AdminPage: React.FC = () => {
     if (!currentUser.isAdmin) return <p className="not-allowed-to-view-text">Only admins are allowed to view this page, you are not an admin, this implicates that you are not allowed to view this page (maths)</p>
     return (
         <div className="admin-page">
+            <Link to="/" className="back-to-gallery-link">
+                <button>Back to Gallery</button>
+            </Link>
+
             <h1>Admin Page</h1>
             <h2>Welcome back {currentUser.username}!</h2>
 
