@@ -171,6 +171,12 @@ Don't forget to give the project a star! Thanks again!
 4. Push to the Branch (`git push origin feature/myCoolFeature`)
 5. Open a Pull Request
 
+### SonarQube analysis
+
+The SonarQube workflow scans the client and server on pushes to `main`, pull requests, and manual runs. It uses the `SONAR_HOST_URL` and `SONAR_TOKEN` GitHub Actions secrets; the token must have permission to analyze the `screenit` project. Pull requests from forks do not receive repository secrets and therefore cannot run the authenticated scan. Pull request analysis also requires a SonarQube edition that supports it.
+
+The workflow does not currently run tests or import coverage reports.
+
 
 # Acknowledgements
 - [Alfred Berglöf](https://github.com/affe4ever) for spending a lot of time helping to deploy this project to the IT division server
