@@ -69,7 +69,7 @@ const PosterDisplay: React.FC = () => {
                     src={imagePath}
                     alt={`Event poster - ${eventName}`}
                     className="postImage"
-
+                    onClick={() => setCurrentIndex((prev) => (prev + 1) % events.length)}
                 />
             </div>
         </>
